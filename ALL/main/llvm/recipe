@@ -61,6 +61,19 @@ package() {
 	ln -sf clang "$pkgdir/usr/bin/cc"
 	ln -sf clang++ "$pkgdir/usr/bin/c++"
 	ln -sf ld.lld "$pkgdir/usr/bin/ld"
+	# Anything invoking the plain, unprefixed GNU binutils names by
+	# convention - autotools configure scripts, rustc's own build - has no
+	# way to find them otherwise: Arctic only ships LLVM's own versions.
+	ln -sf llvm-ar "$pkgdir/usr/bin/ar"
+	ln -sf llvm-strip "$pkgdir/usr/bin/strip"
+	# xorg-macros.m4 (used by every autotools-based Xorg library) probes
+	# for a "cpp" binary specifically and, when found, uses it the
+	# traditional gcc-cpp way: piping a file in on stdin with no explicit
+	# input argument. Plain `clang -E` requires an explicit `-` for that
+	# and errors "no input files" without one - clang-cpp is LLVM's own
+	# binary built to behave like traditional cpp instead, stdin handling
+	# included.
+	ln -sf clang-cpp "$pkgdir/usr/bin/cpp"
 
 	# LLVM_INSTALL_UTILS puts llvm-lit's helpers in /usr/bin, and two of them
 	# are named after ordinary commands: "count" and "not". toybox owns both,

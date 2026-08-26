@@ -1,0 +1,32 @@
+# libxcvt - VESA CVT mode-line generator, needed by xorg-server
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=libxcvt
+version=0.1.3
+release=1
+desc="VESA CVT mode-line generator, needed by xorg-server"
+url="https://gitlab.freedesktop.org/xorg/lib/libxcvt"
+license="MIT"
+depend="glibc"
+makedepend="meson ninja"
+source="https://gitlab.freedesktop.org/xorg/lib/libxcvt/-/archive/libxcvt-0.1.3/libxcvt-libxcvt-0.1.3.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "libxcvt-libxcvt-0.1.3"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "libxcvt-libxcvt-0.1.3"
+	DESTDIR="$pkgdir" ninja -C build install
+}

@@ -1,0 +1,2 @@
+-Dtests=disabled: avoids a hard build dependency on libcheck, which Arctic
+does not package. -Ddocumentation=disabled: avoids needing doxygen.

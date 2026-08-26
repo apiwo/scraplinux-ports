@@ -8,7 +8,7 @@ release=1
 desc="GL vendor dispatch, so mesa and NVIDIA can both provide GL"
 url="https://gitlab.freedesktop.org/glvnd/libglvnd"
 license="MIT"
-depend="glibc"
+depend="glibc,libx11,libxext"
 makedepend="meson ninja"
 source="https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
 sha256="SKIP"
@@ -29,4 +29,10 @@ build() {
 package() {
 	cd "libglvnd-v1.7.0"
 	DESTDIR="$pkgdir" ninja -C build install
+	# libglvnd installs the GLVND-preferred names (libOpenGL.so,
+	# libGLX.so) but not the legacy libGL.so most build systems -
+	# including CMake's own FindOpenGL.cmake, which is what every Qt6Gui
+	# consumer downstream ends up calling - still look for by default.
+	ln -sf libOpenGL.so.0 "$pkgdir/usr/lib/libGL.so.1"
+	ln -sf libGL.so.1 "$pkgdir/usr/lib/libGL.so"
 }

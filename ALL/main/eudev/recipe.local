@@ -1,0 +1,6 @@
+release=2, not 1: a real install already has 3.2.14-2 deployed (repackaged
+by hand once during the xf86-input-libinput/libudev-zero conflict fix - see
+libudev-zero's recipe.local for the actual fix, which lives on that
+package's replaces="eudev" instead). Keeping this at 2 so a rebuild from
+this recipe does not look like a downgrade against what is already out
+there.

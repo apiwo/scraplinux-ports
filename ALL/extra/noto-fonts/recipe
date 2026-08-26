@@ -1,7 +1,4 @@
 # noto-fonts - Google Noto fonts
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=noto-fonts
 version=2026.08.01
 release=1
@@ -14,11 +11,23 @@ source="https://github.com/notofonts/notofonts.github.io/archive/refs/tags/noto-
 sha256="SKIP"
 
 build() {
-	cd "notofonts.github.io-noto-monthly-release-2026.08.01"
-	make -j"$JOBS" PREFIX=/usr
+	:
 }
 
 package() {
-	cd "notofonts.github.io-noto-monthly-release-2026.08.01"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	# The upstream tree ships ~8000 TTFs across 200+ script-specific
+	# families (2+ GiB) - a full mirror of every regional/historic script
+	# variant, not a fallback font stack a desktop actually needs. Install
+	# just the general-purpose families every UI toolkit falls back to:
+	# Sans/Serif/Mono for Latin/Greek/Cyrillic, plus the symbol and emoji
+	# sets glyphs outside that range actually need.
+	cd "notofonts.github.io-noto-monthly-release-2026.08.01/fonts"
+	install -d "$pkgdir/usr/share/fonts/noto"
+	for fam in NotoSans NotoSerif NotoSansMono NotoSansSymbols \
+	           NotoSansSymbols2 NotoColorEmoji NotoSansMath; do
+		[ -d "$fam" ] || continue
+		find "$fam" -iname '*.ttf' | while read -r f; do
+			install -Dm644 "$f" "$pkgdir/usr/share/fonts/noto/$(basename "$f")"
+		done
+	done
 }

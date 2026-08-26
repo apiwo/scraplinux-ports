@@ -1,0 +1,6 @@
+Marker only - see CONTRIBUTING.md. build()/package() are hand-written
+(default ./configure only builds a static, unversioned libcurses - real
+consumers link against the shared, wide-char libtinfo.so.6/libncursesw.so.6
+sonames, which need --with-shared --enable-widec --with-termlib explicitly)
+and gen-ports.py must never regenerate over them from the manifest's
+generic autotools template.

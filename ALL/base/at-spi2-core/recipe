@@ -22,6 +22,7 @@ build() {
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
+		-Dintrospection=disabled \
 		-Db_lto=true
 	ninja -C build -j"$JOBS"
 }

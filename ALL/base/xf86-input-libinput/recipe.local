@@ -1,0 +1,6 @@
+Installs include/libinput-properties.h to /usr/include/xorg/ in
+package() - upstream's meson.build never installs this public header at
+all, and lxqt-config-input needs it (touchpaddevice.cpp). Search path
+choice (/usr/include/xorg, not plain /usr/include) matches what
+lxqt-config's own build already looks for, following the usual X.Org
+driver-headers convention.

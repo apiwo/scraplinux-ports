@@ -1,0 +1,32 @@
+# json-glib - JSON parser/generator built on GLib, used by lxqt-archiver
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=json-glib
+version=1.10.8
+release=1
+desc="JSON parser/generator built on GLib, used by lxqt-archiver"
+url="https://gitlab.gnome.org/GNOME/json-glib"
+license="LGPL-2.1-or-later"
+depend="glibc glib"
+makedepend="meson ninja python"
+source="https://download.gnome.org/sources/json-glib/1.10/json-glib-1.10.8.tar.xz"
+sha256="SKIP"
+
+build() {
+	cd "json-glib-1.10.8"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "json-glib-1.10.8"
+	DESTDIR="$pkgdir" ninja -C build install
+}

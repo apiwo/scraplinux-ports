@@ -1,0 +1,40 @@
+# muparser - Fast math expression parser library, used by lxqt-runner's calculator feature
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=muparser
+version=2.3.5
+release=1
+desc="Fast math expression parser library, used by lxqt-runner's calculator feature"
+url="https://beltoforion.de/en/muparser/"
+license="MIT"
+depend="glibc"
+makedepend="cmake ninja"
+source="https://github.com/beltoforion/muparser/archive/refs/tags/v2.3.5.tar.gz"
+sha256="SKIP"
+
+build() {
+	# ENABLE_OPENMP=OFF: no libomp/OpenMP runtime is packaged for the
+	# clang/lld toolchain this tree builds with - find_package(OpenMP)
+	# fails outright otherwise. muparser's OpenMP use is an optional
+	# internal-parallelism speedup, not a feature its consumers see.
+	# ENABLE_SAMPLES=OFF: the example binaries aren't part of the library
+	# lxqt-runner links against, so skip building them.
+	cmake -S "muparser-2.3.5" -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_SHARED_LIBS=ON \
+		-DENABLE_OPENMP=OFF \
+		-DENABLE_SAMPLES=OFF \
+		-DCMAKE_PREFIX_PATH=/usr \
+		-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF \
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	DESTDIR="$pkgdir" ninja -C build install
+}

@@ -1,0 +1,5 @@
+sed-patches CMakeLists.txt's find_package(XCB COMPONENTS DPMS SCREENSAVER)
+to xcb-dpms/xcb-screensaver - see the comment in build(). Without this,
+configure fails with "Could NOT find XCB (missing: XCB_LIBRARIES)" because
+FindXCB.cmake looks for a pkg-config module and a library named literally
+"DPMS"/"SCREENSAVER", which libxcb never ships under those names.

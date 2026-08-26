@@ -1,0 +1,58 @@
+# kwindowsystem - KF6WindowSystem, cross-platform access to window manager features, needed by liblxqt
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=kwindowsystem
+version=6.20.0
+release=1
+desc="KF6WindowSystem, cross-platform access to window manager features, needed by liblxqt"
+url="https://api.kde.org/frameworks/kwindowsystem/"
+license="LGPL-2.1-or-later"
+depend="qt6-base libxcb libx11 xcb-util-wm xcb-util-keysyms extra-cmake-modules"
+makedepend="cmake ninja"
+source="https://download.kde.org/stable/frameworks/6.20/kwindowsystem-6.20.0.tar.xz"
+sha256="SKIP"
+
+build() {
+	# CMAKE_PREFIX_PATH/CMAKE_FIND_ROOT_PATH pinned to /usr, and
+	# find_package() barred from the package registry: without this
+	# cmake's own registry can find a host-installed copy of the same
+	# library ahead of the one actually being built against (real, hit
+	# by qt6-svg finding the host's Qt6 instead of Arctic's own).
+	#
+	# CMAKE_CXX_FLAGS below adds every Qt module's versioned private-header
+	# dir directly: third-party consumers of Qt private headers (LXQt and
+	# friends) set -DQt6Foo_PRIVATE_INCLUDE_DIRS by reading
+	# Qt6::FooPrivate's INTERFACE_INCLUDE_DIRECTORIES via
+	# get_target_property() at configure time - but that property is a
+	# generator expression gated on a TARGET_PROPERTY check, and
+	# get_target_property() captures it unevaluated, so the variable ends
+	# up empty and every private header 404s. Harmless for anything that
+	# isn't consuming Qt private headers at all.
+	cmake -S "kwindowsystem-6.20.0" -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_SHARED_LIBS=ON \
+		-DCMAKE_PREFIX_PATH=/usr \
+		-DCMAKE_FIND_ROOT_PATH=/usr \
+		-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=OFF \
+		-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+		-DCMAKE_CXX_FLAGS="-I/usr/include/QtCore/6.10.1 -I/usr/include/QtCore/6.10.1/QtCore -I/usr/include/QtGui/6.10.1 -I/usr/include/QtGui/6.10.1/QtGui -I/usr/include/QtWidgets/6.10.1 -I/usr/include/QtWidgets/6.10.1/QtWidgets -I/usr/include/QtDBus/6.10.1 -I/usr/include/QtDBus/6.10.1/QtDBus -I/usr/include/QtNetwork/6.10.1 -I/usr/include/QtNetwork/6.10.1/QtNetwork" \
+		-DKWINDOWSYSTEM_WAYLAND=OFF
+	# cmake itself (a host binary in this chroot) needs LD_LIBRARY_PATH to
+	# find its own dependencies, but that same setting poisons anything
+	# the build produces and then runs on itself (Qt's own qmlcachegen,
+	# built here, loading the host's Qt 6.11 instead of the one just
+	# built here alongside it - "undefined symbol ... version
+	# Qt_6_PRIVATE_API", a real symbol at a real address in the correct
+	# library, just not the one that got loaded).
+	unset LD_LIBRARY_PATH
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	DESTDIR="$pkgdir" ninja -C build install
+}

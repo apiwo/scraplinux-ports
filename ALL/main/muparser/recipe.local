@@ -1,0 +1,6 @@
+-DENABLE_OPENMP=OFF: no OpenMP runtime is packaged for the clang/lld
+toolchain, and find_package(OpenMP REQUIRED) fails outright without it.
+Purely an internal-parallelism speedup, invisible to consumers like
+lxqt-runner. -DENABLE_SAMPLES=OFF skips the example binaries. Also dropped
+the generic cmake-template's Qt-private-header CMAKE_CXX_FLAGS block -
+muparser is plain C++, not a Qt/LXQt consumer, and doesn't need it.

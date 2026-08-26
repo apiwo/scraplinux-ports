@@ -49,6 +49,11 @@ TEMPLATES = {
     "autotools": """
 build() {{
 	cd "{srcdir}"
+	# Some release tarballs are raw git-tag archives with no generated
+	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
+	# dist" tarball ships one, a GitHub/GitLab auto-generated source
+	# archive does not. Bootstrap it ourselves when that happens.
+	[ -x ./configure ] || autoreconf -fi
 	# Not every configure script accepts the same options - sqlite rejects
 	# --disable-nls outright, for instance - so only pass the ones this one
 	# actually advertises. Guessing wrong fails the whole build.
@@ -56,14 +61,17 @@ build() {{
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	# bmake is not GNU make - automake's dependency-tracking .deps
+	# fragments need nested variable expansion bmake doesn't have.
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }}
 
 package() {{
 	cd "{srcdir}"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }}
 """,
     # -------------------------------------------------------- autotools, no nls
@@ -71,22 +79,72 @@ package() {{
 build() {{
 	cd "{srcdir}"
 	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }}
 
 package() {{
 	cd "{srcdir}"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }}
 """,
     # ------------------------------------------------------------------ cmake
     "cmake": """
 build() {{
+	# CMAKE_PREFIX_PATH pinned to /usr, and find_package() barred from
+	# every source of an unwanted host-installed hit:
+	#
+	# - CMAKE_FIND_USE_PACKAGE_REGISTRY / _SYSTEM_PACKAGE_REGISTRY=OFF:
+	#   without this cmake's own registry can find a host-installed copy
+	#   of the same library ahead of the one actually being built against
+	#   (real, hit by qt6-svg finding the host's Qt6 instead of Arctic's).
+	# - CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF: cmake derives extra
+	#   find_package() search prefixes from every PATH entry (stripping a
+	#   trailing /bin or /sbin), and this build's PATH includes
+	#   /host/usr/bin and /host/bin as a fallback for host tools not yet
+	#   packaged for Arctic - without this, that becomes a search prefix
+	#   of /host/usr, and find_package quietly resolves a real dependency
+	#   to a host copy that was never built against Arctic at all (hit by
+	#   pcmanfm-qt finding a host-installed fm-qt6 this way).
+	#
+	# Deliberately NOT set: CMAKE_FIND_USE_CMAKE_SYSTEM_PATH=OFF and
+	# CMAKE_FIND_ROOT_PATH=/usr, both tried and reverted. The former also
+	# gates whether find_library()/find_path() (not just find_package())
+	# consult CMAKE_PREFIX_PATH at all - turning it off broke plain
+	# find_library(OpenGL) against /usr entirely, taking every downstream
+	# Qt6Gui consumer down with it. The latter only takes effect while
+	# cross-compiling (CMAKE_CROSSCOMPILING true), which this never is -
+	# a no-op on its own, but compounded the find_library breakage above
+	# when combined with it. CMAKE_PREFIX_PATH=/usr is what actually does
+	# the pinning; neither of these was pulling its weight.
+	#
+	# CMAKE_CXX_FLAGS below adds every Qt module's versioned private-header
+	# dir directly: third-party consumers of Qt private headers (LXQt and
+	# friends) set -DQt6Foo_PRIVATE_INCLUDE_DIRS by reading
+	# Qt6::FooPrivate's INTERFACE_INCLUDE_DIRECTORIES via
+	# get_target_property() at configure time - but that property is a
+	# generator expression gated on a TARGET_PROPERTY check, and
+	# get_target_property() captures it unevaluated, so the variable ends
+	# up empty and every private header 404s. Harmless for anything that
+	# isn't consuming Qt private headers at all.
 	cmake -S "{srcdir}" -B build -G Ninja \\
 		-DCMAKE_INSTALL_PREFIX=/usr \\
 		-DCMAKE_INSTALL_LIBDIR=lib \\
 		-DCMAKE_BUILD_TYPE=Release \\
-		-DBUILD_SHARED_LIBS=ON
+		-DBUILD_SHARED_LIBS=ON \\
+		-DCMAKE_PREFIX_PATH=/usr \\
+		-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \\
+		-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF \\
+		-DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF \\
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\
+		-DCMAKE_CXX_FLAGS="-I/usr/include/QtCore/6.10.1 -I/usr/include/QtCore/6.10.1/QtCore -I/usr/include/QtGui/6.10.1 -I/usr/include/QtGui/6.10.1/QtGui -I/usr/include/QtWidgets/6.10.1 -I/usr/include/QtWidgets/6.10.1/QtWidgets -I/usr/include/QtDBus/6.10.1 -I/usr/include/QtDBus/6.10.1/QtDBus -I/usr/include/QtNetwork/6.10.1 -I/usr/include/QtNetwork/6.10.1/QtNetwork"
+	# cmake itself (a host binary in this chroot) needs LD_LIBRARY_PATH to
+	# find its own dependencies, but that same setting poisons anything
+	# the build produces and then runs on itself (Qt's own qmlcachegen,
+	# built here, loading the host's Qt 6.11 instead of the one just
+	# built here alongside it - "undefined symbol ... version
+	# Qt_6_PRIVATE_API", a real symbol at a real address in the correct
+	# library, just not the one that got loaded).
+	unset LD_LIBRARY_PATH
 	ninja -C build -j"$JOBS"
 }}
 

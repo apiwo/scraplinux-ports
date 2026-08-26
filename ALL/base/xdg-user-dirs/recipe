@@ -1,0 +1,33 @@
+# xdg-user-dirs - Manages ~/Desktop, ~/Documents etc per the XDG spec, needed by lxqt-session
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=xdg-user-dirs
+version=0.19
+release=1
+desc="Manages ~/Desktop, ~/Documents etc per the XDG spec, needed by lxqt-session"
+url="https://www.freedesktop.org/wiki/Software/xdg-user-dirs/"
+license="MIT"
+depend="glibc"
+makedepend="meson ninja"
+source="https://user-dirs.freedesktop.org/releases/xdg-user-dirs-0.19.tar.xz"
+sha256="SKIP"
+
+build() {
+	cd "xdg-user-dirs-0.19"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true \
+		-Ddocs=false
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "xdg-user-dirs-0.19"
+	DESTDIR="$pkgdir" ninja -C build install
+}

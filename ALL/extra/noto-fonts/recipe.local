@@ -1,0 +1,6 @@
+Marker only - see CONTRIBUTING.md. build()/package() are hand-written
+(the upstream release tarball is a raw font-source tree with no build
+system at all - "make: no target to make" - and contains ~8000 TTFs
+across 200+ script-specific families, which is not what a desktop needs
+as a fallback font stack) and gen-ports.py must never regenerate over
+them from the manifest's generic make template.

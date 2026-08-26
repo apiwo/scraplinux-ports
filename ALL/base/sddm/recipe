@@ -1,28 +1,45 @@
 # sddm - the display manager Arctic defaults to.
 name=sddm
-version=0.22.0
+version=0.21.0
 release=1
 desc="Qt display manager, Wayland capable"
 url="https://github.com/sddm/sddm"
 license="GPL-2.0-or-later"
-depend="glibc qt6-base qt6-declarative libxcb pam-less-shadow"
+depend="glibc qt6-base qt6-declarative libxcb pam"
 makedepend="cmake ninja clang lld qt6-tools"
 source="sddm-$version.tar.gz::https://github.com/sddm/sddm/archive/refs/tags/v$version.tar.gz"
 sha256="SKIP"
 
 build() {
+	# See gen-ports.py's shared cmake template for why these three
+	# CMAKE_FIND_USE_* flags matter: without them find_package() can
+	# quietly resolve a real dependency against a host-installed copy
+	# never built for Arctic at all, via either the host's cmake package
+	# registry or a search prefix derived from this build's own PATH
+	# (which includes /host/usr/bin for host tools not yet packaged).
 	cmake -S "sddm-$version" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DBUILD_MAN_PAGES=ON \
+		-DCMAKE_PREFIX_PATH=/usr \
+		-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF \
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+		-DBUILD_MAN_PAGES=OFF \
 		-DENABLE_JOURNALD=OFF \
 		-DNO_SYSTEMD=ON \
 		-DUSE_ELOGIND=OFF \
 		-DBUILD_WITH_QT6=ON
+	unset LD_LIBRARY_PATH
 	ninja -C build -j"$JOBS"
 }
 
 package() {
 	DESTDIR="$pkgdir" ninja -C build install
-	install -d "$pkgdir/var/lib/sddm"
+	# Owned by the sddm system user (uid/gid 80, skel/etc/passwd) - the
+	# greeter helper setuid()s to it before running sddm-greeter-qt6, and a
+	# root-owned home directory it can't write into is a second, separate
+	# way for "Auth: sddm-helper exited with 3" to happen even after the
+	# user account itself exists.
+	install -dm750 -o 80 -g 80 "$pkgdir/var/lib/sddm"
 }

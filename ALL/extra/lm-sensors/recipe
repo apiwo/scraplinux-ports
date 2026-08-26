@@ -15,10 +15,12 @@ sha256="SKIP"
 
 build() {
 	cd "lm-sensors-V3-6-2"
-	make -j"$JOBS" PREFIX=/usr
+	# lm-sensors' Makefile uses GNU Make conditionals ($(findstring ...),
+	# ifneq/ifeq) bmake (Arctic's default "make") can't parse.
+	gmake -j"$JOBS" PREFIX=/usr CC=clang AR=llvm-ar RANLIB=llvm-ranlib
 }
 
 package() {
 	cd "lm-sensors-V3-6-2"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	gmake PREFIX=/usr DESTDIR="$pkgdir" CC=clang AR=llvm-ar RANLIB=llvm-ranlib install
 }

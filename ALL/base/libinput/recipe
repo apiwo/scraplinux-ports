@@ -3,13 +3,25 @@
 # libwacom, the debug GUI and the test suite are all off: libwacom is a
 # tablet database Arctic does not package, and meson treats it as a hard
 # dependency unless told otherwise.
+#
+# lua-plugins is also off, and this one matters more than it looks: it
+# defaults to meson's "auto" feature type, which silently links against
+# whatever Lua the build machine happens to have lying around if it finds
+# one via pkg-config - not something declared in `depend`, so nothing
+# caught it. That produced a hard runtime dependency on the exact soname
+# liblua5.4.so.0, which Arctic has never packaged (Arctic's own `lua` port
+# is 5.5, a different soname entirely) - so libinput_drv.so failed to
+# dlopen on every real install, X silently fell back to no input driver at
+# all, and mouse/keyboard never worked in any X11 session. Lua plugins are
+# an optional scripting feature for custom device quirks, not something
+# core keyboard/mouse handling needs.
 name=libinput
 version=1.30.0
-release=1
+release=3
 desc="Input device handling"
 url="https://www.freedesktop.org/wiki/Software/libinput/"
 license="MIT"
-depend="glibc libevdev mtdev libudev-zero"
+depend="glibc libevdev mtdev eudev"
 makedepend="meson ninja"
 source="https://gitlab.freedesktop.org/libinput/libinput/-/archive/1.30.0/libinput-1.30.0.tar.gz"
 sha256="SKIP"
@@ -27,7 +39,8 @@ build() {
 		-Dlibwacom=false \
 		-Ddebug-gui=false \
 		-Dtests=false \
-		-Ddocumentation=false
+		-Ddocumentation=false \
+		-Dlua-plugins=disabled
 	ninja -C build -j"$JOBS"
 }
 

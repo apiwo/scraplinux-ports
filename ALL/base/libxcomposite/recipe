@@ -1,0 +1,40 @@
+# libxcomposite - X composite extension library
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=libxcomposite
+version=0.4.6
+release=1
+desc="X composite extension library"
+url="https://x.org/"
+license="MIT"
+depend="glibc libx11 libxfixes"
+makedepend=""
+source="https://x.org/pub/individual/lib/libXcomposite-0.4.6.tar.xz"
+sha256="SKIP"
+
+build() {
+	cd "libXcomposite-0.4.6"
+	# alpm-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# build() runs - the host's own shell running ./configure inherits
+	# it and can crash loading the sysroot's libc.so.6 instead of its own.
+	unset LD_LIBRARY_PATH
+	# Not every configure script accepts the same options - sqlite rejects
+	# --disable-nls outright, for instance - so only pass the ones this one
+	# actually advertises. Guessing wrong fails the whole build.
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	_help=$(./configure --help 2>/dev/null)
+	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
+	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	# bmake is not GNU make - automake's dependency-tracking .deps
+	# fragments need nested variable expansion bmake doesn't have.
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
+	# shellcheck disable=SC2086
+	./configure $_opts
+	gmake -j"$JOBS"
+}
+
+package() {
+	cd "libXcomposite-0.4.6"
+	gmake DESTDIR="$pkgdir" install
+}

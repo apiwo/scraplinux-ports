@@ -1,0 +1,8 @@
+Real Rust build, not gen-ports.py's generic "make" template: uses x.py
+(bootstrap.toml, not the old config.toml name as of 1.94), needs
+LLVM_USE_LIBCXX=1 exported, and needs a few missing dev symlinks on the
+build host that gen-ports.py can't express - ar -> llvm-ar, strip ->
+llvm-strip, libgcc_s.so -> libgcc_s.so.1, libstdc++.so -> libstdc++.so.6.
+Those are host-environment gaps (fixed once, should already be present in
+any buildroot this has built successfully in before), not something the
+recipe itself can fix.

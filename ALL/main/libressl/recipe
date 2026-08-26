@@ -33,14 +33,16 @@ package() {
 	# /etc/ssl/cert.pem is owned by libressl" was enough to stop any
 	# transaction that included ca-certificates, which is most of them.
 	rm -f "$pkgdir/etc/ssl/cert.pem"
-	# openssl.cnf has the same problem for the same reason: LibreSSL and
-	# OpenSSL are alternative implementations of one interface and both ship
-	# a file at that path, so installing the second one onto a system that
-	# already had the first stopped the transaction. They coexist happily as
-	# libraries - the sonames differ - and it is only the configuration file
-	# they cannot both own. LibreSSL's keeps its own name; nothing reads it
-	# by the other one that is not equally happy with OpenSSL's.
-	if [ -f "$pkgdir/etc/ssl/openssl.cnf" ]; then
-		mv -f "$pkgdir/etc/ssl/openssl.cnf" "$pkgdir/etc/ssl/libressl.cnf"
-	fi
+	# openssl.cnf stays right here, under its real name. This library's own
+	# compiled-in default config path (baked in via --sysconfdir=/etc at
+	# ./configure time, the standard OPENSSLDIR/openssl.cnf convention) is
+	# /etc/ssl/openssl.cnf, not configurable to a different filename short
+	# of patching LibreSSL's own source. An earlier version of this recipe
+	# renamed it to libressl.cnf to dodge an alpm ownership conflict with a
+	# real-OpenSSL package Arctic used to also ship - that left this exact
+	# path unclaimed, OpenSSL's incompatible provider-based config filled it
+	# instead, and every LibreSSL-linked consumer (curl included) hard-
+	# failed to even initialize ("unknown module name: module=providers" -
+	# LibreSSL has no provider architecture at all). Arctic is LibreSSL-only
+	# now - see CONTRIBUTING.md - so this file just keeps its real name.
 }

@@ -41,4 +41,11 @@ build() {
 package() {
 	cd "Linux-PAM-1.7.2"
 	DESTDIR="$pkgdir" ninja -C build install
+	# pam_unix.so shells out to this to check a password when the caller
+	# itself cannot read /etc/shadow (anything not already running as
+	# root - a screen locker, `passwd` invoked by an ordinary user, ...).
+	# Without the setuid bit it can't read shadow either, and the check
+	# fails the exact same way root-owned processes never notice because
+	# they never need this helper at all.
+	chmod 4755 "$pkgdir/usr/bin/unix_chkpwd"
 }

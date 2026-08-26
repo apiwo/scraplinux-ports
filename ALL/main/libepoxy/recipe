@@ -1,0 +1,32 @@
+# libepoxy - GL function pointer dispatch, needed by Xorg's glamor 2D acceleration
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=libepoxy
+version=1.5.10
+release=1
+desc="GL function pointer dispatch, needed by Xorg's glamor 2D acceleration"
+url="https://github.com/anholt/libepoxy"
+license="MIT"
+depend="glibc libx11"
+makedepend="meson ninja python"
+source="https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "libepoxy-1.5.10"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "libepoxy-1.5.10"
+	DESTDIR="$pkgdir" ninja -C build install
+}

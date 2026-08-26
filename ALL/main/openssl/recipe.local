@@ -1,4 +1,0 @@
-Marker only - see CONTRIBUTING.md. build()/package() are hand-written
-(openssl's ./Configure isn't autoconf, the generic template doesn't apply)
-and gen-ports.py must never regenerate over them from the manifest's
-generic autotools template.

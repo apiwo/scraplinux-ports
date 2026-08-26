@@ -1,0 +1,18 @@
+Blocked: obrender-3.5.pc (from openbox) unconditionally lists
+"Requires: ... librsvg-2.0", so pkg-config --exists obrender-3.5 fails
+without a real librsvg-2.0.pc present, regardless of whether libobrender.so
+actually links rsvg at runtime.
+
+ports/base/librsvg/recipe as it stands is a non-functional stub - it runs
+`cargo build --release` at the librsvg package root and installs
+target/release/librsvg as if it were a binary, but librsvg is a C-ABI
+shared library (librsvg-2.so) built through its own meson+cargo hybrid, not
+a plain cargo binary crate. There is also no rust/cargo toolchain package
+in the manifest or buildroot at all - the makedepend="rust cargo" line
+resolves to nothing.
+
+Getting obconf-qt building means standing up a real Rust toolchain port and
+a real librsvg build (meson driving cargo, producing the GObject-Introspection
+C library, gdk-pixbuf loader, and pkgconfig file) - separate, sizeable work
+from the rest of the LXQt suite. Revisit once rust/cargo and a working
+librsvg exist as their own verified ports.

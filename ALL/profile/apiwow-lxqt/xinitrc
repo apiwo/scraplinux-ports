@@ -1,0 +1,11 @@
+#!/bin/sh
+# Arctic Linux - apiwow-lxqt session.
+#
+# The fallback path for anyone who ran `startx` directly instead of going
+# through SDDM - without this, xinit falls all the way back to its own
+# upstream default /etc/X11/xinit/xinitrc, which launches twm/xclock/xterm
+# and nothing that is actually LXQt.
+
+[ -f "$HOME/.Xresources" ] && xrdb -merge "$HOME/.Xresources"
+
+exec startlxqt

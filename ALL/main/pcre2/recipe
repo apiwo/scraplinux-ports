@@ -18,16 +18,22 @@ build() {
 	# Not every configure script accepts the same options - sqlite rejects
 	# --disable-nls outright, for instance - so only pass the ones this one
 	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	# Qt6 (QRegularExpression, using UTF-16 QString internally) needs the
+	# 16-bit variant, not just the default 8-bit one - a real, permanent
+	# gap in this package, not a one-off build quirk.
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --enable-pcre2-8 --enable-pcre2-16 --enable-pcre2-32"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	# bmake is not GNU make - automake's dependency-tracking .deps
+	# fragments need nested variable expansion bmake doesn't have.
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }
 
 package() {
 	cd "pcre2-10.46"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }

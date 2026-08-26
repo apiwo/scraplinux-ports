@@ -1,0 +1,32 @@
+# adwaita-icon-theme - The Adwaita (GNOME) icon theme, for LXQt and any GTK app on the desktop
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=adwaita-icon-theme
+version=50.0
+release=1
+desc="The Adwaita (GNOME) icon theme, for LXQt and any GTK app on the desktop"
+url="https://gitlab.gnome.org/GNOME/adwaita-icon-theme"
+license="LGPL-3.0-or-later CC0-1.0"
+depend="glibc"
+makedepend="meson ninja"
+source="https://download.gnome.org/sources/adwaita-icon-theme/50/adwaita-icon-theme-50.0.tar.xz"
+sha256="SKIP"
+
+build() {
+	cd "adwaita-icon-theme-50.0"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "adwaita-icon-theme-50.0"
+	DESTDIR="$pkgdir" ninja -C build install
+}

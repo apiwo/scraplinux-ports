@@ -1,0 +1,41 @@
+# xterm - Terminal emulator for X11 - the fallback every xinitrc needs a real one of
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=xterm
+version=400
+release=1
+desc="Terminal emulator for X11 - the fallback every xinitrc needs a real one of"
+url="https://invisible-island.net/xterm/"
+license="MIT"
+depend="glibc libx11 libxt libxaw libxft ncurses"
+makedepend=""
+source="https://invisible-mirror.net/archives/xterm/xterm-400.tgz"
+sha256="SKIP"
+
+build() {
+	cd "xterm-400"
+	# Some release tarballs are raw git-tag archives with no generated
+	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
+	# dist" tarball ships one, a GitHub/GitLab auto-generated source
+	# archive does not. Bootstrap it ourselves when that happens.
+	[ -x ./configure ] || autoreconf -fi
+	# Not every configure script accepts the same options - sqlite rejects
+	# --disable-nls outright, for instance - so only pass the ones this one
+	# actually advertises. Guessing wrong fails the whole build.
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	_help=$(./configure --help 2>/dev/null)
+	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
+	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	# bmake is not GNU make - automake's dependency-tracking .deps
+	# fragments need nested variable expansion bmake doesn't have.
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
+	# shellcheck disable=SC2086
+	./configure $_opts
+	gmake -j"$JOBS"
+}
+
+package() {
+	cd "xterm-400"
+	gmake DESTDIR="$pkgdir" install
+}

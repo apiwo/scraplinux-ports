@@ -1,0 +1,17 @@
+Unverified: this recipe runs a full GCC build/install (gmake DESTDIR=...
+install) despite the description promising "libstdc++ and libgcc_s
+runtime only" - nothing here scopes it down to just those two, and the
+libgcc_s.so.1/libstdc++.so.6 files actually present in build sysroots
+turned out to be untracked stray files (`alpm owns` found no owner for
+libgcc_s.so.1), not something this recipe produced. It has probably never
+actually been built successfully.
+
+Also missing regardless of how it gets built: the unversioned dev
+symlinks (libgcc_s.so -> libgcc_s.so.1, libstdc++.so -> libstdc++.so.6).
+Only the runtime SONAME files exist - anything passing -lgcc_s/-lstdc++
+to the linker (rustc's own build did) fails with "unable to find library"
+even though the actual .so.N files are sitting right there, because the
+linker looks for the plain unversioned name specifically. Add those two
+`ln -sf` lines to package() whenever this recipe is actually made to
+build for real instead of copying the files in from wherever they came
+from before.

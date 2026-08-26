@@ -1,0 +1,42 @@
+# cargo - Rust package manager and build tool
+#
+# Built from the same source tree as rust, but packaged separately so
+# `alpm add rust` and `alpm add cargo` both work on their own - cargo just
+# depends on rust. This does mean a from-source rebuild compiles the whole
+# stage2 toolchain twice, once per recipe: alpm-build has no notion of one
+# package reusing another's build tree, and keeping them as genuinely
+# separate installable packages was worth that cost.
+name=cargo
+version=1.94.0
+release=1
+desc="Rust package manager and build tool"
+url="https://rust-lang.org/"
+license="MIT Apache-2.0"
+depend="glibc rust"
+makedepend="python llvm cmake ninja"
+source="https://static.rust-lang.org/dist/rustc-1.94.0-src.tar.xz"
+sha256="SKIP"
+
+# See rust's own recipe for why this is needed.
+export LLVM_USE_LIBCXX=1
+
+build() {
+	cd "rustc-1.94.0-src"
+	./configure \
+		--prefix=/usr \
+		--release-channel=stable \
+		--set=llvm.download-ci-llvm=false \
+		--set=target.x86_64-unknown-linux-gnu.llvm-config=/usr/bin/llvm-config \
+		--set=build.docs=false \
+		--tools=cargo
+	python3 x.py build --stage 2 -j"$JOBS"
+}
+
+package() {
+	cd "rustc-1.94.0-src"
+	DESTDIR="$pkgdir" python3 x.py install cargo --stage 2
+	rm -f "$pkgdir/usr/lib/rustlib/components" \
+	      "$pkgdir/usr/lib/rustlib/install.log" \
+	      "$pkgdir/usr/lib/rustlib/rust-installer-version" \
+	      "$pkgdir/usr/lib/rustlib/uninstall.sh"
+}

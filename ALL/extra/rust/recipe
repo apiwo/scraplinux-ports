@@ -1,24 +1,44 @@
-# rust - The Rust compiler and cargo
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# rust - The Rust compiler and standard library
 name=rust
 version=1.94.0
 release=1
-desc="The Rust compiler and cargo"
+desc="The Rust compiler and standard library"
 url="https://rust-lang.org/"
 license="MIT Apache-2.0"
-depend="glibc llvm curl libressl"
-makedepend="python cmake ninja"
+depend="glibc"
+makedepend="python llvm cmake ninja"
 source="https://static.rust-lang.org/dist/rustc-1.94.0-src.tar.xz"
 sha256="SKIP"
 
+# Arctic's llvm-config --cxxflags never reports -stdlib=libc++, even though
+# the libs it points at were built with it - rustc_llvm's build.rs greps
+# cxxflags for that exact string to decide -lc++ vs -lstdc++, so it always
+# falls through to -lstdc++ and leaves every std::__1::-namespaced (libc++)
+# symbol in librustc_driver.so undefined at final link time. This is
+# rustc_llvm's own documented override for exactly that mismatch.
+export LLVM_USE_LIBCXX=1
+
 build() {
 	cd "rustc-1.94.0-src"
-	make -j"$JOBS" PREFIX=/usr
+	./configure \
+		--prefix=/usr \
+		--release-channel=stable \
+		--set=llvm.download-ci-llvm=false \
+		--set=target.x86_64-unknown-linux-gnu.llvm-config=/usr/bin/llvm-config \
+		--set=build.docs=false \
+		--tools=cargo
+	python3 x.py build --stage 2 -j"$JOBS"
 }
 
 package() {
 	cd "rustc-1.94.0-src"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	DESTDIR="$pkgdir" python3 x.py install rustc library/std --stage 2
+	# rust-installer's own component bookkeeping (rustup-style uninstall
+	# script + manifest) - meaningless under alpm, and cargo's package()
+	# installs the exact same four files, which alpm-build would then see
+	# as a file conflict between the two packages.
+	rm -f "$pkgdir/usr/lib/rustlib/components" \
+	      "$pkgdir/usr/lib/rustlib/install.log" \
+	      "$pkgdir/usr/lib/rustlib/rust-installer-version" \
+	      "$pkgdir/usr/lib/rustlib/uninstall.sh"
 }

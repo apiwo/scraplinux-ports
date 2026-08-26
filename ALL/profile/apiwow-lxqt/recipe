@@ -1,0 +1,30 @@
+# apiwow-lxqt - SDDM + LXQt, the full desktop session on X11
+name=apiwow-lxqt
+version=1.1.0
+release=1
+desc="SDDM + LXQt, the full desktop session on X11"
+url="https://github.com/apiwo/arctic-linux"
+license="BSD-2-Clause"
+depend="sddm sddm-arctic-theme liblxqt lxqt-session lxqt-panel lxqt-globalkeys \
+	lxqt-config lxqt-policykit lxqt-notificationd lxqt-runner lxqt-powermanagement \
+	lxqt-archiver lxqt-about lxqt-admin screengrab \
+	pcmanfm-qt qterminal adwaita-icon-theme openbox xorg-server xorg-xinit xauth xterm \
+	xf86-input-libinput xkbcomp ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts"
+makedepend=""
+source="xinitrc session.conf"
+sha256="SKIP SKIP"
+
+package() {
+	install -d "$pkgdir/usr/share/arctic/meta"
+	printf '%s\n' "$depend" >"$pkgdir/usr/share/arctic/meta/apiwow-lxqt"
+	# The fallback path for `startx` run directly instead of through SDDM -
+	# without this, xinit falls back to its own upstream default xinitrc,
+	# which launches twm/xclock/xterm and nothing that is actually LXQt.
+	install -Dm755 xinitrc "$pkgdir/etc/skel/.xinitrc"
+	# lxqt-session launches a *separate* window manager rather than being
+	# one itself, and has no hardcoded default - without this, "successful"
+	# meant a session that started, found nothing configured to actually
+	# manage windows, and exited within a couple hundred milliseconds
+	# looking to SDDM exactly like a normal clean logout.
+	install -Dm644 session.conf "$pkgdir/etc/xdg/lxqt/session.conf"
+}

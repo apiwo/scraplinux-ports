@@ -1,0 +1,5 @@
+-DWITH_MONITOR=OFF: the monitor-settings module hard-requires KF6Screen
+(libkscreen), a whole separate KDE Frameworks package Arctic does not
+build yet. Everything else - appearance (wallpaper, icon theme, colors,
+fonts), file associations, input, locale - builds and works without it.
+Revisit once libkscreen exists as its own port.

@@ -24,12 +24,24 @@ build() {
 	# this, because each translation unit's own #include order reaches the
 	# real overloads first. Disabling the PCH is the standard workaround for
 	# this class of PCH-order sensitivity.
+	# CMAKE_PREFIX_PATH/CMAKE_FIND_ROOT_PATH pinned to /usr, and
+	# find_package() barred from touching anything else: without this
+	# cmake's own package registry finds the host's own Qt install (bind-
+	# mounted at /host for cmake/ninja/python themselves, none of which
+	# are real Arctic packages yet) ahead of the one actually being built
+	# against here, and every private header comes from the wrong Qt.
 	cmake -S "qtsvg-everywhere-src-6.10.1" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DBUILD_SHARED_LIBS=ON \
-		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON
+		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON \
+		-DCMAKE_PREFIX_PATH=/usr \
+		-DCMAKE_FIND_ROOT_PATH=/usr \
+		-DCMAKE_FIND_USE_CMAKE_SYSTEM_PATH=OFF \
+		-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF \
+		-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF \
+		-DQT_DEFAULT_MAJOR_VERSION=6
 	ninja -C build -j"$JOBS"
 }
 

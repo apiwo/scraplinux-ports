@@ -10,24 +10,30 @@ url="https://icu.unicode.org/"
 license="ICU"
 depend="glibc"
 makedepend=""
-source="https://github.com/unicode-org/icu/releases/download/release-78-1/icu4c-78_1-src.tgz"
+source="https://github.com/unicode-org/icu/releases/download/release-78.1/icu4c-78.1-sources.tgz"
 sha256="SKIP"
 
 build() {
-	cd "icu4c-78_1-src"
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	# icu4c's real configure/source tree lives under source/, not the
+	# tarball's top level (which is just README/license/packaging files).
+	cd "icu/source"
+	# ICU renames every exported C symbol with a version suffix by default
+	# (ucnv_reset -> ucnv_reset_78), meant for embedding multiple ICU
+	# versions side by side. A system-wide ICU package needs plain names -
+	# every consumer (Qt6Core included) links against ucnv_reset, not a
+	# version-suffixed one, and distros disable this for exactly that
+	# reason.
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --disable-renaming"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }
 
 package() {
-	cd "icu4c-78_1-src"
-	make DESTDIR="$pkgdir" install
+	cd "icu/source"
+	gmake DESTDIR="$pkgdir" install
 }

@@ -15,19 +15,32 @@ sha256="SKIP"
 
 build() {
 	cd "perl-5.42.1"
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# shellcheck disable=SC2086
-	./configure $_opts
-	make -j"$JOBS"
+	# perl ships its own interactive Configure (capital C), not a GNU
+	# autotools ./configure - no help text to introspect, no
+	# --disable-dependency-tracking. -des runs it non-interactively with
+	# defaults.
+	# Arctic ships llvm-ar/llvm-nm/llvm-ranlib, not the generic "ar"/"nm"/
+	# "ranlib" names Configure defaults to and hardcodes into libperl.a's
+	# build rule regardless of $PATH.
+	# -Dmake=gmake: without this Configure records bmake (the first "make"
+	# on PATH) into Config.pm, and every CPAN module's generated
+	# sub-Makefile recurses via $(MAKE) = bmake, which doesn't speak GNU
+	# Make's jobserver FIFO protocol and corrupts the -j flag on the
+	# recursive call ("argument 'observer-auth=fifo:...' to option '-j'
+	# must be a positive number").
+	sh Configure -des \
+		-Dprefix=/usr \
+		-Dcc=clang \
+		-Dld=clang \
+		-Dar=llvm-ar \
+		-Dnm=llvm-nm \
+		-Dranlib=llvm-ranlib \
+		-Dmake=gmake \
+		-Dusethreads
+	gmake -j"$JOBS"
 }
 
 package() {
 	cd "perl-5.42.1"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }

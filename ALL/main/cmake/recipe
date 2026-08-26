@@ -1,10 +1,7 @@
 # cmake - Cross-platform build generator
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=cmake
 version=4.2.1
-release=1
+release=2
 desc="Cross-platform build generator"
 url="https://cmake.org/"
 license="BSD-3-Clause"
@@ -15,19 +12,23 @@ sha256="SKIP"
 
 build() {
 	cd "cmake-4.2.1"
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# shellcheck disable=SC2086
-	./configure $_opts
-	make -j"$JOBS"
+	# CMake does not use autotools - it has its own bootstrap script, which
+	# in turn generates a plain Makefile. -DCMAKE_USE_OPENSSL=OFF is the
+	# actual fix here, not just the bootstrap mechanism: CMake vendors its
+	# own copy of librhash (used for file(MD5/SHA...) et al) and, left to
+	# its own defaults, links it against whatever OpenSSL it finds at
+	# build time. A stray OpenSSL3 build once sat in this buildroot (see
+	# arctic-libressl-only-no-openssl) and got linked in - producing a
+	# cmake that needed libcrypto.so.3, a soname Arctic has never shipped
+	# since Arctic is LibreSSL-only. That single missing library broke
+	# every cmake invocation outright, LXQt's build included, since none
+	# of them can even reach the "not a valid input file" stage without
+	# cmake itself running at all.
+	./bootstrap --prefix=/usr --parallel="$JOBS" -- -DCMAKE_USE_OPENSSL=OFF
+	gmake -j"$JOBS"
 }
 
 package() {
 	cd "cmake-4.2.1"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }

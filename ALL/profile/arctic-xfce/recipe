@@ -10,7 +10,7 @@ license="BSD-2-Clause"
 # overrides it with the Arctic-themed one below.
 replaces="foot"
 depend="xfce4-meta foot xfce4-notifyd xfce4-screenshooter thunar \
-	xorg-server sddm pipewire wireplumber \
+	xorg-server xorg-xinit xauth xterm sddm pipewire wireplumber \
 	ttf-jetbrains-mono noto-fonts noto-fonts-emoji arctic-plasma-theme"
 makedepend=""
 source="foot.ini xfce4-desktop.xml xsettings.xml"

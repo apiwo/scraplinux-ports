@@ -14,11 +14,19 @@ source="https://duktape.org/duktape-2.7.0.tar.xz"
 sha256="SKIP"
 
 build() {
+	unset LD_LIBRARY_PATH
 	cd "duktape-2.7.0"
-	make -j"$JOBS" PREFIX=/usr
+	# No top-level Makefile - duktape ships as amalgamated source meant to
+	# be embedded directly, plus a handful of Makefile.* examples for the
+	# rare consumer that wants it as a real shared library (polkit does).
+	gmake -f Makefile.sharedlibrary INSTALL_PREFIX=/usr LIBDIR=/lib
 }
 
 package() {
 	cd "duktape-2.7.0"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	gmake -f Makefile.sharedlibrary INSTALL_PREFIX=/usr LIBDIR=/lib DESTDIR="$pkgdir" install
+	# The debug variant (libduktaped) is a duplicate build of the same
+	# source with -g and no other differences - nothing in this tree asks
+	# for it, and Arctic packages do not ship debug/release library pairs.
+	rm -f "$pkgdir"/usr/lib/libduktaped*
 }

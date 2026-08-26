@@ -10,7 +10,7 @@ desc="dwm + picom, calm grey and white, with the Arctic terminal and fonts"
 url="https://github.com/apiwo/arctic-linux"
 license="MIT BSD-2-Clause"
 depend="dwm dmenu st picom slstatus slock foot \
-	xorg-server xorg-xinit libx11 libxft libxinerama \
+	xorg-server xorg-xinit xauth xterm libx11 libxft libxinerama \
 	ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts feh"
 makedepend="clang bmake"
 source="config.h picom.conf xinitrc foot.ini"

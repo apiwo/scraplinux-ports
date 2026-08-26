@@ -15,6 +15,11 @@ sha256="SKIP"
 
 build() {
 	cd "npth-1.8"
+	# Some release tarballs are raw git-tag archives with no generated
+	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
+	# dist" tarball ships one, a GitHub/GitLab auto-generated source
+	# archive does not. Bootstrap it ourselves when that happens.
+	[ -x ./configure ] || autoreconf -fi
 	# Not every configure script accepts the same options - sqlite rejects
 	# --disable-nls outright, for instance - so only pass the ones this one
 	# actually advertises. Guessing wrong fails the whole build.
@@ -22,12 +27,15 @@ build() {
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
+	# bmake is not GNU make - automake's dependency-tracking .deps
+	# fragments need nested variable expansion bmake doesn't have.
+	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }
 
 package() {
 	cd "npth-1.8"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 }
