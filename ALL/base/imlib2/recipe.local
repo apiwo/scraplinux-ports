@@ -1,0 +1,19 @@
+--without-svg: same host-leakage bug as openbox (see its recipe.local) -
+imlib2's EC_LOADER_CHECK(SVG, auto, librsvg-2.0 >= 2.46) autodetects
+librsvg via pkg-config, and the previously-published imlib2-1.12.5-1
+package's /usr/lib/imlib2/loaders/svg.so ended up linked against a
+librsvg-2.so.2 that only ever existed on the build host, never in this
+buildroot. Lower severity than openbox's case - it's a dlopen'd loader
+plugin, not a hard NEEDED entry on a directly-linked library, so it would
+only silently drop SVG image support rather than fail anything to start -
+but the fix is the same and just as cheap. Revisit once Arctic has a real
+librsvg package - see ports/base/obconf-qt/recipe.local.
+
+NOT YET BUILT/PUBLISHED: rebuilding with this flag hits a separate,
+unrelated failure - the "raw" loader (src/modules/loaders/raw.c, libraw-
+based camera-format decoding) needs -lomp and no libomp is packaged for
+this clang toolchain (same root cause as muparser's -DENABLE_OPENMP=OFF -
+see ports/main/muparser/recipe.local). release=2 in this recipe reflects
+the intended fix, not a built/shipped version - the repo/mirror still has
+imlib2-1.12.5-1 (the old, host-leaked-svg.so version) until this is
+resolved too.

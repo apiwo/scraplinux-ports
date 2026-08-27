@@ -4,7 +4,7 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=openbox
 version=3.6.1
-release=1
+release=2
 desc="A highly configurable stacking window manager"
 url="http://openbox.org/"
 license="GPL-2.0-or-later"
@@ -23,7 +23,7 @@ build() {
 	# Not every configure script accepts the same options - sqlite rejects
 	# --disable-nls outright, for instance - so only pass the ones this one
 	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --disable-librsvg"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
@@ -37,5 +37,14 @@ build() {
 
 package() {
 	cd "openbox-3.6.1"
-	gmake DESTDIR="$pkgdir" install
+	# -j1: alpm-build exports MAKEFLAGS=-j$JOBS globally, so this inherits
+	# real parallelism even with no -j of its own. Fine for the build, but
+	# openbox's own install-sh -d (used throughout `make install` for every
+	# shared parent directory - /usr/share, /usr/share/themes, /etc/xdg/
+	# openbox, ...) is a plain `mkdir` with no -p and no tolerance for
+	# losing a race to another install-sh instance creating the same
+	# directory - "mkdir: 'X': File exists" and a hard install failure,
+	# non-deterministically depending on scheduling. Installing files has
+	# nothing to gain from parallelism anyway.
+	gmake -j1 DESTDIR="$pkgdir" install
 }
