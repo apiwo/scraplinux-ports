@@ -1,0 +1,20 @@
+Version pin was wrong (see the comment above `version=` in the recipe
+itself) - fixed to the real latest release tag and its "-src" asset. That
+part is confirmed working: source now fetches, extracts, and compiles
+well into the dependency graph.
+
+Blocked past that on a real upstream compatibility gap, not an Arctic
+packaging bug: `openssl-sys` 0.9.99 (pulled in transitively) refuses to
+build against anything newer than LibreSSL 3.8.1 -
+
+  This crate is only compatible with OpenSSL (version 1.0.1 through
+  1.1.1, or 3), or LibreSSL 2.5 through 3.8.1, but a different version of
+  OpenSSL was found.
+
+Arctic ships LibreSSL 4.2.0. Forcing a different openssl-sys version
+would need an actual Cargo.lock edit (the build runs --locked, same
+reasoning as every other Rust recipe here), which risks cascading into
+every other crate that also pins around openssl-sys's version - not
+attempted this pass. A newer wezterm release, or an openssl-sys bump
+upstream, may already have moved past this; worth re-checking before
+patching Cargo.lock by hand.

@@ -9,7 +9,7 @@ desc="SVG rendering library"
 url="https://wiki.gnome.org/Projects/LibRsvg"
 license="LGPL-2.1-or-later"
 depend="cairo pango gdk-pixbuf libxml2"
-makedepend="rust cargo"
+makedepend="rust cargo pkgconf xorgproto libx11 libxrender libxft libxext libxcb"
 source="https://download.gnome.org/sources/librsvg/2.61/librsvg-2.61.0.tar.xz"
 sha256="SKIP"
 

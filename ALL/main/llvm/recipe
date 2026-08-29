@@ -7,7 +7,7 @@ release=3
 desc="The LLVM compiler infrastructure: clang, lld, libc++, lldb"
 url="https://llvm.org/"
 license="Apache-2.0-with-LLVM-exception"
-depend="glibc zlib zstd"
+depend="glibc zlib zstd libxml2"
 makedepend="cmake ninja python"
 provides="clang lld libcxx compiler"
 # AMDGPU is in the target list because mesa needs it, not because Arctic

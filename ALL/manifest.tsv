@@ -100,7 +100,7 @@ main	arctic-init	1.0.0	meta	BSD-2-Clause	busybox,arctic-base	-	https://github.co
 main	gmp-alt	6.3.0	autotools	LGPL-3.0-or-later	glibc	-	https://gmplib.org/	https://gmplib.org/download/gmp/gmp-{version}.tar.xz	Arbitrary precision arithmetic, for nftables
 main	base	1.0.1	meta	BSD-2-Clause	glibc,busybox,toybox,zsh,doas,alpm,arctic-base,arctic-init,curl,libarchive,mandoc,onetrueawk,libxcrypt,iana-etc,tzdata,ca-certificates,signify	-	https://github.com/apiwo/arctic-linux	-	A minimal but complete Arctic system
 main	base-devel	1.0.0	meta	BSD-2-Clause	llvm,bmake,byacc,pkgconf,cmake,ninja,meson,git,patch-bsd,flex-alt	-	https://github.com/apiwo/arctic-linux	-	The toolchain needed to build Arctic packages
-main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libffi	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	clang, lld, libc++, the Arctic toolchain
+main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libxml2	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	clang, lld, libc++, the Arctic toolchain
 main	cmake	4.2.1	autotools	BSD-3-Clause	glibc,libressl,curl,expat,zlib,libarchive,netbsd-curses	-	https://cmake.org/	https://github.com/Kitware/CMake/releases/download/v{version}/cmake-{version}.tar.gz	Cross-platform build generator
 main	ninja	1.13.2	cmake	Apache-2.0	glibc	cmake,python	https://ninja-build.org/	https://github.com/ninja-build/ninja/archive/refs/tags/v{version}.tar.gz	Small, fast build system
 main	samurai	1.2	make	Apache-2.0 MIT	glibc	-	https://github.com/michaelforney/samurai	https://github.com/michaelforney/samurai/releases/download/{version}/samurai-{version}.tar.gz	A ninja-compatible build tool in C
@@ -203,8 +203,8 @@ extra	liberation-fonts	2.1.5	make	OFL-1.1	-	-	https://github.com/liberationfonts
 extra	vscode	1.108.0	binary	MIT	glibc,electron,libsecret,libx11	nodejs,npm,python	https://github.com/microsoft/vscode	https://github.com/microsoft/vscode/archive/refs/tags/{version}.tar.gz	Visual Studio Code, built from source
 extra	electron	43.2.0	binary	MIT	glibc,mesa,libx11,wayland,nss,alsa-lib	-	https://electronjs.org/	https://github.com/electron/electron/releases/download/v{version}/electron-v{version}-linux-x64.zip	Chromium application runtime
 extra	nodejs	26.3.0	autotools	MIT	glibc,libuv,zlib,brotli,c-ares,nghttp2,libressl	python,ninja	https://nodejs.org/	https://nodejs.org/dist/v{version}/node-v{version}.tar.xz	JavaScript runtime
-extra	rust	1.94.0	make	MIT Apache-2.0	glibc	python,llvm,cmake,ninja	https://rust-lang.org/	https://static.rust-lang.org/dist/rustc-{version}-src.tar.xz	The Rust compiler and standard library
-extra	cargo	1.94.0	make	MIT Apache-2.0	glibc,rust	python,llvm,cmake,ninja	https://rust-lang.org/	https://static.rust-lang.org/dist/rustc-{version}-src.tar.xz	Rust package manager and build tool
+extra	rust	1.94.0	make	MIT Apache-2.0	glibc,gcc-libs	python,llvm,cmake,ninja	https://rust-lang.org/	https://static.rust-lang.org/dist/rustc-{version}-src.tar.xz	The Rust compiler and standard library
+extra	cargo	1.94.0	make	MIT Apache-2.0	glibc,rust,gcc-libs	python,llvm,cmake,ninja	https://rust-lang.org/	https://static.rust-lang.org/dist/rustc-{version}-src.tar.xz	Rust package manager and build tool
 extra	go	1.26.1	make	BSD-3-Clause	glibc	-	https://go.dev/	https://go.dev/dl/go{version}.src.tar.gz	The Go toolchain
 extra	zig	0.16.0	cmake	MIT	glibc,llvm	cmake,ninja	https://ziglang.org/	https://ziglang.org/download/{version}/zig-{version}.tar.xz	The Zig compiler
 extra	dkms	3.4.2	make	GPL-2.0-or-later	glibc,kmod,bmake	-	https://github.com/dell/dkms	https://github.com/dell/dkms/archive/refs/tags/v{version}.tar.gz	Rebuild kernel modules when the kernel changes
@@ -260,6 +260,7 @@ base	xorg-xinit	1.4.4	autotools	MIT	glibc,libx11	-	https://x.org/	https://www.x.
 base	xorg-xwayland	24.1.9	meson	MIT	glibc,mesa,wayland,libdrm,pixman,libxkbcommon	meson,ninja	https://x.org/	https://x.org/pub/individual/xserver/xwayland-{version}.tar.xz	X server running on Wayland
 base	xcb-proto	1.17.0	autotools	MIT	glibc	python	https://xcb.freedesktop.org/	https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-{version}.tar.xz	XML descriptions of the X protocol, needed to build libxcb
 base	xorgproto	2025.1	meson	MIT	-	meson,ninja	https://gitlab.freedesktop.org/xorg/proto/xorgproto	https://xorg.freedesktop.org/archive/individual/proto/xorgproto-{version}.tar.xz	X11 protocol headers
+base	xtrans	1.6.0	autotools	MIT	-	-	https://x.org/	https://x.org/pub/individual/lib/xtrans-{version}.tar.xz	X transport library, needed by Xwayland's build
 base	util-macros	1.20.2	autotools	MIT	-	-	https://gitlab.freedesktop.org/xorg/util/macros	https://xorg.freedesktop.org/archive/individual/util/util-macros-{version}.tar.xz	Autoconf macros used by every other Xorg autotools build
 base	libx11	1.8.13	autotools	MIT	glibc,libxcb	-	https://x.org/	https://x.org/pub/individual/lib/libX11-{version}.tar.xz	X11 client library
 base	libxcb	1.17.0	autotools	MIT	glibc,libxau,libxdmcp,xcb-proto	-	https://x.org/	https://x.org/pub/individual/lib/libxcb-{version}.tar.xz	X protocol C-language binding
@@ -270,8 +271,10 @@ base	libxrender	0.9.12	autotools	MIT	glibc,libx11	-	https://x.org/	https://x.org
 base	libxinerama	1.1.6	autotools	MIT	glibc,libx11,libxext	-	https://x.org/	https://x.org/pub/individual/lib/libXinerama-{version}.tar.xz	Xinerama extension library
 base	libxscrnsaver	1.2.4	autotools	MIT	glibc,libx11,libxext	-	https://x.org/	https://x.org/pub/individual/lib/libXScrnSaver-{version}.tar.xz	X screen saver extension library
 base	libxcomposite	0.4.6	autotools	MIT	glibc,libx11,libxfixes	-	https://x.org/	https://x.org/pub/individual/lib/libXcomposite-{version}.tar.xz	X composite extension library
-base	elogind	257.16	meson	LGPL-2.1-or-later	glibc,libcap,pam,util-linux-libs,acl,dbus	meson,ninja	https://github.com/elogind/elogind	https://github.com/elogind/elogind/archive/refs/tags/v{version}.tar.gz	Session/seat tracking, the systemd-logind fork for init systems without systemd
+base	elogind	257.16	meson	LGPL-2.1-or-later	glibc,libcap,pam,util-linux-libs,acl,dbus	meson,ninja,gperf	https://github.com/elogind/elogind	https://github.com/elogind/elogind/archive/refs/tags/v{version}.tar.gz	Session/seat tracking, the systemd-logind fork for init systems without systemd
 base	libxext	1.3.7	autotools	MIT	glibc,libx11	-	https://x.org/	https://x.org/pub/individual/lib/libXext-{version}.tar.xz	X miscellaneous extensions
+base	libxdamage	1.1.6	autotools	MIT	glibc,libx11,libxfixes	-	https://x.org/	https://x.org/pub/individual/lib/libXdamage-{version}.tar.xz	X Damage extension library, needed by gdk-pixbuf/GTK3's Wayland backend
+base	libxxf86vm	1.1.5	autotools	MIT	glibc,libx11,libxext	-	https://x.org/	https://x.org/pub/individual/lib/libXxf86vm-{version}.tar.xz	X XFree86 video mode extension library, needed by mesa's GLX
 base	libxrandr	1.5.5	autotools	MIT	glibc,libx11,libxrender,libxext	-	https://x.org/	https://x.org/pub/individual/lib/libXrandr-{version}.tar.xz	X Resize and Rotate extension
 base	libxi	1.8.3	autotools	MIT	glibc,libx11,libxext	-	https://x.org/	https://x.org/pub/individual/lib/libXi-{version}.tar.xz	X Input extension library
 base	libxcursor	1.2.3	autotools	MIT	glibc,libx11,libxrender,libxfixes	-	https://x.org/	https://x.org/pub/individual/lib/libXcursor-{version}.tar.xz	X cursor management
@@ -287,7 +290,10 @@ base	libxmu	1.2.1	autotools	MIT	glibc,libx11,libxext	-	https://x.org/	https://x.
 base	libinput	1.30.0	meson	MIT	glibc,libevdev,mtdev,libudev-zero	meson,ninja	https://www.freedesktop.org/wiki/Software/libinput/	https://gitlab.freedesktop.org/libinput/libinput/-/archive/{version}/libinput-{version}.tar.gz	Input device handling
 base	libevdev	1.13.4	meson	MIT	glibc	meson,ninja	https://www.freedesktop.org/wiki/Software/libevdev/	https://www.freedesktop.org/software/libevdev/libevdev-{version}.tar.xz	Wrapper for evdev devices
 base	mtdev	1.1.7	autotools	MIT	glibc	-	https://bitmath.org/code/mtdev/	https://bitmath.org/code/mtdev/mtdev-{version}.tar.bz2	Multitouch protocol translation
-base	wlroots	0.20.0	meson	MIT	wayland,mesa,libinput,libxkbcommon,pixman,seatd,libdrm	meson,ninja	https://gitlab.freedesktop.org/wlroots/wlroots	https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/{version}/downloads/wlroots-{version}.tar.gz	Wayland compositor library
+main	hwdata	0.410	make	GPL-2.0-or-later	-	-	https://github.com/vcrhonek/hwdata	https://github.com/vcrhonek/hwdata/archive/refs/tags/v{version}.tar.gz	Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)
+main	gperf	3.1	autotools	GPL-3.0-or-later	glibc	-	https://www.gnu.org/software/gperf/	https://ftp.gnu.org/gnu/gperf/gperf-{version}.tar.gz	Perfect hash function generator
+base	libdisplay-info	0.3.0	meson	MIT	glibc,hwdata	meson,ninja	https://gitlab.freedesktop.org/emersion/libdisplay-info	https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/{version}/libdisplay-info-{version}.tar.gz	EDID and DisplayID parsing library, a wlroots dependency
+base	wlroots	0.20.2	meson	MIT	wayland,mesa,libinput,libxkbcommon,pixman,seatd,libdrm,libdisplay-info	meson,ninja	https://gitlab.freedesktop.org/wlroots/wlroots	https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/{version}/downloads/wlroots-{version}.tar.gz	Wayland compositor library
 #
 # --- desktops and window managers
 base	plasma-meta	6.5.0	meta	GPL-2.0-or-later	plasma-workspace,plasma-desktop,kwin,systemsettings,breeze,plasma-nm,plasma-pa,powerdevil,kscreen,sddm,sddm-arctic-theme,arctic-plasma-theme,konsole,dolphin,kate,ark,spectacle,gwenview,okular,pipewire,wireplumber,mesa,xdg-desktop-portal-kde	-	https://kde.org/plasma-desktop/	-	KDE Plasma desktop, themed for Arctic
@@ -341,6 +347,11 @@ base	swayfx	0.5	meson	MIT	wlroots,wayland,libxkbcommon,pango,cairo,json-c,scenef
 base	scenefx	0.3	meson	MIT	wlroots,wayland,pixman	meson,ninja	https://github.com/wlrfx/scenefx	https://github.com/wlrfx/scenefx/archive/refs/tags/{version}.tar.gz	Effects library for wlroots compositors
 base	dwl	0.8	suckless	GPL-3.0-only	wayland,wlroots,libinput,libxkbcommon	bmake	https://codeberg.org/dwl/dwl	https://codeberg.org/dwl/dwl/archive/v{version}.tar.gz	dwm for Wayland
 base	somebar	0.2	meson	MIT	wayland,wlroots,pango,cairo	meson,ninja	https://git.sr.ht/~raphi/somebar	https://git.sr.ht/~raphi/somebar/archive/{version}.tar.gz	Status bar for dwl
+base	labwc	0.20.2	meson	GPL-2.0-only	wlroots,wayland,cairo,pango,libxkbcommon,wayland-protocols	meson,ninja	https://github.com/labwc/labwc	https://github.com/labwc/labwc/archive/refs/tags/{version}.tar.gz	Stacking Wayland compositor with an Openbox look and feel
+base	tinywl	0.20.2	make	MIT	wlroots,wayland,libxkbcommon	pkgconf	https://gitlab.freedesktop.org/wlroots/wlroots	https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/{version}/downloads/wlroots-{version}.tar.gz	Minimal reference Wayland compositor, wlroots' own example
+base	kiwmi	0-20220730	meson	MIT	wlroots,wayland,libxkbcommon,pixman,lua	meson,ninja	https://github.com/buffet/kiwmi	https://github.com/buffet/kiwmi/archive/392b6c38fd189e304aa97f9c6fc88a5c7113a140.tar.gz	Lua-scriptable Wayland compositor
+base	cage	0.3.1	meson	MIT	wlroots,wayland,libxkbcommon	meson,ninja	https://github.com/cage-kiosk/cage	https://github.com/cage-kiosk/cage/archive/refs/tags/v{version}.tar.gz	Kiosk compositor that runs a single application, wlroots-based
+base	wio	0.19.0	meson	MIT	wlroots,wayland,libxkbcommon,cage	meson,ninja	https://github.com/Rubo3/wio	https://github.com/Rubo3/wio/archive/refs/tags/{version}.tar.gz	Wayland compositor similar to Plan 9's rio
 base	dwm	6.6	suckless	MIT	libx11,libxft,libxinerama,freetype,fontconfig,harfbuzz	bmake	https://dwm.suckless.org/	https://dl.suckless.org/dwm/dwm-{version}.tar.gz	Dynamic window manager for X
 base	dmenu	5.4	suckless	MIT	libx11,libxft,libxinerama,freetype,fontconfig	bmake	https://tools.suckless.org/dmenu/	https://dl.suckless.org/tools/dmenu-{version}.tar.gz	Dynamic menu for X
 base	slstatus	1.1	suckless	ISC	libx11	bmake	https://tools.suckless.org/slstatus/	https://dl.suckless.org/tools/slstatus-{version}.tar.gz	Status monitor for dwm
@@ -357,6 +368,8 @@ base	rofi	2.0.0	meson	MIT	libx11,pango,cairo,librsvg,libxkbcommon	meson,ninja	ht
 base	mako	1.11.0	meson	MIT	wayland,pango,cairo,libxkbcommon,dbus	meson,ninja	https://github.com/emersion/mako	https://github.com/emersion/mako/archive/refs/tags/v{version}.tar.gz	Notification daemon for Wayland
 base	dunst	1.13.0	make	BSD-3-Clause	libx11,pango,cairo,libxinerama,libxrandr,dbus	-	https://dunst-project.org/	https://github.com/dunst-project/dunst/archive/refs/tags/v{version}.tar.gz	Notification daemon for X
 base	swaylock	1.8.4	meson	MIT	wayland,libxkbcommon,cairo,libxcrypt	meson,ninja	https://github.com/swaywm/swaylock	https://github.com/swaywm/swaylock/archive/refs/tags/v{version}.tar.gz	Screen locker for Wayland
+base	swaybg	1.2.2	meson	MIT	wayland,cairo,gdk-pixbuf	meson,ninja	https://github.com/swaywm/swaybg	https://github.com/swaywm/swaybg/archive/refs/tags/v{version}.tar.gz	Wallpaper tool for Wayland
+base	cliphist	0.7.0	go	GPL-3.0	glibc	go	https://github.com/sentriz/cliphist	https://github.com/sentriz/cliphist/archive/refs/tags/v{version}.tar.gz	Clipboard history for Wayland (wl-clipboard companion)
 base	swayidle	1.8.0	meson	MIT	wayland	meson,ninja	https://github.com/swaywm/swayidle	https://github.com/swaywm/swayidle/archive/refs/tags/{version}.tar.gz	Idle management daemon
 base	grim	1.6.0	meson	MIT	wayland,cairo,libpng	meson,ninja	https://sr.ht/~emersion/grim/	https://git.sr.ht/~emersion/grim/archive/v{version}.tar.gz	Screenshot utility for Wayland
 base	slurp	1.5.0	meson	MIT	wayland,cairo	meson,ninja	https://github.com/emersion/slurp	https://github.com/emersion/slurp/archive/refs/tags/v{version}.tar.gz	Select a region on Wayland

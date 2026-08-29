@@ -3,18 +3,26 @@
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=wezterm
-version=20260401
+# 20260401 never existed - a placeholder guess at what a future dated tag
+# might look like. wezterm's real releases are tagged
+# YYYYMMDD-HHMMSS-<commit>, not a bare date, and its GitHub Releases
+# (github.com/wez/wezterm/releases) had not cut a new one since this
+# tag - the "-src" release asset is used rather than the plain GitHub
+# archive tarball because wezterm vendors several submodules
+# (deps/freetype, deps/harfbuzz, ...) that a bare `git archive`-style
+# tarball does not include; the -src asset does.
+version=20240203-110809-5046fc22
 release=1
 desc="GPU-accelerated cross-platform terminal"
 url="https://wezterm.org/"
 license="MIT"
 depend="glibc wayland libxkbcommon fontconfig libressl"
-makedepend="rust cargo"
-source="https://github.com/wez/wezterm/archive/refs/tags/20260401.tar.gz"
+makedepend="rust cargo pkgconf"
+source="https://github.com/wez/wezterm/releases/download/$version/wezterm-$version-src.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "wezterm-20260401"
+	cd "wezterm-$version"
 	# --offline needs a vendored dependency tree that nothing here produces -
 	# every crate the recipe does not vendor itself fails with "no matching
 	# package found" before a single line of Rust compiles. The build
@@ -33,7 +41,7 @@ build() {
 }
 
 package() {
-	cd "wezterm-20260401"
+	cd "wezterm-$version"
 	install -Dm755 "target/release/wezterm" "$pkgdir/usr/bin/wezterm"
 	for d in README.md README LICENSE; do
 		[ -f "$d" ] && install -Dm644 "$d" "$pkgdir/usr/share/doc/wezterm/$d"
