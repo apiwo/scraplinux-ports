@@ -1,24 +1,25 @@
 :root{
-  --bg:#0a1c38;
-  --bg-alt:#0d2242;
-  --fg:#eef2f8;
-  --fg-dim:#a9bbd6;
-  --accent:#8fb8ff;
-  --accent-dim:#5580b8;
-  --rule:rgba(255,255,255,0.16);
+  --bg:#161615;
+  --bg-alt:#1f1e1c;
+  --fg:#ececea;
+  --fg-dim:#9a9892;
+  --accent:#e8b923;
+  --accent-dim:#8a6f1c;
+  --rule:rgba(255,255,255,0.12);
 }
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
 body{
   margin:0;
+  border-top:4px solid var(--accent);
   background:var(--bg);
   color:var(--fg);
-  font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
+  font-family:Arial,Helvetica,"Helvetica Neue",sans-serif;
   font-size:15px;
   line-height:1.6;
 }
 a{color:var(--accent);text-decoration:underline;}
-a:hover{color:#c3dbff;}
+a:hover{color:#ffd662;}
 a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
 .wrap{max-width:760px;margin:0 auto;padding:0 20px 80px;}
@@ -60,11 +61,32 @@ header.hero .tagline{
   padding:20px 0 8px;
   flex-wrap:wrap;
 }
-.pages{min-width:150px;font-size:14px;}
-.pages p{margin:0 0 8px;color:var(--fg-dim);}
-.pages ul{list-style:none;margin:0;padding:0;}
-.pages li{margin:4px 0;}
-.pages li::before{content:"> ";color:var(--accent-dim);}
+
+/* Any nav-style list of links on the page (docs guide list, home page
+   list, etc) - one card treatment, used everywhere the same way. */
+.pages{min-width:220px;font-size:14px;}
+.pages p{
+  margin:0 0 10px;
+  color:var(--accent);
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:12px;
+  letter-spacing:.08em;
+}
+.pages ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.pages li{margin:0;}
+.pages li::before{content:none;}
+.pages li a{
+  display:block;
+  padding:8px 12px;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent-dim);
+  background:var(--bg-alt);
+  text-decoration:none;
+  color:var(--fg);
+  transition:border-left-color .12s ease;
+}
+.pages li a:hover{border-left-color:var(--accent);color:var(--accent);}
 
 .art{
   flex:1;
@@ -73,6 +95,7 @@ header.hero .tagline{
   justify-content:center;
 }
 .art pre{
+  font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
   font-size:12px;
   line-height:1.05;
   color:var(--accent);
@@ -97,13 +120,34 @@ section h3{
 section p{margin:0 0 10px;color:var(--fg);}
 section ul{margin:0 0 10px;padding-left:20px;}
 section li{margin:4px 0;}
+
+/* Any "scan me quickly" list on the page - the features list on the home
+   page, and anything else that wants the same rows-with-a-rail treatment
+   as .pages but inside an ordinary <section> rather than the top grid. */
+#features ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+#features li{
+  margin:0;
+  padding:8px 12px;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent-dim);
+  background:var(--bg-alt);
+}
+
 section table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 12px;}
 section table th{text-align:left;padding:5px 8px;border-bottom:1px solid var(--rule);color:var(--fg-dim);font-weight:600;}
 section table td{padding:5px 8px;border-bottom:1px solid var(--rule);vertical-align:top;}
 section code{
+  font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
   background:var(--bg-alt);
   padding:1px 5px;
-  font-size:.92em;
+  font-size:.88em;
 }
 
 .status-line{
@@ -111,9 +155,10 @@ section code{
   letter-spacing:.02em;
   color:var(--fg-dim);
 }
-.status-line strong{color:var(--fg);}
+.status-line strong{color:var(--accent);}
 
 pre.code{
+  font-family:ui-monospace,"JetBrains Mono","Fira Code",Menlo,Consolas,monospace;
   background:var(--bg-alt);
   border:1px solid var(--rule);
   padding:14px 16px;
