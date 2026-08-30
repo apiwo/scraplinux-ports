@@ -19,7 +19,7 @@ sha256="SKIP"
 build() {
 	cd "dwm-$version"
 	cp config.def.h config.h
-	# JetBrains Mono is what the rest of Arctic's desktop uses, st is the
+	# JetBrains Mono is what the rest of ScrapLinux's desktop uses, st is the
 	# terminal the apiwow-dwm profile installs, and the accent is the same
 	# neutral grey rather than dwm's default cyan.
 	sed -i \

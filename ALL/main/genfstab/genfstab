@@ -11,7 +11,7 @@
 set -u
 _t=${1:?usage: genfstab <target-root>}
 
-printf '# Arctic Linux - /etc/fstab\n'
+printf '# ScrapLinux - /etc/fstab\n'
 printf '# <device>\t<mount>\t<type>\t<options>\t<dump>\t<pass>\n'
 
 # Longest paths last so /boot/efi is written after /boot, which is the

@@ -16,9 +16,9 @@ sha256="SKIP"
 build() {
 	cd "dbus-1.16.2"
 	# x11_autolaunch defaults to 'auto', so meson probed the build host for
-	# libX11 and turned it on because it found one - not because Arctic
+	# libX11 and turned it on because it found one - not because ScrapLinux
 	# ships X11. That put libX11.so.6 in dbus-launch's NEEDED list with
-	# nothing on the target to satisfy it. Arctic is TTY-based; disable it.
+	# nothing on the target to satisfy it. ScrapLinux is TTY-based; disable it.
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \

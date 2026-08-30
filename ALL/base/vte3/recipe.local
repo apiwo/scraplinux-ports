@@ -1,4 +1,4 @@
 # -Db_lto=false: vte asserts "LTO not supported" rather than probing for it.
-# -D_systemd=false: Arctic has no systemd, and vte requires libsystemd
+# -D_systemd=false: ScrapLinux has no systemd, and vte requires libsystemd
 # unconditionally on Linux otherwise.
-# -Dvapi=false: the Vala bindings need valac, which Arctic does not package.
+# -Dvapi=false: the Vala bindings need valac, which ScrapLinux does not package.

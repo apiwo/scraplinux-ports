@@ -15,7 +15,7 @@ sha256="SKIP"
 
 build() {
 	cd "libXScrnSaver-1.2.4"
-	# alpm-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
 	# build() runs (for recipes that compile-and-run a target-linked
 	# helper) - this recipe never does that, but the host's own shell
 	# invoking ./configure --help inherits it anyway and can crash

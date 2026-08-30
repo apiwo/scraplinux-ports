@@ -1,8 +1,8 @@
-# fastfetch - system information, with the Arctic logo already configured.
+# fastfetch - system information, with the ScrapLinux logo already configured.
 name=fastfetch
 version=2.55.0
 release=1
-desc="System information tool, configured with the Arctic logo"
+desc="System information tool, configured with the ScrapLinux logo"
 url="https://github.com/fastfetch-cli/fastfetch"
 license="MIT"
 depend="glibc"
@@ -19,18 +19,18 @@ build() {
 
 package() {
 	DESTDIR="$pkgdir" ninja -C build install
-	# Ship the Arctic mark as fastfetch's logo, plus a matching config.
+	# Ship the ScrapLinux mark as fastfetch's logo, plus a matching config.
 	# The source tree, not an installed-system path - nothing has that at
-	# build time, only the source checkout does (ARCTIC_TREE inside the
+	# build time, only the source checkout does (SCRAPLINUX_TREE inside the
 	# sandbox, but this also needs to work for a plain unsandboxed clone).
-	logo="${ARCTIC_TREE:-/home/apiwo/arctic}/branding/ascii/arctic-logo.txt"
-	install -Dm644 "$logo" "$pkgdir/usr/share/fastfetch/logos/arctic.txt"
+	logo="${SCRAPLINUX_TREE:-/home/apiwo/scraplinux}/branding/ascii/scraplinux-logo.txt"
+	install -Dm644 "$logo" "$pkgdir/usr/share/fastfetch/logos/scraplinux.txt"
 	mkdir -p "$(dirname $pkgdir/etc/xdg/fastfetch/config.jsonc)"
 cat >"$pkgdir/etc/xdg/fastfetch/config.jsonc" <<-'JSON'
 		{
 		  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
 		  "logo": {
-		    "source": "/usr/share/fastfetch/logos/arctic.txt",
+		    "source": "/usr/share/fastfetch/logos/scraplinux.txt",
 		    "type": "file",
 		    "color": { "1": "magenta", "2": "cyan" },
 		    "padding": { "top": 1, "left": 2 }

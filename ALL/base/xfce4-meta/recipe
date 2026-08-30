@@ -13,6 +13,6 @@ source=""
 sha256=""
 
 package() {
-	install -d "$pkgdir/usr/share/arctic"
-	printf 'xfce\n' >"$pkgdir/usr/share/arctic/desktop"
+	install -d "$pkgdir/usr/share/scraplinux"
+	printf 'xfce\n' >"$pkgdir/usr/share/scraplinux/desktop"
 }

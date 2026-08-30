@@ -8,7 +8,7 @@
 # script - before `make` does anything at all.
 #
 # CONFIG_TLS=openssl is wpa_supplicant's name for the OpenSSL API, which is
-# what LibreSSL implements - it is not a choice of package. Arctic has one
+# what LibreSSL implements - it is not a choice of package. ScrapLinux has one
 # TLS library and it is libressl; this used to link OpenSSL's libssl.so.3
 # because openssl happened to be in the build sysroot at the time, and a base
 # install then carried both. They claim the same headers and the same

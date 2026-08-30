@@ -17,6 +17,6 @@ once xorgproto and the X11 libs are present.
 
 Fix belongs in util-linux's own recipe (install the .pc files its build
 already produces, the way it already installs the .so files), not here -
-not attempted this pass. Once that exists, `alpm add -s librsvg` with the
+not attempted this pass. Once that exists, `scraps add -s librsvg` with the
 makedepend list above should be enough; nothing else was still failing
 when this was left off.

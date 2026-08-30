@@ -26,7 +26,7 @@ build() {
 	# fails configure outright rather than just skipping them.
 	case "$_help" in *--disable-asciidoc*) _opts="$_opts --disable-asciidoc" ;; esac
 	# libssh is only for the optional LUKS2 ssh-token (fetching a passphrase
-	# from a remote server) - Arctic does not build libssh, and the base
+	# from a remote server) - ScrapLinux does not build libssh, and the base
 	# LUKS functionality this is here for does not need it.
 	case "$_help" in *--disable-ssh-token*) _opts="$_opts --disable-ssh-token" ;; esac
 	# shellcheck disable=SC2086

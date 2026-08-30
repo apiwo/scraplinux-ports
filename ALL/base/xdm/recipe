@@ -19,15 +19,15 @@ build() {
 package() {
 	cd "xdm-$version"
 	make DESTDIR="$pkgdir" install
-	# Arctic colours on the greeter, so it does not look like 1994.
-	mkdir -p "$(dirname $pkgdir/etc/X11/xdm/Xresources.arctic)"
-cat >"$pkgdir/etc/X11/xdm/Xresources.arctic" <<-'RES'
-		xlogin*greeting: Arctic Linux
+	# ScrapLinux colours on the greeter, so it does not look like 1994.
+	mkdir -p "$(dirname $pkgdir/etc/X11/xdm/Xresources.scraplinux)"
+cat >"$pkgdir/etc/X11/xdm/Xresources.scraplinux" <<-'RES'
+		xlogin*greeting: ScrapLinux
 		xlogin*background: #1a1b26
 		xlogin*foreground: #c8d3f5
 		xlogin*greetColor: #03dbbb
 		xlogin*promptColor: #7e32ca
 		xlogin*borderWidth: 0
 RES
-chmod 644 "$pkgdir/etc/X11/xdm/Xresources.arctic"
+chmod 644 "$pkgdir/etc/X11/xdm/Xresources.scraplinux"
 }

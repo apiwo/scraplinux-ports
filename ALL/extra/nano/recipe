@@ -15,11 +15,11 @@ sha256="SKIP"
 
 build() {
 	cd "nano-9.2"
-	# See recipe.local: scope curses detection to Arctic's own
+	# See recipe.local: scope curses detection to ScrapLinux's own
 	# netbsd-curses, not whatever the build host happens to have.
 	_cdeps="$srcdir/.curses-deps"
 	rm -rf "$_cdeps"; mkdir -p "$_cdeps"
-	_cpkg=$(ls -t /home/apiwo/arctic-build/repo/main/x86_64/netbsd-curses-*.alpmz 2>/dev/null | head -1)
+	_cpkg=$(ls -t /home/apiwo/scraplinux-build/repo/main/x86_64/netbsd-curses-*.scrapsz 2>/dev/null | head -1)
 	[ -n "$_cpkg" ] || die "netbsd-curses has no binary package built yet"
 	( cd "$_cdeps" && untar "$_cpkg" . )
 	export CPPFLAGS="-I$_cdeps/usr/include ${CPPFLAGS:-}"

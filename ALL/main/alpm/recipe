@@ -1,26 +1,26 @@
-# alpm - the Arctic Linux Package Manager itself.
-# Deliberately thin: alpm has to work on a system with nothing else on it.
-# (alpm-rs/ has a Rust rewrite sitting in the tree, unused for now.)
-name=alpm
+# scraps - the ScrapLinux Package Manager itself.
+# Deliberately thin: scraps has to work on a system with nothing else on it.
+# (scraps-rs/ has a Rust rewrite sitting in the tree, unused for now.)
+name=scraps
 version=1.0.0
 release=1
-desc="Arctic Linux Package Manager"
-url="https://github.com/apiwo/arctic-linux"
+desc="ScrapLinux Package Manager"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 depend="busybox"
 provides="package-manager"
-source="alpm alpm-build alpm-repo libalpm.sh alpm.conf"
+source="scraps scraps-build scraps-repo libscraps.sh scraps.conf"
 sha256="SKIP SKIP SKIP SKIP SKIP"
-backup="etc/alpm/alpm.conf"
+backup="etc/scraps/scraps.conf"
 
 package() {
-	install -Dm755 alpm       "$pkgdir/usr/bin/alpm"
-	install -Dm755 alpm-build "$pkgdir/usr/bin/alpm-build"
-	install -Dm755 alpm-repo  "$pkgdir/usr/bin/alpm-repo"
-	install -Dm644 libalpm.sh "$pkgdir/usr/lib/alpm/libalpm.sh"
-	install -Dm644 alpm.conf  "$pkgdir/etc/alpm/alpm.conf"
-	install -d "$pkgdir/etc/alpm/repos.d"
-	install -d "$pkgdir/var/lib/alpm/local" "$pkgdir/var/lib/alpm/sync"
-	install -d "$pkgdir/var/lib/alpm/hold" "$pkgdir/var/lib/alpm/snapshots"
-	install -d "$pkgdir/var/cache/alpm/pkg" "$pkgdir/var/cache/alpm/src"
+	install -Dm755 scraps       "$pkgdir/usr/bin/scraps"
+	install -Dm755 scraps-build "$pkgdir/usr/bin/scraps-build"
+	install -Dm755 scraps-repo  "$pkgdir/usr/bin/scraps-repo"
+	install -Dm644 libscraps.sh "$pkgdir/usr/lib/scraps/libscraps.sh"
+	install -Dm644 scraps.conf  "$pkgdir/etc/scraps/scraps.conf"
+	install -d "$pkgdir/etc/scraps/repos.d"
+	install -d "$pkgdir/var/lib/scraps/local" "$pkgdir/var/lib/scraps/sync"
+	install -d "$pkgdir/var/lib/scraps/hold" "$pkgdir/var/lib/scraps/snapshots"
+	install -d "$pkgdir/var/cache/scraps/pkg" "$pkgdir/var/cache/scraps/src"
 }

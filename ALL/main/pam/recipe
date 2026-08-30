@@ -16,7 +16,7 @@ sha256="SKIP"
 build() {
 	cd "Linux-PAM-1.7.2"
 	# docs needs docbook/xsltproc, which are not packaged; selinux, audit,
-	# nis, logind and elogind all need libraries Arctic does not build.
+	# nis, logind and elogind all need libraries ScrapLinux does not build.
 	# openssl is disabled upstream by default - pam_timestamp has no reason
 	# to link a second TLS library when it never needs one.
 	meson setup build \

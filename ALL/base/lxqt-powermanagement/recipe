@@ -31,14 +31,14 @@ build() {
 	# - CMAKE_FIND_USE_PACKAGE_REGISTRY / _SYSTEM_PACKAGE_REGISTRY=OFF:
 	#   without this cmake's own registry can find a host-installed copy
 	#   of the same library ahead of the one actually being built against
-	#   (real, hit by qt6-svg finding the host's Qt6 instead of Arctic's).
+	#   (real, hit by qt6-svg finding the host's Qt6 instead of ScrapLinux's).
 	# - CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF: cmake derives extra
 	#   find_package() search prefixes from every PATH entry (stripping a
 	#   trailing /bin or /sbin), and this build's PATH includes
 	#   /host/usr/bin and /host/bin as a fallback for host tools not yet
-	#   packaged for Arctic - without this, that becomes a search prefix
+	#   packaged for ScrapLinux - without this, that becomes a search prefix
 	#   of /host/usr, and find_package quietly resolves a real dependency
-	#   to a host copy that was never built against Arctic at all (hit by
+	#   to a host copy that was never built against ScrapLinux at all (hit by
 	#   pcmanfm-qt finding a host-installed fm-qt6 this way).
 	#
 	# Deliberately NOT set: CMAKE_FIND_USE_CMAKE_SYSTEM_PATH=OFF and

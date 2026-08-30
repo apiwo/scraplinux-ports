@@ -19,9 +19,9 @@ build() {
 	# --disable-nls outright, for instance - so only pass the ones this one
 	# actually advertises. Guessing wrong fails the whole build.
 	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	# libevent and netbsd-curses live in the Arctic staging prefix during a
+	# libevent and netbsd-curses live in the ScrapLinux staging prefix during a
 	# build, not in the host's default search path.
-	_D=${ARCTIC_DEPS:-/home/apiwo/arctic-build/stage/deps/usr}
+	_D=${SCRAPLINUX_DEPS:-/home/apiwo/scraplinux-build/stage/deps/usr}
 	export CPPFLAGS="-I$_D/include ${CPPFLAGS:-}"
 	export LDFLAGS="-L$_D/lib ${LDFLAGS:-}"
 	export PKG_CONFIG_PATH="$_D/lib/pkgconfig:${PKG_CONFIG_PATH:-}"

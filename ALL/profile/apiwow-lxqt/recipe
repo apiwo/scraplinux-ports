@@ -3,9 +3,9 @@ name=apiwow-lxqt
 version=1.1.0
 release=1
 desc="SDDM + LXQt, the full desktop session on X11"
-url="https://github.com/apiwo/arctic-linux"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
-depend="sddm sddm-arctic-theme liblxqt lxqt-session lxqt-panel lxqt-globalkeys \
+depend="sddm sddm-scraplinux-theme liblxqt lxqt-session lxqt-panel lxqt-globalkeys \
 	lxqt-config lxqt-policykit lxqt-notificationd lxqt-runner lxqt-powermanagement \
 	lxqt-archiver lxqt-about lxqt-admin screengrab \
 	pcmanfm-qt qterminal adwaita-icon-theme openbox xorg-server xorg-xinit xauth xterm \
@@ -15,8 +15,8 @@ source="xinitrc session.conf"
 sha256="SKIP SKIP"
 
 package() {
-	install -d "$pkgdir/usr/share/arctic/meta"
-	printf '%s\n' "$depend" >"$pkgdir/usr/share/arctic/meta/apiwow-lxqt"
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "$depend" >"$pkgdir/usr/share/scraplinux/meta/apiwow-lxqt"
 	# The fallback path for `startx` run directly instead of through SDDM -
 	# without this, xinit falls back to its own upstream default xinitrc,
 	# which launches twm/xclock/xterm and nothing that is actually LXQt.

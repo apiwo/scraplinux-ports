@@ -26,14 +26,14 @@ build() {
 	# dmesg, kill, mount, su, agetty and, fatally, /bin/login.
 	#
 	# busybox provides /bin/login as an applet symlink and busybox links
-	# nothing. util-linux's login links libpam, which Arctic does not have
+	# nothing. util-linux's login links libpam, which ScrapLinux does not have
 	# and does not build. So installing this package - which every base
 	# install does, because libblkid and libmount are what mount and the
 	# installer need - replaced a working login with one that could not
 	# start, and the first boot of a finished install could not be logged
 	# into:
 	#
-	#   arctic login: apiwo
+	#   scraplinux login: apiwo
 	#   /bin/login: error while loading shared libraries: libpam.so.0
 	#
 	# The package now builds what its own name says it builds.

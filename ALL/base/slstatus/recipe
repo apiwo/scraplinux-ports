@@ -15,8 +15,8 @@ sha256="SKIP"
 
 build() {
 	cd "slstatus-1.1"
-	# Suckless software is configured in the source. Arctic ships a config.h
-	# with the Arctic palette; replace it and rebuild to change anything.
+	# Suckless software is configured in the source. ScrapLinux ships a config.h
+	# with the ScrapLinux palette; replace it and rebuild to change anything.
 	[ -f config.def.h ] && cp -f config.def.h config.h
 	make -j"$JOBS" PREFIX=/usr
 }

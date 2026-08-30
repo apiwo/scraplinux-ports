@@ -13,11 +13,11 @@ makedepend="linux-headers"
 source="https://github.com/patjak/facetimehd/archive/refs/tags/0.7.0.tar.gz"
 sha256="SKIP"
 
-# Built against every installed kernel. alpm re-runs this from the package's
+# Built against every installed kernel. scraps re-runs this from the package's
 # post_upgrade hook whenever a kernel changes, which is what dkms is for.
 #
 # gmake, not make: Linux's kbuild is written against GNU make and bmake cannot
-# drive it. /usr/bin/make on Arctic is bmake, so kernel modules ask for gmake
+# drive it. /usr/bin/make on ScrapLinux is bmake, so kernel modules ask for gmake
 # explicitly.
 build() {
 	cd "facetimehd-0.7.0"

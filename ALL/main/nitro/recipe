@@ -5,7 +5,7 @@
 # nitroctl doubles as init/halt/poweroff/reboot/shutdown when invoked under
 # those names. Those symlinks are not installed here: busybox already owns
 # all five in /usr/bin, and two packages claiming one path is a hard install
-# conflict. arctic-init-setup links them on a system that boots nitro.
+# conflict. scraplinux-init-setup links them on a system that boots nitro.
 name=nitro
 version=0.8.1
 release=1
@@ -30,6 +30,6 @@ package() {
 	install -Dm644 nitroctl.1 "$pkgdir/usr/share/man/man1/nitroctl.1"
 	install -Dm644 halt.8     "$pkgdir/usr/share/man/man8/nitro-halt.8"
 	# The service directory itself, so nitro has somewhere to look before
-	# anything has been configured. arctic-init-setup fills it in.
+	# anything has been configured. scraplinux-init-setup fills it in.
 	install -dm755 "$pkgdir/etc/nitro"
 }

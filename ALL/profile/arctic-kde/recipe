@@ -1,19 +1,19 @@
-# arctic-kde - KDE Plasma with foot as the terminal and the Arctic colours.
-name=arctic-kde
+# scraplinux-kde - KDE Plasma with foot as the terminal and the ScrapLinux colours.
+name=scraplinux-kde
 version=1.0.0
 release=2
 kind=profile
-desc="KDE Plasma with foot and the Arctic colour scheme"
-url="https://github.com/apiwo/arctic-linux"
+desc="KDE Plasma with foot and the ScrapLinux colour scheme"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 # foot ships its own /etc/xdg/foot/foot.ini; this profile intentionally
-# overrides it with the Arctic-themed one below.
+# overrides it with the ScrapLinux-themed one below.
 replaces="foot"
-depend="plasma-meta foot sddm sddm-arctic-theme arctic-plasma-theme \
+depend="plasma-meta foot sddm sddm-scraplinux-theme scraplinux-plasma-theme \
 	dolphin kate ark spectacle gwenview okular \
 	pipewire wireplumber ttf-jetbrains-mono noto-fonts noto-fonts-emoji"
 makedepend=""
-source="foot.ini arctic.colors"
+source="foot.ini scraplinux.colors"
 sha256="SKIP SKIP"
 backup="etc/skel/.config/foot/foot.ini"
 
@@ -21,19 +21,19 @@ package() {
 	install -Dm644 foot.ini "$pkgdir/etc/skel/.config/foot/foot.ini"
 	install -Dm644 foot.ini "$pkgdir/etc/xdg/foot/foot.ini"
 
-	# Plasma colour scheme matching the Arctic palette.
-	install -Dm644 arctic.colors "$pkgdir/usr/share/color-schemes/Arctic.colors"
+	# Plasma colour scheme matching the ScrapLinux palette.
+	install -Dm644 scraplinux.colors "$pkgdir/usr/share/color-schemes/ScrapLinux.colors"
 
 	# foot as the default terminal, in place of konsole.
 	install -Dm644 /dev/null "$pkgdir/etc/skel/.config/kdeglobals"
 	cat >"$pkgdir/etc/skel/.config/kdeglobals" <<-'KDE'
 		[General]
 		TerminalApplication=foot
-		ColorScheme=Arctic
+		ColorScheme=ScrapLinux
 		[KDE]
 		SingleClick=false
 	KDE
 
-	install -d "$pkgdir/usr/share/arctic/profiles"
-	printf 'arctic-kde\n' >"$pkgdir/usr/share/arctic/profiles/active"
+	install -d "$pkgdir/usr/share/scraplinux/profiles"
+	printf 'scraplinux-kde\n' >"$pkgdir/usr/share/scraplinux/profiles/active"
 }

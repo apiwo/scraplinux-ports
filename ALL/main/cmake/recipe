@@ -18,9 +18,9 @@ build() {
 	# own copy of librhash (used for file(MD5/SHA...) et al) and, left to
 	# its own defaults, links it against whatever OpenSSL it finds at
 	# build time. A stray OpenSSL3 build once sat in this buildroot (see
-	# arctic-libressl-only-no-openssl) and got linked in - producing a
-	# cmake that needed libcrypto.so.3, a soname Arctic has never shipped
-	# since Arctic is LibreSSL-only. That single missing library broke
+	# scraplinux-libressl-only-no-openssl) and got linked in - producing a
+	# cmake that needed libcrypto.so.3, a soname ScrapLinux has never shipped
+	# since ScrapLinux is LibreSSL-only. That single missing library broke
 	# every cmake invocation outright, LXQt's build included, since none
 	# of them can even reach the "not a valid input file" stage without
 	# cmake itself running at all.

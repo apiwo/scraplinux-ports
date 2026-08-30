@@ -6,8 +6,8 @@ name=apiwow-dwm
 version=1.0.0
 release=1
 kind=profile
-desc="dwm + picom, calm grey and white, with the Arctic terminal and fonts"
-url="https://github.com/apiwo/arctic-linux"
+desc="dwm + picom, calm grey and white, with the ScrapLinux terminal and fonts"
+url="https://github.com/apiwo/scraplinux"
 license="MIT BSD-2-Clause"
 depend="dwm dmenu st picom slstatus slock foot \
 	xorg-server xorg-xinit xauth xterm libx11 libxft libxinerama \
@@ -35,6 +35,6 @@ package() {
 		Type=XSession
 	DESK
 
-	install -d "$pkgdir/usr/share/arctic/profiles"
-	printf 'apiwow-dwm\n' >"$pkgdir/usr/share/arctic/profiles/active"
+	install -d "$pkgdir/usr/share/scraplinux/profiles"
+	printf 'apiwow-dwm\n' >"$pkgdir/usr/share/scraplinux/profiles/active"
 }

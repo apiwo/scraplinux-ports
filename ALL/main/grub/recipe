@@ -15,7 +15,7 @@ sha256="SKIP"
 build() {
 	cd "grub-$version"
 	# GRUB's freestanding boot code passes -fno-stack-protector, but
-	# Arctic's ambient CFLAGS (-fstack-protector-strong) lands after it
+	# ScrapLinux's ambient CFLAGS (-fstack-protector-strong) lands after it
 	# on the same compile line and wins - the freestanding kernel.exec
 	# then calls __stack_chk_fail with nothing there to provide it:
 	# "undefined symbol: __stack_chk_fail". Unset for this recipe only.

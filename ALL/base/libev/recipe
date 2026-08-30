@@ -31,6 +31,6 @@ package() {
 	cd "libev-4.33"
 	make DESTDIR="$pkgdir" install
 	# libev installs a libevent-compatibility header under libevent's own name,
-	# which stops any install that wants both. Nothing in Arctic uses the shim.
+	# which stops any install that wants both. Nothing in ScrapLinux uses the shim.
 	rm -rf "$pkgdir/usr/include/event.h"
 }

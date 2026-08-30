@@ -20,7 +20,7 @@ build() {
 	#   qsslsocket_openssl_symbols_p.h:210:22: error: unknown type name
 	#   'OPENSSL_STACK'; did you mean 'OPENSSL_STRING'?
 	#
-	# Arctic links libressl everywhere and openssl is the alternative that is
+	# ScrapLinux links libressl everywhere and openssl is the alternative that is
 	# never installed alongside it, so building Qt against openssl instead
 	# would make every Qt application drag in a second TLS library that
 	# conflicts with the one curl and the rest of the system use. The desktop

@@ -25,7 +25,7 @@ build() {
 	# CARGO_HOME defaults to ~/.cargo - under the sandbox's read-only host
 	# bind when building as root, so cargo's own registry cache had nowhere
 	# to write and every download failed with "Read-only file system".
-	export CARGO_HOME="${CARGO_HOME:-/tmp/arctic-cargo-home}"
+	export CARGO_HOME="${CARGO_HOME:-/tmp/scraplinux-cargo-home}"
 	# Not clang/lld - nothing else in this tree builds with them (every other
 	# recipe just uses cc, which is gcc here), and forcing a linker that is
 	# not actually installed failed every single Rust package the same way.
@@ -33,7 +33,7 @@ build() {
 	# its own when it finds one via pkg-config - the sandbox bind-mounts the
 	# whole host filesystem read-only, and the build host has its own real
 	# libgit2 sitting at /usr/lib64/libgit2.so.1.9.4 (Gentoo's own package,
-	# nothing Arctic ships). Without this, the resulting eza binary links
+	# nothing ScrapLinux ships). Without this, the resulting eza binary links
 	# against that exact host copy (readelf -d showed NEEDED
 	# libgit2.so.1.9), which does not exist on any real install - it only
 	# ever worked here by accident, on this one build host. Forces

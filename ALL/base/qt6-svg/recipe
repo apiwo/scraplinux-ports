@@ -28,7 +28,7 @@ build() {
 	# find_package() barred from touching anything else: without this
 	# cmake's own package registry finds the host's own Qt install (bind-
 	# mounted at /host for cmake/ninja/python themselves, none of which
-	# are real Arctic packages yet) ahead of the one actually being built
+	# are real ScrapLinux packages yet) ahead of the one actually being built
 	# against here, and every private header comes from the wrong Qt.
 	cmake -S "qtsvg-everywhere-src-6.10.1" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \

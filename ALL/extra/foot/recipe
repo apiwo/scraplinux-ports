@@ -1,4 +1,4 @@
-# foot - the Arctic terminal. Wayland native, fast, no dependencies to speak of.
+# foot - the ScrapLinux terminal. Wayland native, fast, no dependencies to speak of.
 name=foot
 version=1.24.0
 release=1
@@ -26,10 +26,10 @@ build() {
 package() {
 	cd foot
 	DESTDIR="$pkgdir" ninja -C build install
-	# Arctic's own defaults: the logo palette, and a readable size.
+	# ScrapLinux's own defaults: the logo palette, and a readable size.
 	mkdir -p "$(dirname $pkgdir/etc/xdg/foot/foot.ini)"
 cat >"$pkgdir/etc/xdg/foot/foot.ini" <<-'INI'
-		# Arctic Linux defaults for foot
+		# ScrapLinux defaults for foot
 		font=monospace:size=11
 		dpi-aware=yes
 		pad=8x8

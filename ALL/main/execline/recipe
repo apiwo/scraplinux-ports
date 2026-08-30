@@ -10,15 +10,15 @@ makedepend=""
 source="https://skarnet.org/software/execline/execline-2.9.7.0.tar.gz"
 sha256="SKIP"
 
-# depend= is metadata only - alpm-build does not stage a recipe's declared
+# depend= is metadata only - scraps-build does not stage a recipe's declared
 # dependencies onto the build host before running build(). Every package in
 # the skarnet chain needs skalibs' headers, libraries and sysdeps directory
 # to exist somewhere real at configure time, so each one stages it out of
 # the repo itself.
 stage_skalibs() {
-	STAGE="$ALPM_BUILDROOT/skarnet-stage"
+	STAGE="$SCRAPS_BUILDROOT/skarnet-stage"
 	[ -f "$STAGE/usr/lib/skalibs/sysdeps/target" ] && return 0
-	pkg=$(ls -t "${ALPM_REPO:-/home/apiwo/arctic-build/repo}"/main/x86_64/skalibs-*.alpmz 2>/dev/null | head -1)
+	pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/skalibs-*.scrapsz 2>/dev/null | head -1)
 	[ -n "$pkg" ] || { echo "skalibs package not found - build skalibs first" >&2; return 1; }
 	mkdir -p "$STAGE"
 	tar -xf "$pkg" -C "$STAGE" --exclude=.PKGINFO --exclude=.FILES --exclude=.INSTALL

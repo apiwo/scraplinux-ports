@@ -25,7 +25,7 @@ build() {
 	# pa_glib_mainloop_* symbols that actually live in the separately
 	# built libpulse-simple.so/libpulse-mainloop-glib.so, not this
 	# target - GNU ld silently tolerates a version-script entry for a
-	# symbol that isn't in the object being linked, lld (Arctic's only
+	# symbol that isn't in the object being linked, lld (ScrapLinux's only
 	# linker) doesn't. --undefined-version restores the lenient behavior.
 	export LDFLAGS="$LDFLAGS -Wl,--undefined-version"
 	meson setup build \

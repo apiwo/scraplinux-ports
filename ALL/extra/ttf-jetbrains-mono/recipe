@@ -1,8 +1,8 @@
-# ttf-jetbrains-mono - JetBrains Mono, the Arctic terminal font
+# ttf-jetbrains-mono - JetBrains Mono, the ScrapLinux terminal font
 name=ttf-jetbrains-mono
 version=2.304
 release=1
-desc="JetBrains Mono, the Arctic terminal font"
+desc="JetBrains Mono, the ScrapLinux terminal font"
 url="https://www.jetbrains.com/lp/mono/"
 license="OFL-1.1"
 depend=""

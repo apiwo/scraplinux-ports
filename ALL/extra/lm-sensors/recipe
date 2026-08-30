@@ -16,7 +16,7 @@ sha256="SKIP"
 build() {
 	cd "lm-sensors-V3-6-2"
 	# lm-sensors' Makefile uses GNU Make conditionals ($(findstring ...),
-	# ifneq/ifeq) bmake (Arctic's default "make") can't parse.
+	# ifneq/ifeq) bmake (ScrapLinux's default "make") can't parse.
 	gmake -j"$JOBS" PREFIX=/usr CC=clang AR=llvm-ar RANLIB=llvm-ranlib
 }
 

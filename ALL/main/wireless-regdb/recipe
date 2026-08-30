@@ -22,7 +22,7 @@ build() {
 
 package() {
 	cd "wireless-regdb-$version"
-	# /usr/lib/firmware, not /lib/firmware: Arctic is merged-/usr and this is
+	# /usr/lib/firmware, not /lib/firmware: ScrapLinux is merged-/usr and this is
 	# where the kernel's firmware loader is pointed.
 	install -Dm644 regulatory.db "$pkgdir/usr/lib/firmware/regulatory.db"
 	install -Dm644 regulatory.db.p7s "$pkgdir/usr/lib/firmware/regulatory.db.p7s"

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Arctic Linux - apiwow-lxqt session.
+# ScrapLinux - apiwow-lxqt session.
 #
 # The fallback path for anyone who ran `startx` directly instead of going
 # through SDDM - without this, xinit falls all the way back to its own

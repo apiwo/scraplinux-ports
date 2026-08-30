@@ -19,6 +19,6 @@ build() {
 package() {
 	cd obj
 	../bmake/boot-strap --prefix=/usr --install-destdir="$pkgdir" op=install
-	# 'make' on Arctic means bmake.
+	# 'make' on ScrapLinux means bmake.
 	ln -sf bmake "$pkgdir/usr/bin/make"
 }

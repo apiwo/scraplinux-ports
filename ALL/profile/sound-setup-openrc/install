@@ -2,7 +2,7 @@ post_install() {
 	for u in $(awk -F: '$3 >= 1000 && $3 < 60000 {print $1}' /etc/passwd 2>/dev/null); do
 		addgroup "$u" audio 2>/dev/null || :
 	done
-	command -v arctic-init-setup >/dev/null 2>&1 && arctic-init-setup openrc >/dev/null 2>&1 || :
+	command -v scraplinux-init-setup >/dev/null 2>&1 && scraplinux-init-setup openrc >/dev/null 2>&1 || :
 	command -v rc-update >/dev/null 2>&1 && rc-update add pipewire default >/dev/null 2>&1 || :
 }
 post_upgrade() { post_install; }

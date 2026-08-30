@@ -13,7 +13,7 @@ makedepend=""
 source="https://repo.radeon.com/amdgpu/26.10/ubuntu/pool/proprietary/amdvlk_26.10_amd64.deb"
 sha256="SKIP"
 
-# Repackaged upstream build. Arctic prefers to compile from source, but a few
+# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
 # things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 

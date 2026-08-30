@@ -18,7 +18,7 @@ build() {
 	# GitHub's tag archive is raw source, not a `make dist` release tarball -
 	# there is no generated ./configure here (libndp has never published one
 	# as a real GitHub Release, only git tags), so one has to be produced
-	# first. autoreconf/automake/libtool aren't Arctic packages yet, only
+	# first. autoreconf/automake/libtool aren't ScrapLinux packages yet, only
 	# build-time tools this recipe borrows from the build host, same as
 	# meson/ninja/python already are for other recipes before their own
 	# ports exist.

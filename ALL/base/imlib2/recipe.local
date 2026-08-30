@@ -6,7 +6,7 @@ librsvg-2.so.2 that only ever existed on the build host, never in this
 buildroot. Lower severity than openbox's case - it's a dlopen'd loader
 plugin, not a hard NEEDED entry on a directly-linked library, so it would
 only silently drop SVG image support rather than fail anything to start -
-but the fix is the same and just as cheap. Revisit once Arctic has a real
+but the fix is the same and just as cheap. Revisit once ScrapLinux has a real
 librsvg package - see ports/base/obconf-qt/recipe.local.
 
 NOT YET BUILT/PUBLISHED: rebuilding with this flag hits a separate,

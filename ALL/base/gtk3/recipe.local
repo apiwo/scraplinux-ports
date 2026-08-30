@@ -1,5 +1,5 @@
 # release=2. The 3.24.43-1 that was published has no .PKGINFO in it - the
-# archive is corrupt, publish-pkgs.sh skips it, and alpm cannot install it,
+# archive is corrupt, publish-pkgs.sh skips it, and scraps cannot install it,
 # which is why anything needing GTK fell back to a source build. A rebuilt
 # -1 would be the same name with different bytes, which publishing refuses,
 # so the fix carries a new release. Without this marker gen-ports.py rewrites

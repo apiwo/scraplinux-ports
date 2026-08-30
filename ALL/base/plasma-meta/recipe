@@ -1,7 +1,7 @@
-# plasma-meta - KDE Plasma, themed for Arctic. This is what the live ISO runs.
+# plasma-meta - KDE Plasma, themed for ScrapLinux. This is what the live ISO runs.
 #
 # Plasma is a big dependency graph; this package installs nothing itself and
-# exists so that "alpm add plasma-meta" gets you a working desktop.
+# exists so that "scraps add plasma-meta" gets you a working desktop.
 name=plasma-meta
 version=6.5.0
 release=1
@@ -11,7 +11,7 @@ license="GPL-2.0-or-later"
 depend="plasma-workspace plasma-desktop kwin systemsettings breeze \
 	plasma-nm plasma-pa powerdevil kscreen kde-gtk-config \
 	xdg-desktop-portal-kde qt6-base qt6-wayland kf6 \
-	sddm sddm-arctic-theme arctic-plasma-theme \
+	sddm sddm-scraplinux-theme scraplinux-plasma-theme \
 	konsole dolphin kate ark spectacle gwenview okular \
 	pipewire wireplumber mesa"
 makedepend=""
@@ -20,6 +20,6 @@ sha256=""
 
 package() {
 	# Meta package: the dependency list above is the payload.
-	install -d "$pkgdir/usr/share/arctic"
-	printf 'plasma\n' >"$pkgdir/usr/share/arctic/desktop"
+	install -d "$pkgdir/usr/share/scraplinux"
+	printf 'plasma\n' >"$pkgdir/usr/share/scraplinux/desktop"
 }

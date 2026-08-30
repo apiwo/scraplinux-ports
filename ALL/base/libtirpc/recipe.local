@@ -1,5 +1,5 @@
 Marker only - see CONTRIBUTING.md. build() is hand-written (needs
 --disable-gssapi, which the generic autotools template's --help-based
-flag detection does not know to look for - Arctic has no GSS-API/Kerberos
+flag detection does not know to look for - ScrapLinux has no GSS-API/Kerberos
 package) and gen-ports.py must never regenerate over it from the
 manifest's generic autotools template.

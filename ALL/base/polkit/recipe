@@ -25,9 +25,9 @@ build() {
 	# __pointer_chk_guard way as everything else this session. Not
 	# needed anyway - only used for language bindings, not polkitd/
 	# pkexec/pkcheck, which link fine without it.
-	# Arctic has no systemd and no elogind - 'ConsoleKit' is the one
+	# ScrapLinux has no systemd and no elogind - 'ConsoleKit' is the one
 	# session_tracking value that does not pull in either as a hard
-	# dependency (it is a real meson option value, not a package Arctic
+	# dependency (it is a real meson option value, not a package ScrapLinux
 	# needs to build).
 	meson setup build \
 		--prefix=/usr \

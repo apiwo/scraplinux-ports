@@ -2,7 +2,7 @@ Unverified: this recipe runs a full GCC build/install (gmake DESTDIR=...
 install) despite the description promising "libstdc++ and libgcc_s
 runtime only" - nothing here scopes it down to just those two, and the
 libgcc_s.so.1/libstdc++.so.6 files actually present in build sysroots
-turned out to be untracked stray files (`alpm owns` found no owner for
+turned out to be untracked stray files (`scraps owns` found no owner for
 libgcc_s.so.1), not something this recipe produced. It has probably never
 actually been built successfully.
 

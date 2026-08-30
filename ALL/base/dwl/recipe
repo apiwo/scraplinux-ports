@@ -12,21 +12,21 @@ sha256="SKIP"
 
 build() {
 	cd dwl
-	# Suckless software is configured by editing the source, so Arctic ships a
+	# Suckless software is configured by editing the source, so ScrapLinux ships a
 	# config.h rather than patching at runtime.
 	cp config.def.h config.h
 	sed -i 's/"foot"/"foot"/' config.h
 	# dwl 0.8's config.mk hardcodes wlroots-0.19 in its pkg-config calls -
-	# Arctic ships wlroots 0.20 (see ports/base/wlroots), so the version
+	# ScrapLinux ships wlroots 0.20 (see ports/base/wlroots), so the version
 	# pin needs updating or WLR_INCS/WLR_LIBS resolve to nothing and every
 	# wlr/*.h include fails.
 	sed -i 's/wlroots-0.19/wlroots-0.20/g' config.mk
 	# client.h (dwl 0.8, written for wlroots 0.19) uses
 	# XDG_TOPLEVEL_CONFIGURE_BOUNDS_SINCE_VERSION and
 	# XDG_TOPLEVEL_WM_CAPABILITIES_SINCE_VERSION - "use of undeclared
-	# identifier" on wlroots 0.20, not because Arctic's xdg-shell.xml or
+	# identifier" on wlroots 0.20, not because ScrapLinux's xdg-shell.xml or
 	# wayland-scanner are wrong (confirmed: wayland-scanner server-header
-	# against Arctic's own xdg-shell.xml emits both correctly, 54
+	# against ScrapLinux's own xdg-shell.xml emits both correctly, 54
 	# SINCE_VERSION constants total), but because wlroots 0.20's installed
 	# wlr_xdg_shell.h pulls its constants from
 	# <wayland-protocols/xdg-shell-enum.h> - a *separate*, more limited
@@ -36,7 +36,7 @@ build() {
 	# dwl 0.8 predates this wlroots 0.19->0.20 restructuring and has never
 	# been adjusted for it (confirmed no newer tagged release exists).
 	# Defining the two guards locally, at their real xdg-shell protocol
-	# version numbers (checked directly against the xdg-shell.xml Arctic
+	# version numbers (checked directly against the xdg-shell.xml ScrapLinux
 	# ships: configure_bounds since="4", wm_capabilities since="5"), is
 	# the same fix dwl.c's own client.h would need from any downstream
 	# consumer hitting this - not something wayland-protocols or wlroots

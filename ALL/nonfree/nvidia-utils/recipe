@@ -13,7 +13,7 @@ makedepend=""
 source="https://us.download.nvidia.com/XFree86/Linux-x86_64/590.48/NVIDIA-Linux-x86_64-590.48.run"
 sha256="SKIP"
 
-# Repackaged upstream build. Arctic prefers to compile from source, but a few
+# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
 # things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 

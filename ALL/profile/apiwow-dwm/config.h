@@ -1,4 +1,4 @@
-/* apiwow-dwm - dwm configured for the Arctic calm grey and white scheme.
+/* apiwow-dwm - dwm configured for the ScrapLinux calm grey and white scheme.
  * Same neutral palette as the foot config: no hues, #141414 through #ededed. */
 static const unsigned int borderpx  = 2;
 static const unsigned int snap      = 32;

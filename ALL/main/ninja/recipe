@@ -17,7 +17,7 @@ build() {
 	# BUILD_TESTING pulls in googletest via FetchContent, which tries to
 	# clone/download it at configure time - a real network dependency the
 	# sandboxed build should not have, and libgtest/libgmock only existed
-	# in the package because this was ON by CMake's own default. Arctic
+	# in the package because this was ON by CMake's own default. ScrapLinux
 	# never runs ninja's own test suite, so there is nothing to lose.
 	cmake -S "ninja-1.13.2" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \

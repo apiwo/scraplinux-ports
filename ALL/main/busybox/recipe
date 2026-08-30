@@ -1,5 +1,5 @@
 # busybox - init, getty, mdev and the network stack.
-# Arctic runs busybox as PID 1. The classic Unix commands come from toybox
+# ScrapLinux runs busybox as PID 1. The classic Unix commands come from toybox
 # instead, so this build keeps the applets busybox is actually best at.
 name=busybox
 version=1.38.0
@@ -9,7 +9,7 @@ url="https://busybox.net/"
 license="GPL-2.0-only"
 depend="glibc"
 source="https://busybox.net/downloads/busybox-$version.tar.bz2
-	arctic.config
+	scraplinux.config
 	busybox.conf"
 sha256="SKIP
 	SKIP
@@ -17,7 +17,7 @@ sha256="SKIP
 
 build() {
 	cd "busybox-$version"
-	cp ../arctic.config .config
+	cp ../scraplinux.config .config
 	make oldconfig </dev/null >/dev/null
 	make -j"$JOBS" CFLAGS_EXTRA="-Wno-error"
 	# A static copy for the initramfs, where no libraries exist yet.
@@ -36,10 +36,10 @@ package() {
 	# setuid-root: check_suid() at startup reads /etc/busybox.conf and drops
 	# back to the caller's own uid for anything not explicitly granted there.
 	install -Dm4755 busybox "$pkgdir/usr/bin/busybox"
-	install -Dm755 busybox.static "$pkgdir/usr/lib/arctic/busybox.static"
+	install -Dm755 busybox.static "$pkgdir/usr/lib/scraplinux/busybox.static"
 	install -Dm644 .config "$pkgdir/usr/share/busybox/config"
 	install -Dm600 ../busybox.conf "$pkgdir/etc/busybox.conf"
-	# Only claim the applets Arctic wants from busybox; toybox takes the rest.
+	# Only claim the applets ScrapLinux wants from busybox; toybox takes the rest.
 	for a in init getty mdev sh ash login su passwd chpasswd adduser addgroup \
 		deluser delgroup mount umount swapon swapoff mkswap fsck blkid findfs \
 		mountpoint losetup switch_root pivot_root udhcpc ip ifconfig route \

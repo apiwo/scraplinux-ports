@@ -1,4 +1,4 @@
 Marker only - see CONTRIBUTING.md. build() is hand-written (needs
--Dintrospection=no - Arctic has no gobject-introspection package yet,
+-Dintrospection=no - ScrapLinux has no gobject-introspection package yet,
 and nothing here consumes GIR data) and gen-ports.py must never
 regenerate over it from the manifest's generic meson template.

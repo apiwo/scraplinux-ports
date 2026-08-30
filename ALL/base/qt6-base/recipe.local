@@ -1,5 +1,5 @@
 # The OpenSSL TLS backend is turned off in build(). Qt's plugin uses
-# OPENSSL_STACK, which LibreSSL does not define, and Arctic links libressl
+# OPENSSL_STACK, which LibreSSL does not define, and ScrapLinux links libressl
 # everywhere - building Qt against openssl instead would put a second,
 # conflicting TLS library under every Qt application. The template has no
 # field for extra cmake options.

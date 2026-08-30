@@ -26,7 +26,7 @@ build() {
 	# vim's own configure auto-detects a GUI toolkit off the build host
 	# (gtk2/gtk3/motif/X11) rather than the target - on a host with a real
 	# desktop installed it happily found GTK3, glib, pango, dbus and elogind
-	# and linked against all of them, none of which Arctic builds or ships.
+	# and linked against all of them, none of which ScrapLinux builds or ships.
 	# This is a terminal editor here; --enable-gui=no and --without-x rule
 	# out the whole GUI path regardless of what the build host happens to
 	# have lying around.
@@ -34,7 +34,7 @@ build() {
 	# whatever the build host happens to have via pkg-config and links
 	# against them unconditionally if found - wayland-client, libcanberra
 	# (sound events), libsodium (secure memory), libacl. None of that is
-	# shipped on Arctic, so the resulting vim failed to start at all on
+	# shipped on ScrapLinux, so the resulting vim failed to start at all on
 	# real hardware with "cannot open shared object file". --without-x
 	# alone only rules out the X11 GUI path, not any of these.
 	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib \

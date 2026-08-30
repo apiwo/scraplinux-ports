@@ -1,2 +1,2 @@
-# Hand-written: iw installs into sbin by default and Arctic is merged-/usr
+# Hand-written: iw installs into sbin by default and ScrapLinux is merged-/usr
 # with /usr/sbin a symlink, so SBINDIR has to be pointed at /usr/bin.

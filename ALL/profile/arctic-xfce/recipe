@@ -1,17 +1,17 @@
-# arctic-xfce - Xfce with the Arctic look and foot as the terminal.
-name=arctic-xfce
+# scraplinux-xfce - Xfce with the ScrapLinux look and foot as the terminal.
+name=scraplinux-xfce
 version=1.0.0
 release=2
 kind=profile
-desc="Xfce with the Arctic theme, foot and a neutral panel layout"
-url="https://github.com/apiwo/arctic-linux"
+desc="Xfce with the ScrapLinux theme, foot and a neutral panel layout"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 # foot ships its own /etc/xdg/foot/foot.ini; this profile intentionally
-# overrides it with the Arctic-themed one below.
+# overrides it with the ScrapLinux-themed one below.
 replaces="foot"
 depend="xfce4-meta foot xfce4-notifyd xfce4-screenshooter thunar \
 	xorg-server xorg-xinit xauth xterm sddm pipewire wireplumber \
-	ttf-jetbrains-mono noto-fonts noto-fonts-emoji arctic-plasma-theme"
+	ttf-jetbrains-mono noto-fonts noto-fonts-emoji scraplinux-plasma-theme"
 makedepend=""
 source="foot.ini xfce4-desktop.xml xsettings.xml"
 sha256="SKIP SKIP SKIP"
@@ -25,6 +25,6 @@ package() {
 	install -Dm644 xfce4-desktop.xml "$x/xfce4-desktop.xml"
 	install -Dm644 xsettings.xml     "$x/xsettings.xml"
 
-	install -d "$pkgdir/usr/share/arctic/profiles"
-	printf 'arctic-xfce\n' >"$pkgdir/usr/share/arctic/profiles/active"
+	install -d "$pkgdir/usr/share/scraplinux/profiles"
+	printf 'scraplinux-xfce\n' >"$pkgdir/usr/share/scraplinux/profiles/active"
 }

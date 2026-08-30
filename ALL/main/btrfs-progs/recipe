@@ -24,7 +24,7 @@ build() {
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
 	# Both auto-detect against whatever the build host happens to have and
 	# link against it if found - real udev and liblzo2 on the build host,
-	# neither of which Arctic ships. The result was mkfs.btrfs and every
+	# neither of which ScrapLinux ships. The result was mkfs.btrfs and every
 	# other btrfs-progs binary failing to start at all on a real install:
 	# "cannot open shared object file: libudev.so.1". lzo is a legacy
 	# compression option nobody uses over zstd by default anyway; udev

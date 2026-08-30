@@ -6,11 +6,11 @@ name=niri-dms
 version=1.0.0
 release=2
 kind=profile
-desc="Niri + DankMaterialShell, with the Arctic neutral rice and keybinds"
-url="https://github.com/apiwo/arctic-linux"
+desc="Niri + DankMaterialShell, with the ScrapLinux neutral rice and keybinds"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 # foot ships its own /etc/xdg/foot/foot.ini; this profile intentionally
-# overrides it with the Arctic-themed one below.
+# overrides it with the ScrapLinux-themed one below.
 replaces="foot"
 depend="niri dankmaterialshell foot fuzzel mako swaylock wl-clipboard grim slurp \
 	xorg-xwayland pipewire wireplumber ttf-jetbrains-mono ttf-nerd-fonts-symbols \
@@ -37,6 +37,6 @@ package() {
 		Type=Application
 	DESK
 
-	install -d "$pkgdir/usr/share/arctic/profiles"
-	printf 'niri-dms\n' >"$pkgdir/usr/share/arctic/profiles/active"
+	install -d "$pkgdir/usr/share/scraplinux/profiles"
+	printf 'niri-dms\n' >"$pkgdir/usr/share/scraplinux/profiles/active"
 }

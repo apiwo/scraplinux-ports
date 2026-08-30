@@ -3,7 +3,7 @@ itself) - fixed to the real latest release tag and its "-src" asset. That
 part is confirmed working: source now fetches, extracts, and compiles
 well into the dependency graph.
 
-Blocked past that on a real upstream compatibility gap, not an Arctic
+Blocked past that on a real upstream compatibility gap, not an ScrapLinux
 packaging bug: `openssl-sys` 0.9.99 (pulled in transitively) refuses to
 build against anything newer than LibreSSL 3.8.1 -
 
@@ -11,7 +11,7 @@ build against anything newer than LibreSSL 3.8.1 -
   1.1.1, or 3), or LibreSSL 2.5 through 3.8.1, but a different version of
   OpenSSL was found.
 
-Arctic ships LibreSSL 4.2.0. Forcing a different openssl-sys version
+ScrapLinux ships LibreSSL 4.2.0. Forcing a different openssl-sys version
 would need an actual Cargo.lock edit (the build runs --locked, same
 reasoning as every other Rust recipe here), which risks cascading into
 every other crate that also pins around openssl-sys's version - not

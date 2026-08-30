@@ -27,7 +27,7 @@ build() {
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# Arctic has no GSS-API/Kerberos package; libtirpc's own gssapi support
+	# ScrapLinux has no GSS-API/Kerberos package; libtirpc's own gssapi support
 	# is optional and off by default upstream everywhere except its own
 	# configure script, which errors out looking for gssapi.h unless told
 	# not to.

@@ -1,6 +1,6 @@
 # nouveau-drivers - the free NVIDIA driver. The alternative to nvidia-drivers.
 #
-# Arctic keeps a whole repo of these so that every nonfree package has a free
+# ScrapLinux keeps a whole repo of these so that every nonfree package has a free
 # counterpart you can install instead, and the installer offers the choice.
 name=nouveau-drivers
 version=1.0.18
@@ -27,7 +27,7 @@ package() {
 	# On Turing and later, nouveau needs the GSP firmware to reach full clocks.
 	mkdir -p "$(dirname $pkgdir/etc/modprobe.d/nouveau.conf)"
 cat >"$pkgdir/etc/modprobe.d/nouveau.conf" <<-'CONF'
-		# Arctic Linux nouveau defaults
+		# ScrapLinux nouveau defaults
 		options nouveau config=NvGspRm=1
 		options nouveau modeset=1
 CONF

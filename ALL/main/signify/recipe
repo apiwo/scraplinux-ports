@@ -2,7 +2,7 @@
 #
 # This is what verifies a repository index. Ed25519, one line of public key,
 # no key servers, no web of trust and no GPG anywhere near the base system -
-# which is the point: alpm has to be able to check a signature on a machine
+# which is the point: scraps has to be able to check a signature on a machine
 # that has just been installed, and the whole verifier is one small binary
 # with no dependency beyond libc.
 #

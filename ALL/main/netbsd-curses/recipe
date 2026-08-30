@@ -1,5 +1,5 @@
 # netbsd-curses - the terminal library, in place of ncurses.
-# ncurses is a GNU project, so Arctic uses NetBSD's curses instead. It provides
+# ncurses is a GNU project, so ScrapLinux uses NetBSD's curses instead. It provides
 # the ncurses ABI names as symlinks, which is enough for everything in base.
 name=netbsd-curses
 version=0.3.2

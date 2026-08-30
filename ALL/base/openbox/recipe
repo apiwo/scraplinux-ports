@@ -37,7 +37,7 @@ build() {
 
 package() {
 	cd "openbox-3.6.1"
-	# -j1: alpm-build exports MAKEFLAGS=-j$JOBS globally, so this inherits
+	# -j1: scraps-build exports MAKEFLAGS=-j$JOBS globally, so this inherits
 	# real parallelism even with no -j of its own. Fine for the build, but
 	# openbox's own install-sh -d (used throughout `make install` for every
 	# shared parent directory - /usr/share, /usr/share/themes, /etc/xdg/

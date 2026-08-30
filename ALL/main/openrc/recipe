@@ -15,7 +15,7 @@ sha256="SKIP"
 
 build() {
 	cd "openrc-0.63.2"
-	# alpm-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
 	# build() runs, for recipes that compile-and-run a helper against the
 	# target's own libs. meson's own tooling inherits it too: on a host
 	# whose python-exec2c was built expecting pointer-guard hardening from
@@ -52,8 +52,8 @@ package() {
 		"$pkgdir/etc/init.d/sysctl"
 
 	# kbd_mode/loadkeys/dumpkeys come from the real kbd package, which
-	# Arctic does not build - it has its own keymap path already
-	# (arctic-rebuild applies identity.conf's id.keymap via busybox's
+	# ScrapLinux does not build - it has its own keymap path already
+	# (scraplinux-rebuild applies identity.conf's id.keymap via busybox's
 	# loadkmap against a .bmap file). Rather than half-reimplement these
 	# two services around a completely different keymap format, drop them
 	# from the default boot runlevel; the init.d scripts stay installed

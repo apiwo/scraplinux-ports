@@ -1,26 +1,26 @@
-# sddm-arctic-theme - the login screen.
-name=sddm-arctic-theme
+# sddm-scraplinux-theme - the login screen.
+name=sddm-scraplinux-theme
 version=1.0.0
 release=1
-desc="Arctic Linux theme for the SDDM login screen"
-url="https://github.com/apiwo/arctic-linux"
+desc="ScrapLinux theme for the SDDM login screen"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 depend="sddm qt6-declarative"
 source="Main.qml theme.conf"
 sha256="SKIP SKIP"
-backup="etc/sddm.conf.d/arctic.conf"
+backup="etc/sddm.conf.d/scraplinux.conf"
 
 package() {
-	t="$pkgdir/usr/share/sddm/themes/arctic"
+	t="$pkgdir/usr/share/sddm/themes/scraplinux"
 	install -Dm644 Main.qml "$t/Main.qml"
 	install -Dm644 theme.conf "$t/theme.conf"
 	mkdir -p "$(dirname $t/metadata.desktop)"
 cat >"$t/metadata.desktop" <<-'DESK'
 		[SddmGreeterTheme]
-		Name=Arctic
-		Description=Arctic Linux login screen
-		Author=Arctic Linux
-		Theme-Id=arctic
+		Name=ScrapLinux
+		Description=ScrapLinux login screen
+		Author=ScrapLinux
+		Theme-Id=scraplinux
 		Theme-API=2.0
 		QtVersion=6
 		MainScript=Main.qml
@@ -31,12 +31,12 @@ chmod 644 "$t/metadata.desktop"
 	# built (no kwin_wayland, no Plasma) - lxqt-session runs under plain
 	# Xorg via an .desktop file lxqt-session's own package already
 	# installs into /usr/share/xsessions, which SDDM auto-discovers.
-	mkdir -p "$(dirname $pkgdir/etc/sddm.conf.d/arctic.conf)"
-cat >"$pkgdir/etc/sddm.conf.d/arctic.conf" <<-'CONF'
+	mkdir -p "$(dirname $pkgdir/etc/sddm.conf.d/scraplinux.conf)"
+cat >"$pkgdir/etc/sddm.conf.d/scraplinux.conf" <<-'CONF'
 		[Theme]
-		Current=arctic
+		Current=scraplinux
 		[General]
 		DisplayServer=x11
 CONF
-chmod 644 "$pkgdir/etc/sddm.conf.d/arctic.conf"
+chmod 644 "$pkgdir/etc/sddm.conf.d/scraplinux.conf"
 }

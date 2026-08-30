@@ -1,11 +1,11 @@
 Marker only - see CONTRIBUTING.md. build() extracts netbsd-curses into a
 local staging dir and points CPPFLAGS/LDFLAGS at it before configure runs.
 Without this, ./configure's curses auto-detection finds the *build host's*
-real ncurses (same libncursesw.so.6 name Arctic's netbsd-curses uses, so
+real ncurses (same libncursesw.so.6 name ScrapLinux's netbsd-curses uses, so
 the linker never complains at build time) which has key_defined() -
 netbsd-curses does not, and nano crashed at runtime with "symbol lookup
 error: undefined symbol: key_defined" as soon as it started. Scoping the
-search path to Arctic's own netbsd-curses build makes configure correctly
+search path to ScrapLinux's own netbsd-curses build makes configure correctly
 detect key_defined is unavailable and build without it, same as it does on
 any real netbsd-curses system. gen-ports.py must never regenerate over this
 from the manifest's generic autotools template.

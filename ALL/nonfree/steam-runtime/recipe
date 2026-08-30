@@ -13,7 +13,7 @@ makedepend=""
 source="https://repo.steampowered.com/steamrt-images-scout/snapshots/0.20260101/steam-runtime.tar.xz"
 sha256="SKIP"
 
-# Repackaged upstream build. Arctic prefers to compile from source, but a few
+# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
 # things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 

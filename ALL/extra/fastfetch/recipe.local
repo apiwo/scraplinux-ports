@@ -1,5 +1,5 @@
-# Hand-written: cmake+ninja build, installs the Arctic ascii logo as
+# Hand-written: cmake+ninja build, installs the ScrapLinux ascii logo as
 # fastfetch's default and ships a matching config.jsonc. The logo path
-# points at the source tree (ARCTIC_TREE), not an installed-system path -
-# nothing has /usr/share/arctic at build time. Do not let gen-ports.py
+# points at the source tree (SCRAPLINUX_TREE), not an installed-system path -
+# nothing has /usr/share/scraplinux at build time. Do not let gen-ports.py
 # regenerate this file.

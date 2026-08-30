@@ -22,10 +22,10 @@ build() {
 package() {
 	cd hyprland-source
 	DESTDIR="$pkgdir" ninja -C build install
-	# A starting configuration with the Arctic palette and sane keybinds.
+	# A starting configuration with the ScrapLinux palette and sane keybinds.
 	mkdir -p "$(dirname $pkgdir/etc/xdg/hypr/hyprland.conf)"
 cat >"$pkgdir/etc/xdg/hypr/hyprland.conf" <<-'CONF'
-		# Arctic Linux defaults for Hyprland
+		# ScrapLinux defaults for Hyprland
 		monitor=,preferred,auto,1
 
 		$terminal = foot
@@ -54,10 +54,10 @@ cat >"$pkgdir/etc/xdg/hypr/hyprland.conf" <<-'CONF'
 
 		animations {
 		    enabled = true
-		    bezier = arctic, 0.05, 0.9, 0.1, 1.0
-		    animation = windows, 1, 5, arctic
+		    bezier = scraplinux, 0.05, 0.9, 0.1, 1.0
+		    animation = windows, 1, 5, scraplinux
 		    animation = fade, 1, 7, default
-		    animation = workspaces, 1, 5, arctic
+		    animation = workspaces, 1, 5, scraplinux
 		}
 
 		$mod = SUPER

@@ -1,13 +1,13 @@
 # sound-setup - pipewire, wireplumber and alsamixer, wired up to actually
-# start. arctic-sound (the plain meta package) only pulls the dependencies
+# start. scraplinux-sound (the plain meta package) only pulls the dependencies
 # in; this also adds every real user to the audio group, enables the
 # system-level pipewire service, and drops a per-session autostart hook,
-# since pipewire itself is a per-user daemon nothing else on Arctic starts.
+# since pipewire itself is a per-user daemon nothing else on ScrapLinux starts.
 name=sound-setup
 version=1.0.0
 release=1
 desc="PipeWire audio, wired up and started"
-url="https://github.com/apiwo/arctic-linux"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
 depend="pipewire wireplumber pipewire-pulse alsa-lib alsa-utils"
 makedepend=""

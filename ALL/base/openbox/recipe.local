@@ -5,11 +5,11 @@ the previously-published openbox-3.6.1-1 package still ended up with a
 real ELF NEEDED entry for librsvg-2.so.2 in libobrender.so, even though
 this buildroot has never had a working librsvg package. The only way that
 happens is the build sandbox's /host fallback PATH (used so builds can
-reach host tools not yet packaged for Arctic - see other recipes'
+reach host tools not yet packaged for ScrapLinux - see other recipes'
 comments on this) let pkg-config see a librsvg-2.0.pc from the *host*,
 outside the sandbox, and link against it - producing a binary that then
-fails to load on a real Arctic install, which has no such library. Force
+fails to load on a real ScrapLinux install, which has no such library. Force
 the flag off so this can never happen again regardless of what the host
-side effects to have installed. Revisit (drop the flag) once Arctic has
+side effects to have installed. Revisit (drop the flag) once ScrapLinux has
 its own real librsvg package - see ports/base/obconf-qt/recipe.local for
 why that doesn't exist yet.

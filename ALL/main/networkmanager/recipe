@@ -15,7 +15,7 @@ sha256="SKIP"
 
 build() {
 	cd "NetworkManager-1.50.0"
-	# Arctic has no systemd, no logind/ConsoleKit, no SELinux and no
+	# ScrapLinux has no systemd, no logind/ConsoleKit, no SELinux and no
 	# firewalld - every option below turns off an integration this system
 	# genuinely does not have, rather than one we just don't want. -Dnmtui=true
 	# is the point of this port: it bundles the nmtui text UI in the same
@@ -34,11 +34,11 @@ build() {
 	# -Dmodem_manager=false: no ModemManager port exists (mobile broadband
 	# modems), and leaving this at its default true silently links against
 	# the build host's own libmm-glib/libnm-wwan if it happens to have
-	# ModemManager installed - neither ships on Arctic, so that binary would
+	# ModemManager installed - neither ships on ScrapLinux, so that binary would
 	# fail to even start with "cannot open shared object file".
 	#
 	# -Dnmcli=false: nmcli hard-requires readline or libedit to build at all.
-	# GNU readline is what Arctic never ships (openssh and vim use libedit
+	# GNU readline is what ScrapLinux never ships (openssh and vim use libedit
 	# instead, for the same reason) - so this recipe pointed PKG_CONFIG_PATH/
 	# CFLAGS/LDFLAGS at $DEPS (the staging tree build-rootfs.sh/build-usable.sh
 	# already maintain for exactly this "dependency isn't on the build host"
@@ -62,7 +62,7 @@ build() {
 	# string "no" and asserts looking for a real systemd install otherwise -
 	# "no" was passed and the assert fired anyway, for a reason not worth
 	# chasing further when any non-empty path sidesteps the check entirely.
-	# Nothing on Arctic reads this path; ninja install just writes a few
+	# Nothing on ScrapLinux reads this path; ninja install just writes a few
 	# .service files under it inside $pkgdir that nothing ever loads.
 	#
 	# -Db_lto=false: meson's own default asserts on -flto-partition=none, a
@@ -114,7 +114,7 @@ package() {
 	cd "NetworkManager-1.50.0"
 	DESTDIR="$pkgdir" ninja -C build install
 	# NM ships a default main.conf with plugins=keyfile,ifupdown - ifupdown
-	# is a Debian-ism Arctic has no use for and its plugin isn't even built
+	# is a Debian-ism ScrapLinux has no use for and its plugin isn't even built
 	# here; keyfile alone is what actually reads/writes connection profiles.
 	if [ -f "$pkgdir/etc/NetworkManager/NetworkManager.conf" ]; then
 		sed -i 's/^plugins=.*/plugins=keyfile/' \

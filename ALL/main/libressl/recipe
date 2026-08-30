@@ -1,8 +1,8 @@
-# libressl - OpenBSD TLS, Arctic's default
+# libressl - OpenBSD TLS, ScrapLinux's default
 name=libressl
 version=4.2.0
 release=4
-desc="OpenBSD TLS, Arctic's default"
+desc="OpenBSD TLS, ScrapLinux's default"
 url="https://www.libressl.org/"
 license="ISC Apache-2.0"
 depend="glibc"
@@ -38,11 +38,11 @@ package() {
 	# ./configure time, the standard OPENSSLDIR/openssl.cnf convention) is
 	# /etc/ssl/openssl.cnf, not configurable to a different filename short
 	# of patching LibreSSL's own source. An earlier version of this recipe
-	# renamed it to libressl.cnf to dodge an alpm ownership conflict with a
-	# real-OpenSSL package Arctic used to also ship - that left this exact
+	# renamed it to libressl.cnf to dodge an scraps ownership conflict with a
+	# real-OpenSSL package ScrapLinux used to also ship - that left this exact
 	# path unclaimed, OpenSSL's incompatible provider-based config filled it
 	# instead, and every LibreSSL-linked consumer (curl included) hard-
 	# failed to even initialize ("unknown module name: module=providers" -
-	# LibreSSL has no provider architecture at all). Arctic is LibreSSL-only
+	# LibreSSL has no provider architecture at all). ScrapLinux is LibreSSL-only
 	# now - see CONTRIBUTING.md - so this file just keeps its real name.
 }

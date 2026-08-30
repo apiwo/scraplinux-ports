@@ -1,2 +1,2 @@
--Dtests=disabled: avoids a hard build dependency on libcheck, which Arctic
+-Dtests=disabled: avoids a hard build dependency on libcheck, which ScrapLinux
 does not package. -Ddocumentation=disabled: avoids needing doxygen.

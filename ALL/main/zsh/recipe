@@ -1,8 +1,8 @@
-# zsh - the Arctic login shell, configured out of the box.
+# zsh - the ScrapLinux login shell, configured out of the box.
 name=zsh
 version=5.9.2
 release=1
-desc="The Z shell, Arctic's default login shell"
+desc="The Z shell, ScrapLinux's default login shell"
 url="https://www.zsh.org/"
 license="MIT-Modern-Variant"
 depend="glibc netbsd-curses"

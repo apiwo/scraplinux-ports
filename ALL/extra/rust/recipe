@@ -10,7 +10,7 @@ makedepend="python llvm cmake ninja"
 source="https://static.rust-lang.org/dist/rustc-1.94.0-src.tar.xz"
 sha256="SKIP"
 
-# Arctic's llvm-config --cxxflags never reports -stdlib=libc++, even though
+# ScrapLinux's llvm-config --cxxflags never reports -stdlib=libc++, even though
 # the libs it points at were built with it - rustc_llvm's build.rs greps
 # cxxflags for that exact string to decide -lc++ vs -lstdc++, so it always
 # falls through to -lstdc++ and leaves every std::__1::-namespaced (libc++)
@@ -34,8 +34,8 @@ package() {
 	cd "rustc-1.94.0-src"
 	DESTDIR="$pkgdir" python3 x.py install rustc library/std --stage 2
 	# rust-installer's own component bookkeeping (rustup-style uninstall
-	# script + manifest) - meaningless under alpm, and cargo's package()
-	# installs the exact same four files, which alpm-build would then see
+	# script + manifest) - meaningless under scraps, and cargo's package()
+	# installs the exact same four files, which scraps-build would then see
 	# as a file conflict between the two packages.
 	rm -f "$pkgdir/usr/lib/rustlib/components" \
 	      "$pkgdir/usr/lib/rustlib/install.log" \

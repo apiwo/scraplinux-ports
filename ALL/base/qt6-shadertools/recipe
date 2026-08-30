@@ -18,7 +18,7 @@ build() {
 	# find_package() barred from the package registry: without this
 	# cmake's own registry can find a host-installed copy of the same
 	# library ahead of the one actually being built against (real, hit
-	# by qt6-svg finding the host's Qt6 instead of Arctic's own).
+	# by qt6-svg finding the host's Qt6 instead of ScrapLinux's own).
 	cmake -S "qtshadertools-everywhere-src-6.10.1" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \

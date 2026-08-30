@@ -22,7 +22,7 @@ build() {
 package() {
 	cd "sysvinit-$version/src"
 	make ROOT="$pkgdir" install
-	# The install target puts things under /sbin and /usr/bin; Arctic is a
+	# The install target puts things under /sbin and /usr/bin; ScrapLinux is a
 	# merged-/usr system where /sbin is a symlink, so anything that landed
 	# in a real /sbin directory has to move.
 	if [ -d "$pkgdir/sbin" ] && [ ! -L "$pkgdir/sbin" ]; then
@@ -34,7 +34,7 @@ package() {
 		rmdir "$pkgdir/sbin" 2>/dev/null || :
 	fi
 	:
-	# util-linux is where these live on Linux, and it is installed on every Arctic
+	# util-linux is where these live on Linux, and it is installed on every ScrapLinux
 	# system. Shipping a second copy stopped any install that chose sysvinit.
 	rm -rf "$pkgdir/usr/bin/last"
 	rm -rf "$pkgdir/usr/bin/lastb"

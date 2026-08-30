@@ -1,4 +1,4 @@
-# Arctic Linux package manifest
+# ScrapLinux package manifest
 # repo	name	version	buildsys	license	depends	makedepends	url	source	desc
 #
 # Recipes are generated from this file by gen-ports.py. A package with a
@@ -9,16 +9,16 @@
 # {version} and {V_} expand in the source column. "-" means none.
 #
 # =============================================================== main
-# Everything needed to install Arctic and boot it.
-main	glibc	2.44	autotools	LGPL-2.1-or-later	linux-headers	gcc,bison,python	https://www.gnu.org/software/libc/	https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz	The GNU C library, the only GNU component in Arctic
+# Everything needed to install ScrapLinux and boot it.
+main	glibc	2.44	autotools	LGPL-2.1-or-later	linux-headers	gcc,bison,python	https://www.gnu.org/software/libc/	https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz	The GNU C library, the only GNU component in ScrapLinux
 main	linux-headers	7.1.3	make	GPL-2.0-only WITH Linux-syscall-note	-	-	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Kernel headers for userspace
 main	gcc-libs	15.3.0	autotools	GPL-3.0-or-later WITH GCC-exception-3.1	glibc	-	https://gcc.gnu.org/	https://ftp.gnu.org/gnu/gcc/gcc-{version}/gcc-{version}.tar.xz	libstdc++ and libgcc_s runtime only, required by the NVIDIA driver
 main	libglvnd	1.7.0	meson	MIT	glibc,libx11,libxext	meson,ninja	https://gitlab.freedesktop.org/glvnd/libglvnd	https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v{version}/libglvnd-v{version}.tar.gz	GL vendor dispatch, so mesa and NVIDIA can both provide GL
 main	libepoxy	1.5.10	meson	MIT	glibc,libx11	meson,ninja,python	https://github.com/anholt/libepoxy	https://github.com/anholt/libepoxy/archive/refs/tags/{version}.tar.gz	GL function pointer dispatch, needed by Xorg's glamor 2D acceleration
 main	busybox	1.38.0	make	GPL-2.0-only	glibc	-	https://busybox.net/	https://busybox.net/downloads/busybox-{version}.tar.bz2	Init, getty, device manager and network tools
-main	genfstab	1.0.0	make	BSD-2-Clause	busybox,util-linux	-	https://github.com/apiwo/arctic-linux	-	Write /etc/fstab from the live mount table
+main	genfstab	1.0.0	make	BSD-2-Clause	busybox,util-linux	-	https://github.com/apiwo/scraplinux	-	Write /etc/fstab from the live mount table
 main	toybox	0.8.14	make	0BSD	glibc	-	https://landley.net/toybox/	https://landley.net/toybox/downloads/toybox-{version}.tar.gz	The classic Unix commands, BSD licensed
-main	zsh	5.9.2	autotools	MIT-Modern-Variant	glibc,netbsd-curses	clang,lld	https://www.zsh.org/	https://www.zsh.org/pub/zsh-{version}.tar.xz	The Z shell, Arctic's login shell
+main	zsh	5.9.2	autotools	MIT-Modern-Variant	glibc,netbsd-curses	clang,lld	https://www.zsh.org/	https://www.zsh.org/pub/zsh-{version}.tar.xz	The Z shell, ScrapLinux's login shell
 main	doas	6.8.2	autotools	ISC	glibc,libxcrypt	clang	https://github.com/Duncaen/OpenDoas	https://github.com/Duncaen/OpenDoas/archive/refs/tags/v{version}.tar.gz	Run commands as another user
 main	netbsd-curses	0.3.2	make	BSD-3-Clause	glibc	-	https://github.com/sabotage-linux/netbsd-curses	https://github.com/sabotage-linux/netbsd-curses/archive/refs/tags/v{version}.tar.gz	NetBSD curses, replacing ncurses
 main	libxcrypt	4.5.2	autotools	LGPL-2.1-or-later	glibc	-	https://github.com/besser82/libxcrypt	https://github.com/besser82/libxcrypt/releases/download/v{version}/libxcrypt-{version}.tar.xz	crypt(), which glibc no longer provides
@@ -36,7 +36,7 @@ main	zstd	1.5.7	make	BSD-3-Clause	glibc	-	https://facebook.github.io/zstd/	https
 main	bzip2	1.0.8	make	bzip2-1.0.6	glibc	-	https://sourceware.org/bzip2/	https://sourceware.org/pub/bzip2/bzip2-{version}.tar.gz	Block-sorting compressor
 main	lz4	1.10.0	make	BSD-2-Clause	glibc	-	https://lz4.org/	https://github.com/lz4/lz4/archive/refs/tags/v{version}.tar.gz	Extremely fast compression
 main	brotli	1.1.0	cmake	MIT	glibc	cmake,ninja	https://github.com/google/brotli	https://github.com/google/brotli/archive/refs/tags/v{version}.tar.gz	Brotli compression
-main	libressl	4.2.0	autotools	ISC Apache-2.0	glibc	-	https://www.libressl.org/	https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{version}.tar.gz	OpenBSD TLS, Arctic's default
+main	libressl	4.2.0	autotools	ISC Apache-2.0	glibc	-	https://www.libressl.org/	https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{version}.tar.gz	OpenBSD TLS, ScrapLinux's default
 main	ca-certificates	20260601	make	MPL-2.0	glibc	-	https://curl.se/docs/caextract.html	https://curl.se/ca/cacert.pem	Trusted certificate authority bundle
 main	curl	8.19.0	autotools	curl	glibc,libressl,zlib,nghttp2,brotli,zstd	-	https://curl.se/	https://curl.se/download/curl-{version}.tar.xz	Transfer data over any protocol
 main	nghttp2	1.68.0	autotools	MIT	glibc	-	https://nghttp2.org/	https://github.com/nghttp2/nghttp2/releases/download/v{version}/nghttp2-{version}.tar.xz	HTTP/2 library
@@ -90,17 +90,17 @@ main	libndp	1.9	autotools	LGPL-2.1-or-later	glibc	-	https://github.com/jpirko/li
 main	networkmanager	1.50.0	meson	LGPL-2.1-or-later GPL-2.0-or-later	glibc,glib,dbus,libnl,wpa_supplicant,newt,curl,libudev-zero,libndp	meson,ninja,python	https://networkmanager.dev/	https://download.gnome.org/sources/NetworkManager/1.50/NetworkManager-{version}.tar.xz	Network configuration daemon, provides nmtui
 main	wireless-regdb	2026.05.30	make	ISC	-	-	https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git	https://kernel.org/pub/software/network/wireless-regdb/wireless-regdb-{version}.tar.xz	Wireless regulatory database
 main	openssh	10.3p1	autotools	BSD-2-Clause	glibc,libressl,zlib,libedit	-	https://www.openssh.com/	https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-{version}.tar.gz	OpenBSD secure shell
-main	limine	12.5.2	make	BSD-2-Clause	glibc	-	https://limine-bootloader.org/	https://github.com/limine-bootloader/limine/releases/download/v{version}/limine-{version}.tar.gz	The Arctic bootloader, BIOS and UEFI
+main	limine	12.5.2	make	BSD-2-Clause	glibc	-	https://limine-bootloader.org/	https://github.com/limine-bootloader/limine/releases/download/v{version}/limine-{version}.tar.gz	The ScrapLinux bootloader, BIOS and UEFI
 main	grub	2.14	autotools	GPL-3.0-or-later	glibc	gmake,perl	https://www.gnu.org/software/grub/	https://ftp.gnu.org/gnu/grub/grub-{version}.tar.xz	GRUB2 bootloader (BIOS only)
 main	efibootmgr	18	meson	GPL-2.0-or-later	glibc,efivar	meson,ninja	https://github.com/rhboot/efibootmgr	https://github.com/rhboot/efibootmgr/archive/refs/tags/{version}.tar.gz	Edit UEFI boot entries
 main	efivar	39	make	LGPL-2.1-only	glibc	-	https://github.com/rhboot/efivar	https://github.com/rhboot/efivar/releases/download/{version}/efivar-{version}.tar.bz2	UEFI variable library
-main	alpm	1.0.0	meta	BSD-2-Clause	busybox	-	https://github.com/apiwo/arctic-linux	-	Arctic Linux Package Manager
-main	arctic-base	1.0.0	meta	BSD-2-Clause	busybox,toybox,zsh,doas,alpm,libxcrypt	-	https://github.com/apiwo/arctic-linux	-	Arctic base configuration, init and branding
-main	arctic-init	1.0.0	meta	BSD-2-Clause	busybox,arctic-base	-	https://github.com/apiwo/arctic-linux	-	The Arctic init scripts and service manager
+main	scraps	1.0.0	meta	BSD-2-Clause	busybox	-	https://github.com/apiwo/scraplinux	-	ScrapLinux Package Manager
+main	scraplinux-base	1.0.0	meta	BSD-2-Clause	busybox,toybox,zsh,doas,scraps,libxcrypt	-	https://github.com/apiwo/scraplinux	-	ScrapLinux base configuration, init and branding
+main	scraplinux-init	1.0.0	meta	BSD-2-Clause	busybox,scraplinux-base	-	https://github.com/apiwo/scraplinux	-	The ScrapLinux init scripts and service manager
 main	gmp-alt	6.3.0	autotools	LGPL-3.0-or-later	glibc	-	https://gmplib.org/	https://gmplib.org/download/gmp/gmp-{version}.tar.xz	Arbitrary precision arithmetic, for nftables
-main	base	1.0.1	meta	BSD-2-Clause	glibc,busybox,toybox,zsh,doas,alpm,arctic-base,arctic-init,curl,libarchive,mandoc,onetrueawk,libxcrypt,iana-etc,tzdata,ca-certificates,signify	-	https://github.com/apiwo/arctic-linux	-	A minimal but complete Arctic system
-main	base-devel	1.0.0	meta	BSD-2-Clause	llvm,bmake,byacc,pkgconf,cmake,ninja,meson,git,patch-bsd,flex-alt	-	https://github.com/apiwo/arctic-linux	-	The toolchain needed to build Arctic packages
-main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libxml2	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	clang, lld, libc++, the Arctic toolchain
+main	base	1.0.1	meta	BSD-2-Clause	glibc,busybox,toybox,zsh,doas,scraps,scraplinux-base,scraplinux-init,curl,libarchive,mandoc,onetrueawk,libxcrypt,iana-etc,tzdata,ca-certificates,signify	-	https://github.com/apiwo/scraplinux	-	A minimal but complete ScrapLinux system
+main	base-devel	1.0.0	meta	BSD-2-Clause	llvm,bmake,byacc,pkgconf,cmake,ninja,meson,git,patch-bsd,flex-alt	-	https://github.com/apiwo/scraplinux	-	The toolchain needed to build ScrapLinux packages
+main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libxml2	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	clang, lld, libc++, the ScrapLinux toolchain
 main	cmake	4.2.1	autotools	BSD-3-Clause	glibc,libressl,curl,expat,zlib,libarchive,netbsd-curses	-	https://cmake.org/	https://github.com/Kitware/CMake/releases/download/v{version}/cmake-{version}.tar.gz	Cross-platform build generator
 main	ninja	1.13.2	cmake	Apache-2.0	glibc	cmake,python	https://ninja-build.org/	https://github.com/ninja-build/ninja/archive/refs/tags/v{version}.tar.gz	Small, fast build system
 main	samurai	1.2	make	Apache-2.0 MIT	glibc	-	https://github.com/michaelforney/samurai	https://github.com/michaelforney/samurai/releases/download/{version}/samurai-{version}.tar.gz	A ninja-compatible build tool in C
@@ -117,7 +117,7 @@ main	gettext-tiny	0.3.3	make	GPL-3.0-or-later MIT	glibc	-	https://github.com/sab
 #
 # =============================================================== extra
 # Extra pieces for a working install: terminals, editors, fonts, network tools.
-extra	foot	1.24.0	meson	MIT	glibc,wayland,fontconfig,freetype,pixman,libxkbcommon,fcft	meson,ninja,scdoc	https://codeberg.org/dnkl/foot	https://codeberg.org/dnkl/foot/archive/{version}.tar.gz	Fast Wayland terminal, the Arctic default
+extra	foot	1.24.0	meson	MIT	glibc,wayland,fontconfig,freetype,pixman,libxkbcommon,fcft	meson,ninja,scdoc	https://codeberg.org/dnkl/foot	https://codeberg.org/dnkl/foot/archive/{version}.tar.gz	Fast Wayland terminal, the ScrapLinux default
 extra	fcft	3.3.1	meson	MIT	glibc,freetype,fontconfig,pixman,harfbuzz,utf8proc	meson,ninja	https://codeberg.org/dnkl/fcft	https://codeberg.org/dnkl/fcft/archive/{version}.tar.gz	Font loading and glyph rasterisation
 extra	utf8proc	2.11.0	cmake	MIT	glibc	cmake,ninja	https://juliastrings.github.io/utf8proc/	https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v{version}.tar.gz	Unicode processing library
 extra	alacritty	0.16.0	cargo	Apache-2.0	glibc,wayland,libxkbcommon,fontconfig	rust,cargo	https://alacritty.org/	https://github.com/alacritty/alacritty/archive/refs/tags/v{version}.tar.gz	GPU-accelerated terminal
@@ -139,9 +139,9 @@ extra	nano	9.2	autotools	GPL-3.0-or-later	glibc,netbsd-curses	-	https://nano-edi
 extra	less	679	autotools	GPL-3.0-or-later BSD-2-Clause	glibc,netbsd-curses	-	https://greenwoodsoftware.com/less/	https://www.greenwoodsoftware.com/less/less-{version}.tar.gz	Terminal pager
 extra	htop	3.5.0	autotools	GPL-2.0-or-later	glibc,netbsd-curses	-	https://htop.dev/	https://github.com/htop-dev/htop/releases/download/{version}/htop-{version}.tar.xz	Interactive process viewer
 extra	btop	1.4.7	cmake	Apache-2.0	glibc,llvm	cmake,ninja	https://github.com/aristocratos/btop	https://github.com/aristocratos/btop/archive/refs/tags/v{version}.tar.gz	Resource monitor with a nicer view
-extra	fastfetch	2.55.0	cmake	MIT	glibc	cmake,ninja	https://github.com/fastfetch-cli/fastfetch	https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{version}.tar.gz	System information, with the Arctic logo
+extra	fastfetch	2.55.0	cmake	MIT	glibc	cmake,ninja	https://github.com/fastfetch-cli/fastfetch	https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{version}.tar.gz	System information, with the ScrapLinux logo
 extra	neofetch	7.1.0	make	MIT	glibc	-	https://github.com/dylanaraps/neofetch	https://github.com/dylanaraps/neofetch/archive/refs/tags/{version}.tar.gz	System information script
-extra	screenfetch	3.9.1	make	GPL-3.0-only	glibc	-	https://github.com/KittyKatt/screenFetch	https://github.com/KittyKatt/screenFetch/archive/refs/tags/v{version}.tar.gz	System information, with the Arctic logo
+extra	screenfetch	3.9.1	make	GPL-3.0-only	glibc	-	https://github.com/KittyKatt/screenFetch	https://github.com/KittyKatt/screenFetch/archive/refs/tags/v{version}.tar.gz	System information, with the ScrapLinux logo
 extra	pciutils	3.14.0	make	GPL-2.0-or-later	glibc,zlib	-	https://mj.ucw.cz/sw/pciutils/	https://kernel.org/pub/software/utils/pciutils/pciutils-{version}.tar.xz	lspci and setpci
 extra	usbutils	019	meson	GPL-2.0-or-later	glibc,libusb	meson,ninja	https://github.com/gregkh/usbutils	https://kernel.org/pub/linux/utils/usb/usbutils/usbutils-{version}.tar.xz	lsusb
 extra	libusb	1.0.30	autotools	LGPL-2.1-or-later	glibc	-	https://libusb.info/	https://github.com/libusb/libusb/releases/download/v{version}/libusb-{version}.tar.bz2	USB device access library
@@ -195,7 +195,7 @@ extra	libtiff	4.7.1	cmake	libtiff	glibc,zlib,libjpeg-turbo,xz,zstd,lerc	cmake,ni
 extra	lerc	4.2.0	cmake	Apache-2.0	glibc	cmake,ninja	https://github.com/Esri/lerc	https://github.com/Esri/lerc/archive/refs/tags/v{version}.tar.gz	Limited error raster compression
 extra	libavif	1.4.0	cmake	BSD-2-Clause	glibc,aom,dav1d	cmake,ninja	https://github.com/AOMediaCodec/libavif	https://github.com/AOMediaCodec/libavif/archive/refs/tags/v{version}.tar.gz	AVIF image codec
 extra	ttf-dejavu	2.37	make	Bitstream-Vera	-	-	https://dejavu-fonts.github.io/	https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_{V_}/dejavu-fonts-ttf-{version}.tar.bz2	DejaVu font family
-extra	ttf-jetbrains-mono	2.304	make	OFL-1.1	-	-	https://www.jetbrains.com/lp/mono/	https://github.com/JetBrains/JetBrainsMono/releases/download/v{version}/JetBrainsMono-{version}.zip	JetBrains Mono, the Arctic terminal font
+extra	ttf-jetbrains-mono	2.304	make	OFL-1.1	-	-	https://www.jetbrains.com/lp/mono/	https://github.com/JetBrains/JetBrainsMono/releases/download/v{version}/JetBrainsMono-{version}.zip	JetBrains Mono, the ScrapLinux terminal font
 extra	ttf-nerd-fonts-symbols	3.4.0	make	MIT	-	-	https://www.nerdfonts.com/	https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/NerdFontsSymbolsOnly.tar.xz	Nerd Font icon glyphs
 extra	noto-fonts	2026.08.01	make	OFL-1.1	-	-	https://fonts.google.com/noto	https://github.com/notofonts/notofonts.github.io/archive/refs/tags/noto-monthly-release-{version}.tar.gz	Google Noto fonts
 extra	noto-fonts-emoji	2.051	make	OFL-1.1	-	-	https://github.com/googlefonts/noto-emoji	https://github.com/googlefonts/noto-emoji/archive/refs/tags/v{version}.tar.gz	Noto emoji fonts
@@ -218,7 +218,7 @@ extra	numactl	2.0.19	autotools	LGPL-2.1-only	glibc	-	https://github.com/numactl/
 extra	slang	2.3.3	autotools	GPL-2.0-or-later	glibc,pcre2,zlib	-	https://www.jedsoft.org/slang/	https://www.jedsoft.org/releases/slang/slang-{version}.tar.bz2	Screen and interpreter library
 extra	shellcheck	0.11.0	make	GPL-3.0-only	glibc	-	https://www.shellcheck.net/	https://github.com/koalaman/shellcheck/archive/refs/tags/v{version}.tar.gz	Shell script linter
 extra	man-pages	6.16	make	various	-	-	https://www.kernel.org/doc/man-pages/	https://kernel.org/pub/linux/docs/man-pages/man-pages-{version}.tar.xz	Linux manual pages
-extra	sudo-shim	1.0.0	meta	BSD-2-Clause	doas	-	https://github.com/apiwo/arctic-linux	-	A sudo-compatible wrapper around doas, for scripts that insist
+extra	sudo-shim	1.0.0	meta	BSD-2-Clause	doas	-	https://github.com/apiwo/scraplinux	-	A sudo-compatible wrapper around doas, for scripts that insist
 #
 # =============================================================== base
 # The bulk of the distribution: desktops, browsers, media, games, toolchains.
@@ -296,7 +296,7 @@ base	libdisplay-info	0.3.0	meson	MIT	glibc,hwdata	meson,ninja	https://gitlab.fre
 base	wlroots	0.20.2	meson	MIT	wayland,mesa,libinput,libxkbcommon,pixman,seatd,libdrm,libdisplay-info	meson,ninja	https://gitlab.freedesktop.org/wlroots/wlroots	https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/{version}/downloads/wlroots-{version}.tar.gz	Wayland compositor library
 #
 # --- desktops and window managers
-base	plasma-meta	6.5.0	meta	GPL-2.0-or-later	plasma-workspace,plasma-desktop,kwin,systemsettings,breeze,plasma-nm,plasma-pa,powerdevil,kscreen,sddm,sddm-arctic-theme,arctic-plasma-theme,konsole,dolphin,kate,ark,spectacle,gwenview,okular,pipewire,wireplumber,mesa,xdg-desktop-portal-kde	-	https://kde.org/plasma-desktop/	-	KDE Plasma desktop, themed for Arctic
+base	plasma-meta	6.5.0	meta	GPL-2.0-or-later	plasma-workspace,plasma-desktop,kwin,systemsettings,breeze,plasma-nm,plasma-pa,powerdevil,kscreen,sddm,sddm-scraplinux-theme,scraplinux-plasma-theme,konsole,dolphin,kate,ark,spectacle,gwenview,okular,pipewire,wireplumber,mesa,xdg-desktop-portal-kde	-	https://kde.org/plasma-desktop/	-	KDE Plasma desktop, themed for ScrapLinux
 base	plasma-workspace	6.5.0	cmake	GPL-2.0-or-later	kf6,qt6-base,qt6-wayland,kwin,plasma-framework	cmake,ninja	https://kde.org/	https://download.kde.org/stable/plasma/{version}/plasma-workspace-{version}.tar.xz	The Plasma shell and workspace
 base	plasma-desktop	6.5.0	cmake	GPL-2.0-or-later	plasma-workspace,kf6	cmake,ninja	https://kde.org/	https://download.kde.org/stable/plasma/{version}/plasma-desktop-{version}.tar.xz	The Plasma desktop session
 base	plasma-framework	6.20.0	cmake	LGPL-2.1-or-later	kf6,qt6-base	cmake,ninja	https://kde.org/	https://download.kde.org/stable/frameworks/6.20/plasma-framework-{version}.tar.xz	Plasma QML framework
@@ -356,7 +356,7 @@ base	dwm	6.6	suckless	MIT	libx11,libxft,libxinerama,freetype,fontconfig,harfbuzz
 base	dmenu	5.4	suckless	MIT	libx11,libxft,libxinerama,freetype,fontconfig	bmake	https://tools.suckless.org/dmenu/	https://dl.suckless.org/tools/dmenu-{version}.tar.gz	Dynamic menu for X
 base	slstatus	1.1	suckless	ISC	libx11	bmake	https://tools.suckless.org/slstatus/	https://dl.suckless.org/tools/slstatus-{version}.tar.gz	Status monitor for dwm
 base	slock	1.5	suckless	MIT	libx11,libxext,libxrandr,libxcrypt	bmake	https://tools.suckless.org/slock/	https://dl.suckless.org/tools/slock-{version}.tar.gz	Simple X screen locker
-base	dms	1.0.0	meta	BSD-2-Clause	dwl,foot,wofi,waybar,mako,arctic-base	-	https://github.com/apiwo/arctic-linux	-	Dynamic Minimal Session, the Arctic desktop shell
+base	dms	1.0.0	meta	BSD-2-Clause	dwl,foot,wofi,waybar,mako,scraplinux-base	-	https://github.com/apiwo/scraplinux	-	Dynamic Minimal Session, the ScrapLinux desktop shell
 base	waybar	0.15.0	meson	MIT	wayland,gtk3,gtkmm3,jsoncpp,libinput,pipewire,libnl	meson,ninja	https://github.com/Alexays/Waybar	https://github.com/Alexays/Waybar/archive/refs/tags/{version}.tar.gz	Status bar for Wayland compositors
 base	gtkmm3	3.24.10	meson	LGPL-2.1-or-later	gtk3,glibmm	meson,ninja	https://gtkmm.gnome.org/	https://download.gnome.org/sources/gtkmm/3.24/gtkmm-{version}.tar.xz	C++ bindings for GTK 3
 base	glibmm	2.84.0	meson	LGPL-2.1-or-later	glib,libsigcplusplus	meson,ninja	https://gtkmm.gnome.org/	https://download.gnome.org/sources/glibmm/2.84/glibmm-{version}.tar.xz	C++ bindings for glib
@@ -397,9 +397,9 @@ base	libgudev	238	meson	LGPL-2.1-or-later	glib,libudev-zero	meson,ninja	https://
 base	vte3	0.82.0	meson	LGPL-3.0-only	gtk3,pango,pcre2,glib	meson,ninja	https://gitlab.gnome.org/GNOME/vte	https://download.gnome.org/sources/vte/0.82/vte-{version}.tar.xz	Terminal widget library
 base	librsvg	2.61.0	cargo	LGPL-2.1-or-later	cairo,pango,gdk-pixbuf,libxml2	rust,cargo	https://wiki.gnome.org/Projects/LibRsvg	https://download.gnome.org/sources/librsvg/2.61/librsvg-{version}.tar.xz	SVG rendering library
 base	sddm	0.21.0	cmake	GPL-2.0-or-later	qt6-base,qt6-declarative,libxcb,pam	cmake,ninja	https://github.com/sddm/sddm	https://github.com/sddm/sddm/archive/refs/tags/v{version}.tar.gz	Qt display manager, Wayland capable
-base	sddm-arctic-theme	1.0.0	meta	BSD-2-Clause	sddm,qt6-declarative	-	https://github.com/apiwo/arctic-linux	-	The Arctic login screen
+base	sddm-scraplinux-theme	1.0.0	meta	BSD-2-Clause	sddm,qt6-declarative	-	https://github.com/apiwo/scraplinux	-	The ScrapLinux login screen
 base	adwaita-icon-theme	50.0	meson	LGPL-3.0-or-later CC0-1.0	glibc	meson,ninja	https://gitlab.gnome.org/GNOME/adwaita-icon-theme	https://download.gnome.org/sources/adwaita-icon-theme/50/adwaita-icon-theme-{version}.tar.xz	The Adwaita (GNOME) icon theme, for LXQt and any GTK app on the desktop
-base	arctic-plasma-theme	1.0.0	meta	BSD-2-Clause CC-BY-SA-4.0	plasma-workspace	-	https://github.com/apiwo/arctic-linux	-	Arctic theme, wallpapers and icons for Plasma
+base	scraplinux-plasma-theme	1.0.0	meta	BSD-2-Clause CC-BY-SA-4.0	plasma-workspace	-	https://github.com/apiwo/scraplinux	-	ScrapLinux theme, wallpapers and icons for Plasma
 base	xdm	1.1.17	autotools	MIT	libx11,libxaw,libxmu,libxft,xorg-server	-	https://x.org/	https://x.org/pub/individual/app/xdm-{version}.tar.xz	The X display manager
 base	greetd	0.10.3	cargo	GPL-3.0-only	glibc,libxcrypt	rust,cargo	https://sr.ht/~kennylevinsen/greetd/	https://git.sr.ht/~kennylevinsen/greetd/archive/{version}.tar.gz	Minimal login daemon
 base	tuigreet	0.9.1	cargo	GPL-3.0-only	greetd	rust,cargo	https://github.com/apognu/tuigreet	https://github.com/apognu/tuigreet/archive/refs/tags/{version}.tar.gz	Console greeter for greetd
@@ -522,12 +522,12 @@ base	fish	4.2.0	cmake	GPL-2.0-only	glibc,netbsd-curses,pcre2	cmake,ninja,rust	ht
 base	dash	0.5.13	autotools	BSD-3-Clause	glibc	-	http://gondor.apana.org.au/~herbert/dash/	http://gondor.apana.org.au/~herbert/dash/files/dash-{version}.tar.gz	POSIX-compliant minimal shell
 #
 # =============================================================== kernels
-kernels	Arctic-base-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Arctic kernel with broad hardware support
-kernels	Arctic-libre-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Arctic kernel, fully free, no blob loading
-kernels	Arctic-small-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Arctic kernel, monolithic and minimal
-kernels	Arctic-rt-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Arctic kernel with full preemption, for audio work
-kernels	Arctic-lts-kernel	6.12.60	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-{version}.tar.xz	Arctic kernel on the long-term support series
-kernels	Arctic-hardened-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Arctic kernel with the hardening options turned up
+kernels	ScrapLinux-base-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel with broad hardware support
+kernels	ScrapLinux-libre-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel, fully free, no blob loading
+kernels	ScrapLinux-small-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel, monolithic and minimal
+kernels	ScrapLinux-rt-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel with full preemption, for audio work
+kernels	ScrapLinux-lts-kernel	6.12.60	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-{version}.tar.xz	ScrapLinux kernel on the long-term support series
+kernels	ScrapLinux-hardened-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel with the hardening options turned up
 kernels	linux-firmware	20260622	firmware	various-redistributable	-	-	https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git	https://kernel.org/pub/linux/kernel/firmware/linux-firmware-{version}.tar.xz	Device firmware for Linux drivers
 kernels	sof-firmware	2025.12	firmware	BSD-3-Clause	-	-	https://github.com/thesofproject/sof-bin	https://github.com/thesofproject/sof-bin/releases/download/v{version}/sof-bin-{version}.tar.gz	Sound Open Firmware, for modern Intel audio
 kernels	alsa-ucm-conf	1.2.15	make	BSD-3-Clause	-	-	https://alsa-project.org/	https://www.alsa-project.org/files/pub/lib/alsa-ucm-conf-{version}.tar.bz2	ALSA use case manager configuration
@@ -538,7 +538,7 @@ kernels	alsa-ucm-conf	1.2.15	make	BSD-3-Clause	-	-	https://alsa-project.org/	htt
 nonfree	nvidia-drivers	590.48	dkms	NVIDIA-proprietary	glibc,gcc-libs,libglvnd,libx11,libxext,libxxf86vm,libdrm,wayland,mesa,libpciaccess	linux-headers,gmake,clang	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA proprietary driver and kernel module (needs libstdc++ and libgcc_s from gcc-libs)
 nonfree	nvidia-utils	590.48	binary	NVIDIA-proprietary	nvidia-drivers,gcc-libs,libglvnd,mesa	-	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA userspace libraries, nvidia-smi and CUDA loader
 nonfree	nvidia-settings	595.84	make	GPL-2.0-only	nvidia-utils,gcc-libs,gtk3,libjansson	-	https://github.com/NVIDIA/nvidia-settings	https://github.com/NVIDIA/nvidia-settings/archive/refs/tags/{version}.tar.gz	NVIDIA control panel
-nonfree	nvidia-lts-drivers	590.48	dkms	NVIDIA-proprietary	glibc,Arctic-lts-kernel	linux-headers	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA driver built for the LTS kernel
+nonfree	nvidia-lts-drivers	590.48	dkms	NVIDIA-proprietary	glibc,ScrapLinux-lts-kernel	linux-headers	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA driver built for the LTS kernel
 nonfree	nvidia-open	595.84	dkms	MIT GPL-2.0-only	glibc	linux-headers	https://github.com/NVIDIA/open-gpu-kernel-modules	https://github.com/NVIDIA/open-gpu-kernel-modules/archive/refs/tags/{version}.tar.gz	NVIDIA open kernel modules for Turing and newer
 nonfree	cuda	13.2	binary	NVIDIA-proprietary	nvidia-utils,gcc-libs	-	https://developer.nvidia.com/cuda-toolkit	https://developer.download.nvidia.com/compute/cuda/{version}/local_installers/cuda_{version}_linux.run	NVIDIA CUDA toolkit
 nonfree	broadcom-wl	6.30.223.271	dkms	Broadcom-proprietary	glibc	linux-headers	https://www.broadcom.com/	https://docs.broadcom.com/docs-and-downloads/docs/linux_sta/hybrid-v35_64-nodebug-pcoem-{V_}.tar.gz	Broadcom 802.11 wireless driver
@@ -584,7 +584,7 @@ multilib	zlib-32	1.3.1	autotools	Zlib	zlib,glibc-32	-	https://zlib.net/	https://
 multilib	libressl-32	4.2.0	autotools	ISC Apache-2.0	libressl,glibc-32	-	https://www.libressl.org/	https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{version}.tar.gz	LibreSSL, 32-bit
 multilib	nvidia-utils-32	590.48	binary	NVIDIA-proprietary	nvidia-utils,glibc-32	-	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA userspace libraries, 32-bit
 multilib	libgl-32	26.0.2	meta	MIT	mesa-32	-	https://mesa3d.org/	-	32-bit OpenGL, for Steam and Wine
-multilib	steam-deps-32	1.0.0	meta	BSD-2-Clause	glibc-32,mesa-32,libx11-32,alsa-lib-32,vulkan-loader-32,libgl-32	-	https://github.com/apiwo/arctic-linux	-	Everything 32-bit that Steam needs
+multilib	steam-deps-32	1.0.0	meta	BSD-2-Clause	glibc-32,mesa-32,libx11-32,alsa-lib-32,vulkan-loader-32,libgl-32	-	https://github.com/apiwo/scraplinux	-	Everything 32-bit that Steam needs
 extra	ncdu	2.9	make	MIT	glibc,netbsd-curses	zig	https://dev.yorhel.nl/ncdu	https://dev.yorhel.nl/download/ncdu-{version}.tar.gz	Disk usage analyser with a text UI
 extra	tealdeer	1.8.0	cargo	MIT Apache-2.0	glibc,libressl	rust,cargo	https://github.com/tealdeer-rs/tealdeer	https://github.com/tealdeer-rs/tealdeer/archive/refs/tags/v{version}.tar.gz	Fast tldr client, for when man is too much
 extra	hyperfine	1.20.0	cargo	MIT Apache-2.0	glibc	rust,cargo	https://github.com/sharkdp/hyperfine	https://github.com/sharkdp/hyperfine/archive/refs/tags/v{version}.tar.gz	Command-line benchmarking tool
@@ -607,13 +607,13 @@ base	wlogout	1.1.1	meson	MIT	gtk3,wayland	meson,ninja	https://github.com/ArtsyMa
 #
 # =============================================================== profile
 # Profile packages. Each installs a whole working setup and writes its
-# configuration, instead of dropping a bare component on you. alpm prints a
+# configuration, instead of dropping a bare component on you. scraps prints a
 # warning before installing one, because they touch /etc and the user's home.
-profile	niri-dms	1.0.0	meta	BSD-2-Clause	niri,dankmaterialshell,foot,fuzzel,mako,swaylock,wl-clipboard,grim,slurp,xorg-xwayland,pipewire,wireplumber,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts,noto-fonts-emoji,nemo,firefox	-	https://github.com/apiwo/arctic-linux	-	Niri + DankMaterialShell with the Arctic neutral rice and keybinds
-profile	arctic-kde	1.0.0	meta	BSD-2-Clause	plasma-meta,foot,sddm,sddm-arctic-theme,arctic-plasma-theme,dolphin,kate,ark,spectacle,gwenview,okular,pipewire,wireplumber,ttf-jetbrains-mono,noto-fonts,noto-fonts-emoji	-	https://github.com/apiwo/arctic-linux	-	KDE Plasma with foot and the Arctic colour scheme
-profile	arctic-xfce	1.0.0	meta	BSD-2-Clause	xfce4-meta,foot,xfce4-notifyd,xfce4-screenshooter,thunar,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,lightdm,pipewire,wireplumber,ttf-jetbrains-mono,noto-fonts,noto-fonts-emoji,arctic-plasma-theme	-	https://github.com/apiwo/arctic-linux	-	Xfce with the Arctic theme, foot and a neutral panel layout
-profile	apiwow-dwm	1.0.0	meta	MIT BSD-2-Clause	dwm,dmenu,st,picom,slstatus,slock,foot,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,libx11,libxft,libxinerama,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts,feh	clang,bmake	https://github.com/apiwo/arctic-linux	-	dwm + picom, calm grey and white, with the Arctic terminal and fonts
-profile	apiwow-lxqt	1.0.0	meta	BSD-2-Clause	sddm,sddm-arctic-theme,liblxqt,lxqt-session,lxqt-panel,lxqt-globalkeys,pcmanfm-qt,qterminal,adwaita-icon-theme,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,xkbcomp,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts	-	https://github.com/apiwo/arctic-linux	-	SDDM + LXQt, the full desktop session on X11
+profile	niri-dms	1.0.0	meta	BSD-2-Clause	niri,dankmaterialshell,foot,fuzzel,mako,swaylock,wl-clipboard,grim,slurp,xorg-xwayland,pipewire,wireplumber,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts,noto-fonts-emoji,nemo,firefox	-	https://github.com/apiwo/scraplinux	-	Niri + DankMaterialShell with the ScrapLinux neutral rice and keybinds
+profile	scraplinux-kde	1.0.0	meta	BSD-2-Clause	plasma-meta,foot,sddm,sddm-scraplinux-theme,scraplinux-plasma-theme,dolphin,kate,ark,spectacle,gwenview,okular,pipewire,wireplumber,ttf-jetbrains-mono,noto-fonts,noto-fonts-emoji	-	https://github.com/apiwo/scraplinux	-	KDE Plasma with foot and the ScrapLinux colour scheme
+profile	scraplinux-xfce	1.0.0	meta	BSD-2-Clause	xfce4-meta,foot,xfce4-notifyd,xfce4-screenshooter,thunar,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,lightdm,pipewire,wireplumber,ttf-jetbrains-mono,noto-fonts,noto-fonts-emoji,scraplinux-plasma-theme	-	https://github.com/apiwo/scraplinux	-	Xfce with the ScrapLinux theme, foot and a neutral panel layout
+profile	apiwow-dwm	1.0.0	meta	MIT BSD-2-Clause	dwm,dmenu,st,picom,slstatus,slock,foot,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,libx11,libxft,libxinerama,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts,feh	clang,bmake	https://github.com/apiwo/scraplinux	-	dwm + picom, calm grey and white, with the ScrapLinux terminal and fonts
+profile	apiwow-lxqt	1.0.0	meta	BSD-2-Clause	sddm,sddm-scraplinux-theme,liblxqt,lxqt-session,lxqt-panel,lxqt-globalkeys,pcmanfm-qt,qterminal,adwaita-icon-theme,xorg-server,xorg-xinit,xauth,xterm,xf86-input-libinput,xkbcomp,ttf-jetbrains-mono,ttf-nerd-fonts-symbols,noto-fonts	-	https://github.com/apiwo/scraplinux	-	SDDM + LXQt, the full desktop session on X11
 main	skalibs	2.14.4.0	autotools	ISC	glibc	-	https://skarnet.org/software/skalibs/	https://skarnet.org/software/skalibs/skalibs-{version}.tar.gz	skarnet base library, needed by s6
 main	execline	2.9.7.0	autotools	ISC	glibc,skalibs	-	https://skarnet.org/software/execline/	https://skarnet.org/software/execline/execline-{version}.tar.gz	Non-interactive scripting language for s6
 main	s6	2.13.2.0	autotools	ISC	glibc,skalibs,execline	-	https://skarnet.org/software/s6/	https://skarnet.org/software/s6/s6-{version}.tar.gz	skarnet supervision suite
@@ -624,9 +624,9 @@ main	sysvinit	3.14	make	GPL-2.0-or-later	glibc	-	https://github.com/slicer69/sys
 main	runit	2.2.0	make	BSD-3-Clause	glibc	-	http://smarden.org/runit/	http://smarden.org/runit/runit-{version}.tar.gz	Small init and service supervision
 main	nitro	0.8.1	make	0BSD	glibc	-	https://github.com/leahneukirchen/nitro	https://github.com/leahneukirchen/nitro/archive/refs/tags/v{version}.tar.gz	Tiny init system and process supervisor
 main	dinit	0.19.4	make	Apache-2.0	glibc	-	https://github.com/davmac314/dinit	https://github.com/davmac314/dinit/archive/refs/tags/v{version}.tar.gz	Service manager and init with dependency handling
-profile	arctic-sound	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils	-	https://github.com/apiwo/arctic-linux	-	PipeWire, WirePlumber and alsamixer, configured and enabled
-profile	sound-setup	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils	-	https://github.com/apiwo/arctic-linux	-	PipeWire audio, wired up and started
-profile	sound-setup-openrc	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils,openrc	-	https://github.com/apiwo/arctic-linux	-	PipeWire audio, wired up and started (OpenRC)
+profile	scraplinux-sound	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils	-	https://github.com/apiwo/scraplinux	-	PipeWire, WirePlumber and alsamixer, configured and enabled
+profile	sound-setup	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils	-	https://github.com/apiwo/scraplinux	-	PipeWire audio, wired up and started
+profile	sound-setup-openrc	1.0.0	meta	BSD-2-Clause	pipewire,wireplumber,pipewire-pulse,alsa-lib,alsa-utils,openrc	-	https://github.com/apiwo/scraplinux	-	PipeWire audio, wired up and started (OpenRC)
 extra	libluv	1.51.0	cmake	Apache-2.0	glibc,libuv,luajit	cmake,ninja	https://github.com/luvit/luv	https://github.com/luvit/luv/releases/download/{version}-0/luv-{version}-0.tar.gz	libuv bindings for Lua, needed by neovim
 profile	lazyvim	1.0.0	meta	MIT	neovim,git	-	https://www.lazyvim.org/	-	Sets up the official LazyVim starter config, on request, per user
 main	signify	33	make	ISC	glibc	-	https://github.com/aperezdc/signify	https://github.com/aperezdc/signify/archive/refs/tags/v{version}.tar.gz	Cryptographically sign and verify files (Ed25519)
@@ -686,7 +686,7 @@ base	qterminal	2.4.0	cmake	GPL-2.0-or-later	glibc,qt6-base,qt6-svg,qtermwidget	-
 base	libxfce4windowing	4.20.7	autotools	LGPL-2.1-or-later	glibc,gtk3,libx11,libwnck,wayland	-	https://xfce.org/	https://archive.xfce.org/src/xfce/libxfce4windowing/4.20/libxfce4windowing-{version}.tar.bz2	Windowing abstraction for Xfce
 main	spirv-llvm-translator	22.1.5	cmake	NCSA	glibc,llvm,spirv-tools	cmake,ninja,llvm	https://github.com/KhronosGroup/SPIRV-LLVM-Translator	https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v{version}.tar.gz	LLVM IR to SPIR-V translator
 main	spirv-headers	1.4.357.0	cmake	MIT	glibc	cmake,ninja	https://github.com/KhronosGroup/SPIRV-Headers	https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-{version}.tar.gz	Machine-readable SPIR-V headers
-main	initialization	0.8.1	make	0BSD	glibc	-	https://github.com/apiwo/initialization	-	The Arctic init system and process supervisor
+main	initialization	0.8.1	make	0BSD	glibc	-	https://github.com/apiwo/initialization	-	The ScrapLinux init system and process supervisor
 extra	vscodium	1.126.04524	make	MIT	glibc,gtk3,nss,libx11,libxcb,libxkbcommon,alsa-lib,libdrm,mesa	-	https://vscodium.com/	https://github.com/VSCodium/vscodium/releases/download/{version}/VSCodium-linux-x64-{version}.tar.gz	VS Code without telemetry or branding
 main	iw	6.17	make	ISC	glibc,libnl	pkgconf	https://wireless.wiki.kernel.org/	https://www.kernel.org/pub/software/network/iw/iw-{version}.tar.xz	Configure and scan wireless devices through nl80211
 
@@ -707,4 +707,4 @@ base	mkfontscale	1.2.3	autotools	MIT	glibc,libfontenc,freetype,xorgproto	-	https
 base	bdftopcf	1.1	autotools	MIT	glibc,libxfont2,libfontenc	-	https://x.org/	https://x.org/pub/individual/app/bdftopcf-{version}.tar.gz	Convert X font from Bitmap Distribution Format to Portable Compiled Format
 base	xf86-video-amdgpu	23.0.0	autotools	MIT	glibc,xorg-server,libdrm,libpciaccess	-	https://x.org/	https://x.org/pub/individual/driver/xf86-video-amdgpu-{version}.tar.gz	X.Org driver for AMD GPUs (AMDGPU kernel driver)
 base	xf86-video-nouveau	1.0.18	autotools	MIT	glibc,xorg-server,libdrm,libpciaccess	-	https://x.org/	https://x.org/pub/individual/driver/xf86-video-nouveau-{version}.tar.gz	X.Org driver for NVIDIA GPUs via the open nouveau kernel driver
-profile	x11-base	1.0.0	meta	MIT	xorg-server,xorg-xinit,xauth,libx11,libxext,libxcb,xcb-proto,libxau,libxdmcp,xtrans,libxrandr,libxi,libxcursor,libxfixes,libxrender,libxinerama,libxcomposite,libxdamage,libxtst,libxv,libxxf86vm,libxkbcommon,xkeyboard-config,libpciaccess,mesa,mtdev,libevdev,xf86-input-libinput,xf86-video-amdgpu,xf86-video-nouveau,pixman,font-util,encodings,font-misc-misc,xkbcomp,setxkbmap,xrandr,xset,dbus	clang,bmake	https://github.com/apiwo/arctic-linux	-	A real, running X server with input/GPU drivers and a usable font path - not just client libraries. modesetting is built into xorg-server itself and covers Intel/generic KMS; xf86-video-intel is deliberately not packaged, it is unmaintained upstream since 2015 for anything past Broadwell and modesetting is its own documented replacement.
+profile	x11-base	1.0.0	meta	MIT	xorg-server,xorg-xinit,xauth,libx11,libxext,libxcb,xcb-proto,libxau,libxdmcp,xtrans,libxrandr,libxi,libxcursor,libxfixes,libxrender,libxinerama,libxcomposite,libxdamage,libxtst,libxv,libxxf86vm,libxkbcommon,xkeyboard-config,libpciaccess,mesa,mtdev,libevdev,xf86-input-libinput,xf86-video-amdgpu,xf86-video-nouveau,pixman,font-util,encodings,font-misc-misc,xkbcomp,setxkbmap,xrandr,xset,dbus	clang,bmake	https://github.com/apiwo/scraplinux	-	A real, running X server with input/GPU drivers and a usable font path - not just client libraries. modesetting is built into xorg-server itself and covers Intel/generic KMS; xf86-video-intel is deliberately not packaged, it is unmaintained upstream since 2015 for anything past Broadwell and modesetting is its own documented replacement.

@@ -3,7 +3,7 @@
 # This repackages the upstream build rather than compiling one. VS Code is an
 # Electron application: building it from source means a full Node toolchain, a
 # Chromium checkout and several hours, and the result would be the same binary
-# VSCodium already publishes and signs. Nothing else in Arctic is packaged this
+# VSCodium already publishes and signs. Nothing else in ScrapLinux is packaged this
 # way, and that is worth being explicit about - it is a binary repackage, in
 # extra, and it is not part of any profile.
 #

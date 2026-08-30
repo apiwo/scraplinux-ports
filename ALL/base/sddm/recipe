@@ -1,4 +1,4 @@
-# sddm - the display manager Arctic defaults to.
+# sddm - the display manager ScrapLinux defaults to.
 name=sddm
 version=0.21.0
 release=1
@@ -14,7 +14,7 @@ build() {
 	# See gen-ports.py's shared cmake template for why these three
 	# CMAKE_FIND_USE_* flags matter: without them find_package() can
 	# quietly resolve a real dependency against a host-installed copy
-	# never built for Arctic at all, via either the host's cmake package
+	# never built for ScrapLinux at all, via either the host's cmake package
 	# registry or a search prefix derived from this build's own PATH
 	# (which includes /host/usr/bin for host tools not yet packaged).
 	cmake -S "sddm-$version" -B build -G Ninja \

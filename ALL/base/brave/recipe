@@ -13,7 +13,7 @@ makedepend=""
 source="https://github.com/brave/brave-browser/releases/download/v1.95.24/brave-browser-1.95.24-linux-amd64.zip"
 sha256="SKIP"
 
-# Repackaged upstream build. Arctic prefers to compile from source, but a few
+# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
 # things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 

@@ -1,7 +1,7 @@
 # curl - Transfer data over any protocol
 #
 # Built without libidn2 and libpsl. Both are GNU or GNU-linked (libpsl pulls
-# libidn2, which pulls libunistring), and Arctic keeps glibc as its only GNU
+# libidn2, which pulls libunistring), and ScrapLinux keeps glibc as its only GNU
 # component. They are also what made curl unable to start on the live image
 # twice - internationalised hostnames and public-suffix cookie rules are not
 # worth three extra libraries on the one binary every repository is fetched

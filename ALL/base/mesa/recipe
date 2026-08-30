@@ -17,11 +17,11 @@ sha256="SKIP"
 
 build() {
 	cd "mesa-$version"
-	# One build covers AMD, Intel and the software fallback. Arctic enables
+	# One build covers AMD, Intel and the software fallback. ScrapLinux enables
 	# every free driver so a single package works on any machine.
 	#
 	# Two drivers are deliberately absent. nouveau's Vulkan driver (NVK) is
-	# written in Rust and its build wants bindgen, and Arctic has no Rust
+	# written in Rust and its build wants bindgen, and ScrapLinux has no Rust
 	# toolchain - nouveau's gallium driver is C and stays. VDPAU is gone from
 	# mesa 26 entirely, and meson stops on the unknown option rather than
 	# ignoring it.

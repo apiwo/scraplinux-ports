@@ -1,5 +1,5 @@
 # toybox - the BSD-licensed userland.
-# This is what makes Arctic's userland BSD rather than GNU: ls, cp, mv, cat,
+# This is what makes ScrapLinux's userland BSD rather than GNU: ls, cp, mv, cat,
 # sed, grep, tar and friends all come from here under the 0BSD licence.
 name=toybox
 version=0.8.14
@@ -18,8 +18,8 @@ build() {
 
 	# defconfig leaves out everything in toybox's "pending" set, and several
 	# commands a POSIX system is expected to have live there. Without them
-	# Arctic shipped with no tr, no stty, no expr and no diff at all: alpm
-	# and arcticfetch call tr and printed "tr: not found" over their own
+	# ScrapLinux shipped with no tr, no stty, no expr and no diff at all: scraps
+	# and scraplinuxfetch call tr and printed "tr: not found" over their own
 	# output, and the installer's chroot calls stty to fix the erase
 	# character, which silently did nothing because the command was not
 	# there. They are pending upstream because they are not finished to
@@ -37,13 +37,13 @@ package() {
 	install -Dm755 toybox "$pkgdir/usr/bin/toybox"
 
 	# Commands a dedicated package in the base system owns. toybox has its
-	# own implementation of every one of them, and Arctic wants the other:
+	# own implementation of every one of them, and ScrapLinux wants the other:
 	# busybox is what mounts filesystems, loads modules and brings up
 	# interfaces at boot, glibc's getconf and iconv are the real ones,
 	# netbsd-curses owns the terminal commands and attr the xattr tools.
 	#
 	# Linking them here does not quietly lose to the other implementation,
-	# it stops the install: alpm refuses a package whose files another
+	# it stops the install: scraps refuses a package whose files another
 	# package already owns. This list was one command short of busybox's
 	# and the base system would not install past /usr/bin/blkid.
 	#

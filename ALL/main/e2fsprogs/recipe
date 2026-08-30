@@ -27,7 +27,7 @@ build() {
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
 	# fuse2fs auto-detects libfuse3 on the build host and links against it
-	# if found. Arctic doesn't ship libfuse3, so the resulting fuse2fs
+	# if found. ScrapLinux doesn't ship libfuse3, so the resulting fuse2fs
 	# failed to start with "cannot open shared object file: libfuse3.so.4".
 	# The core e2fsprogs tools (mkfs.ext4, e2fsck, resize2fs, ...) don't
 	# need FUSE at all; only the userspace-mount tool does.

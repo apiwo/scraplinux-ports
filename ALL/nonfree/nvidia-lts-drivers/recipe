@@ -8,16 +8,16 @@ release=1
 desc="NVIDIA driver built for the LTS kernel"
 url="https://www.nvidia.com/"
 license="NVIDIA-proprietary"
-depend="glibc Arctic-lts-kernel"
+depend="glibc ScrapLinux-lts-kernel"
 makedepend="linux-headers"
 source="https://us.download.nvidia.com/XFree86/Linux-x86_64/590.48/NVIDIA-Linux-x86_64-590.48.run"
 sha256="SKIP"
 
-# Built against every installed kernel. alpm re-runs this from the package's
+# Built against every installed kernel. scraps re-runs this from the package's
 # post_upgrade hook whenever a kernel changes, which is what dkms is for.
 #
 # gmake, not make: Linux's kbuild is written against GNU make and bmake cannot
-# drive it. /usr/bin/make on Arctic is bmake, so kernel modules ask for gmake
+# drive it. /usr/bin/make on ScrapLinux is bmake, so kernel modules ask for gmake
 # explicitly.
 build() {
 	cd "NVIDIA-Linux-x86_64-590.48.run"

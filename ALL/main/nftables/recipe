@@ -23,7 +23,7 @@ build() {
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
 	# --with-cli=no, because configure looks for the symbol "readline" inside
-	# -ledit and Arctic's libedit does not ship that compatibility name, so it
+	# -ledit and ScrapLinux's libedit does not ship that compatibility name, so it
 	# stopped with "No suitable version of libedit found" and no firewall was
 	# ever packaged. What this drops is `nft -i`, the interactive shell; the
 	# rule language, the service and everything /etc/nftables.conf does are

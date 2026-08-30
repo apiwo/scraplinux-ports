@@ -1,5 +1,5 @@
-# llvm - the Arctic toolchain. clang, lld, libc++ and the whole LLVM suite.
-# This, not GCC, is what Arctic compiles with. GCC exists only on the build
+# llvm - the ScrapLinux toolchain. clang, lld, libc++ and the whole LLVM suite.
+# This, not GCC, is what ScrapLinux compiles with. GCC exists only on the build
 # machines as a stage-0 tool for glibc, and is never packaged.
 name=llvm
 version=22.1.8
@@ -10,7 +10,7 @@ license="Apache-2.0-with-LLVM-exception"
 depend="glibc zlib zstd libxml2"
 makedepend="cmake ninja python"
 provides="clang lld libcxx compiler"
-# AMDGPU is in the target list because mesa needs it, not because Arctic
+# AMDGPU is in the target list because mesa needs it, not because ScrapLinux
 # targets AMD GPUs as a platform: radeonsi asks llvm-config for an amdgpu
 # component and mesa refuses to configure without it, then tries to build
 # LLVM as a subproject of itself.
@@ -18,7 +18,7 @@ provides="clang lld libcxx compiler"
 # lldb and polly are left out deliberately. lldb wants swig and libedit and
 # is the part of an LLVM build most likely to fail on a machine that does not
 # have them; polly is an optimiser most packages never ask for. Neither is
-# needed to compile Arctic, and a toolchain that builds is worth more than a
+# needed to compile ScrapLinux, and a toolchain that builds is worth more than a
 # toolchain that would have had a debugger in it.
 #
 # Linking is capped at four jobs regardless of how many cores do the
@@ -57,13 +57,13 @@ build() {
 package() {
 	cd "llvm-project-$version.src"
 	DESTDIR="$pkgdir" ninja -C build install
-	# cc and c++ mean clang on Arctic.
+	# cc and c++ mean clang on ScrapLinux.
 	ln -sf clang "$pkgdir/usr/bin/cc"
 	ln -sf clang++ "$pkgdir/usr/bin/c++"
 	ln -sf ld.lld "$pkgdir/usr/bin/ld"
 	# Anything invoking the plain, unprefixed GNU binutils names by
 	# convention - autotools configure scripts, rustc's own build - has no
-	# way to find them otherwise: Arctic only ships LLVM's own versions.
+	# way to find them otherwise: ScrapLinux only ships LLVM's own versions.
 	ln -sf llvm-ar "$pkgdir/usr/bin/ar"
 	ln -sf llvm-strip "$pkgdir/usr/bin/strip"
 	# xorg-macros.m4 (used by every autotools-based Xorg library) probes

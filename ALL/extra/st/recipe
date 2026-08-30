@@ -12,8 +12,8 @@ sha256="SKIP"
 
 build() {
 	cd "st-0.9.3"
-	# Suckless software is configured in the source. Arctic ships a config.h
-	# with the Arctic palette; replace it and rebuild to change anything.
+	# Suckless software is configured in the source. ScrapLinux ships a config.h
+	# with the ScrapLinux palette; replace it and rebuild to change anything.
 	[ -f config.def.h ] && cp -f config.def.h config.h
 	# "tic -sx st.info" compiles the terminfo entry into the host's
 	# /usr/share/terminfo, which the build sandbox refuses ("Operation not

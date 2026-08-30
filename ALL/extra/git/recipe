@@ -19,7 +19,7 @@ build() {
 package() {
 	cd "git-$version"
 	make DESTDIR="$pkgdir" install
-	# The shipped completion works with the zsh Arctic defaults to.
+	# The shipped completion works with the zsh ScrapLinux defaults to.
 	install -Dm644 contrib/completion/git-completion.zsh \
 		"$pkgdir/usr/share/zsh/site-functions/_git"
 }

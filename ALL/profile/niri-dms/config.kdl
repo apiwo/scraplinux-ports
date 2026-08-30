@@ -1,7 +1,7 @@
-// Arctic Linux - niri, as shipped by the niri-dms profile.
+// ScrapLinux - niri, as shipped by the niri-dms profile.
 // Neutral grey and white, JetBrainsMono, DankMaterialShell for the bar
 // and notifications. Copied to ~/.config/niri/config.kdl for new users;
-// edit freely, alpm will not overwrite it (it is a backup= file).
+// edit freely, scraps will not overwrite it (it is a backup= file).
 
 // niri config for apiwo, ported from ~/.config/sway/config
 

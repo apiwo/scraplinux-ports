@@ -1,7 +1,7 @@
-# glibc - the C library. The only GNU component in an Arctic system.
+# glibc - the C library. The only GNU component in an ScrapLinux system.
 #
 # Note for anyone reading this expecting clang: glibc upstream requires GCC to
-# build itself, so the Arctic build machines keep a GCC purely as a stage-0
+# build itself, so the ScrapLinux build machines keep a GCC purely as a stage-0
 # tool. Nothing GCC produces beyond glibc ends up in a package, and the shipped
 # toolchain is clang/lld.
 name=glibc
@@ -19,7 +19,7 @@ options="!strip"
 build() {
 	mkdir -p build
 	cd build
-	# Arctic is merged-/usr: the loader and the former sbin tools live in /usr.
+	# ScrapLinux is merged-/usr: the loader and the former sbin tools live in /usr.
 	cat >configparms <<-CFG
 		slibdir=/usr/lib
 		rtlddir=/usr/lib

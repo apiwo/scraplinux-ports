@@ -27,6 +27,6 @@ package() {
 	gmake -f Makefile.sharedlibrary INSTALL_PREFIX=/usr LIBDIR=/lib DESTDIR="$pkgdir" install
 	# The debug variant (libduktaped) is a duplicate build of the same
 	# source with -g and no other differences - nothing in this tree asks
-	# for it, and Arctic packages do not ship debug/release library pairs.
+	# for it, and ScrapLinux packages do not ship debug/release library pairs.
 	rm -f "$pkgdir"/usr/lib/libduktaped*
 }

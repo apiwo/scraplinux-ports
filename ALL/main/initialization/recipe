@@ -1,8 +1,8 @@
-# initialization - the init system Arctic runs as pid 1.
+# initialization - the init system ScrapLinux runs as pid 1.
 #
 # A fork of Leah Neukirchen's nitro: the supervision core is nitro's and so is
 # the licence. What is different is the boot report, the naming, and that this
-# is the init Arctic ships rather than one of several a system might pick.
+# is the init ScrapLinux ships rather than one of several a system might pick.
 #
 # Pinned to a commit rather than a tag because the fork has no releases yet.
 # A branch archive would build something different every time it was fetched,
@@ -10,7 +10,7 @@
 name=initialization
 version=0.8.1
 release=1
-desc="The Arctic init system and process supervisor"
+desc="The ScrapLinux init system and process supervisor"
 url="https://github.com/apiwo/initialization"
 license="0BSD"
 depend="glibc"
@@ -35,7 +35,7 @@ build() {
 package() {
 	cd "initialization-$_commit"
 	make install PREFIX=/usr DESTDIR="$pkgdir"
-	# /usr/bin/service belongs to arctic-base: it is the wrapper that hands
+	# /usr/bin/service belongs to scraplinux-base: it is the wrapper that hands
 	# a verb to whichever init is actually running, so nothing here should
 	# answer for an init that is not.
 	rm -f "$pkgdir/usr/bin/service"

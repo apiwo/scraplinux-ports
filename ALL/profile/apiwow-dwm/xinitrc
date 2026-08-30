@@ -1,5 +1,5 @@
 #!/bin/sh
-# Arctic Linux - apiwow-dwm session.
+# ScrapLinux - apiwow-dwm session.
 
 [ -f "$HOME/.Xresources" ] && xrdb -merge "$HOME/.Xresources"
 

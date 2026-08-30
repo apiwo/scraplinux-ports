@@ -15,7 +15,7 @@ sha256="SKIP"
 
 build() {
 	cd "libXcomposite-0.4.6"
-	# alpm-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
 	# build() runs - the host's own shell running ./configure inherits
 	# it and can crash loading the sysroot's libc.so.6 instead of its own.
 	unset LD_LIBRARY_PATH

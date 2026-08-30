@@ -1,4 +1,4 @@
-# libarchive - bsdtar, and the library alpm uses to read .alpmz packages.
+# libarchive - bsdtar, and the library scraps uses to read .scrapsz packages.
 name=libarchive
 version=3.8.9
 release=1
@@ -21,6 +21,6 @@ build() {
 
 package() {
 	DESTDIR="$pkgdir" cmake --install build
-	# alpm calls bsdtar by name.
+	# scraps calls bsdtar by name.
 	ln -sf bsdtar "$pkgdir/usr/bin/tar" 2>/dev/null || true
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Arctic port recipes from the package manifest.
+"""Generate ScrapLinux port recipes from the package manifest.
 
 Hand-writing several hundred recipes means several hundred chances to get a
 configure flag wrong. Instead the manifest carries what is actually specific to
@@ -96,14 +96,14 @@ build() {{
 	# - CMAKE_FIND_USE_PACKAGE_REGISTRY / _SYSTEM_PACKAGE_REGISTRY=OFF:
 	#   without this cmake's own registry can find a host-installed copy
 	#   of the same library ahead of the one actually being built against
-	#   (real, hit by qt6-svg finding the host's Qt6 instead of Arctic's).
+	#   (real, hit by qt6-svg finding the host's Qt6 instead of ScrapLinux's).
 	# - CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH=OFF: cmake derives extra
 	#   find_package() search prefixes from every PATH entry (stripping a
 	#   trailing /bin or /sbin), and this build's PATH includes
 	#   /host/usr/bin and /host/bin as a fallback for host tools not yet
-	#   packaged for Arctic - without this, that becomes a search prefix
+	#   packaged for ScrapLinux - without this, that becomes a search prefix
 	#   of /host/usr, and find_package quietly resolves a real dependency
-	#   to a host copy that was never built against Arctic at all (hit by
+	#   to a host copy that was never built against ScrapLinux at all (hit by
 	#   pcmanfm-qt finding a host-installed fm-qt6 this way).
 	#
 	# Deliberately NOT set: CMAKE_FIND_USE_CMAKE_SYSTEM_PATH=OFF and
@@ -186,7 +186,7 @@ build() {{
 	# CARGO_HOME defaults to ~/.cargo - under the sandbox's read-only host
 	# bind when building as root, so cargo's own registry cache had nowhere
 	# to write and every download failed with "Read-only file system".
-	export CARGO_HOME="${{CARGO_HOME:-/tmp/arctic-cargo-home}}"
+	export CARGO_HOME="${{CARGO_HOME:-/tmp/scraplinux-cargo-home}}"
 	# Not clang/lld - nothing else in this tree builds with them (every other
 	# recipe just uses cc, which is gcc here), and forcing a linker that is
 	# not actually installed failed every single Rust package the same way.
@@ -244,8 +244,8 @@ package() {{
     "suckless": """
 build() {{
 	cd "{srcdir}"
-	# Suckless software is configured in the source. Arctic ships a config.h
-	# with the Arctic palette; replace it and rebuild to change anything.
+	# Suckless software is configured in the source. ScrapLinux ships a config.h
+	# with the ScrapLinux palette; replace it and rebuild to change anything.
 	[ -f config.def.h ] && cp -f config.def.h config.h
 	make -j"$JOBS" PREFIX=/usr
 }}
@@ -259,11 +259,11 @@ package() {{
 """,
     # ---------------------------------------------------------- kernel module
     "dkms": """
-# Built against every installed kernel. alpm re-runs this from the package's
+# Built against every installed kernel. scraps re-runs this from the package's
 # post_upgrade hook whenever a kernel changes, which is what dkms is for.
 #
 # gmake, not make: Linux's kbuild is written against GNU make and bmake cannot
-# drive it. /usr/bin/make on Arctic is bmake, so kernel modules ask for gmake
+# drive it. /usr/bin/make on ScrapLinux is bmake, so kernel modules ask for gmake
 # explicitly.
 build() {{
 	cd "{srcdir}"
@@ -303,13 +303,13 @@ package() {{
 # A meta package: the dependency list is the whole payload. Installing it pulls
 # in a working setup and nothing else.
 package() {{
-	install -d "$pkgdir/usr/share/arctic/meta"
-	printf '%s\\n' "{depends}" >"$pkgdir/usr/share/arctic/meta/{name}"
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\\n' "{depends}" >"$pkgdir/usr/share/scraplinux/meta/{name}"
 }}
 """,
     # ------------------------------------------------------- prebuilt binaries
     "binary": """
-# Repackaged upstream build. Arctic prefers to compile from source, but a few
+# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
 # things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 

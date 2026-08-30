@@ -1,4 +1,4 @@
-# dms - the Dynamic Minimal Session. Arctic's own tiny desktop shell.
+# dms - the Dynamic Minimal Session. ScrapLinux's own tiny desktop shell.
 #
 # Not a compositor: dms is a session that wires a compositor, a bar, a launcher
 # and a notification daemon together with one config file, so a fresh install
@@ -6,10 +6,10 @@
 name=dms
 version=1.0.0
 release=1
-desc="Dynamic Minimal Session, the Arctic lightweight desktop shell"
-url="https://github.com/apiwo/arctic-linux"
+desc="Dynamic Minimal Session, the ScrapLinux lightweight desktop shell"
+url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
-depend="dwl foot wofi waybar mako arctic-base"
+depend="dwl foot wofi waybar mako scraplinux-base"
 source="dms dms.conf dms-session.desktop"
 sha256="SKIP SKIP SKIP"
 backup="etc/dms/dms.conf"

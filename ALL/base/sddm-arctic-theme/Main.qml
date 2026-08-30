@@ -14,7 +14,7 @@ Rectangle {
 		width: 360
 
 		Text {
-			text: "ARCTIC LINUX"
+			text: "SCRAPLINUX LINUX"
 			color: "#8fb8ff"
 			font.pixelSize: 30
 			font.bold: true

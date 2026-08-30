@@ -4,4 +4,4 @@ do not resync from it). CMake has its own bootstrap script producing a
 plain Makefile, not a normal autotools ./configure - see the comment in
 build() for -DCMAKE_USE_OPENSSL=OFF, which is the load-bearing fix
 (prevents CMake's vendored librhash from linking a stray libcrypto.so.3
-instead of Arctic's LibreSSL libcrypto.so.57).
+instead of ScrapLinux's LibreSSL libcrypto.so.57).

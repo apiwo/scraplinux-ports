@@ -1,7 +1,7 @@
 # wayland - Wayland core protocol
 #
 # documentation=false: the docs need doxygen, xsltproc and the DocBook XSL
-# stylesheets, none of which Arctic builds. Without it meson fails at
+# stylesheets, none of which ScrapLinux builds. Without it meson fails at
 # configure time on doc/meson.build before compiling anything.
 name=wayland
 version=1.25.0

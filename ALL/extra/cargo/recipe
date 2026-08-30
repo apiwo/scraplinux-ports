@@ -1,9 +1,9 @@
 # cargo - Rust package manager and build tool
 #
 # Built from the same source tree as rust, but packaged separately so
-# `alpm add rust` and `alpm add cargo` both work on their own - cargo just
+# `scraps add rust` and `scraps add cargo` both work on their own - cargo just
 # depends on rust. This does mean a from-source rebuild compiles the whole
-# stage2 toolchain twice, once per recipe: alpm-build has no notion of one
+# stage2 toolchain twice, once per recipe: scraps-build has no notion of one
 # package reusing another's build tree, and keeping them as genuinely
 # separate installable packages was worth that cost.
 name=cargo

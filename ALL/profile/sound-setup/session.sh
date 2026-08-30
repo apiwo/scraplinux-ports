@@ -1,5 +1,5 @@
-# Arctic Linux - starts the pipewire/wireplumber user session once per
-# login, since pipewire is a per-user daemon and nothing else on Arctic
+# ScrapLinux - starts the pipewire/wireplumber user session once per
+# login, since pipewire is a per-user daemon and nothing else on ScrapLinux
 # starts it. Skipped outside a graphical session and if already running.
 if [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then
 	_pw_running=0

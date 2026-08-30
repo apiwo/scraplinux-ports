@@ -19,7 +19,7 @@ build() {
 	# autotools ./configure - no help text to introspect, no
 	# --disable-dependency-tracking. -des runs it non-interactively with
 	# defaults.
-	# Arctic ships llvm-ar/llvm-nm/llvm-ranlib, not the generic "ar"/"nm"/
+	# ScrapLinux ships llvm-ar/llvm-nm/llvm-ranlib, not the generic "ar"/"nm"/
 	# "ranlib" names Configure defaults to and hardcodes into libperl.a's
 	# build rule regardless of $PATH.
 	# -Dmake=gmake: without this Configure records bmake (the first "make"

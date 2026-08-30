@@ -1,5 +1,5 @@
 # Libraries only, enforced twice: --disable-all-programs in build() and a
 # removal of every binary directory in package(). A full `make install` here
-# shipped util-linux's /bin/login, which links libpam - a library Arctic does
+# shipped util-linux's /bin/login, which links libpam - a library ScrapLinux does
 # not have - over busybox's working login applet, and no installed system
 # could be logged into. The template has no field for either.

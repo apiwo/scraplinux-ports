@@ -15,7 +15,7 @@ sha256="SKIP"
 
 build() {
 	cd "libcap-2.78"
-	# alpm-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
 	# build() runs, for recipes that compile-and-run a helper against the
 	# target's own libs (gobject-introspection's g-ir-scanner is the usual
 	# case). libcap's Makefile never does that - it only invokes make - but
@@ -26,7 +26,7 @@ build() {
 	unset LD_LIBRARY_PATH
 	# libcap's Makefile hardcodes CC := gcc rather than honoring the
 	# inherited environment, so it built with the host's own hardened gcc
-	# plus Arctic's --sysroot/-fuse-ld=lld flags (still exported via
+	# plus ScrapLinux's --sysroot/-fuse-ld=lld flags (still exported via
 	# CFLAGS/LDFLAGS) instead of clang - a combination host gcc was never
 	# built for, and the sysroot's ld.lld crashed the same way `make` did
 	# above for the same reason. CC=$CC on the command line outranks the

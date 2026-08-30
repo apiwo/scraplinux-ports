@@ -25,7 +25,7 @@ build() {
 	# CARGO_HOME defaults to ~/.cargo - under the sandbox's read-only host
 	# bind when building as root, so cargo's own registry cache had nowhere
 	# to write and every download failed with "Read-only file system".
-	export CARGO_HOME="${CARGO_HOME:-/tmp/arctic-cargo-home}"
+	export CARGO_HOME="${CARGO_HOME:-/tmp/scraplinux-cargo-home}"
 	# Not clang/lld - nothing else in this tree builds with them (every other
 	# recipe just uses cc, which is gcc here), and forcing a linker that is
 	# not actually installed failed every single Rust package the same way.

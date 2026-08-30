@@ -1,11 +1,11 @@
-# screenfetch - System information, with the Arctic logo
+# screenfetch - System information, with the ScrapLinux logo
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=screenfetch
 version=3.9.1
 release=1
-desc="System information, with the Arctic logo"
+desc="System information, with the ScrapLinux logo"
 url="https://github.com/KittyKatt/screenFetch"
 license="GPL-3.0-only"
 depend="glibc"
