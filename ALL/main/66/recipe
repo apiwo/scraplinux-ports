@@ -14,8 +14,14 @@ source="https://git.obarun.org/Obarun/66/-/archive/0.9.1.2/66-0.9.1.2.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "66-66-0.9.1.2"
+	# Before the cd: scraps-build's own srcdir_fix (fired by its overridden
+	# cd when the literal directory name is wrong - this tarball's real top
+	# dir is 66-0.9.1.2, not 66-66-0.9.1.2) shells out to /bin/basename
+	# itself, which crashes the same way meson's own tooling does if
+	# LD_LIBRARY_PATH is still pointed at the sysroot - it was, since this
+	# unset previously ran *after* the cd that triggers it.
 	unset LD_LIBRARY_PATH
+	cd "66-66-0.9.1.2"
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
