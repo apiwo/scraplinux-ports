@@ -4,7 +4,7 @@ version=1.1.0
 release=1
 desc="SDDM + LXQt, the full desktop session on X11"
 url="https://github.com/apiwo/scraplinux"
-license="BSD-2-Clause"
+license="GPL-3.0-or-later"
 depend="sddm sddm-scraplinux-theme liblxqt lxqt-session lxqt-panel lxqt-globalkeys \
 	lxqt-config lxqt-policykit lxqt-notificationd lxqt-runner lxqt-powermanagement \
 	lxqt-archiver lxqt-about lxqt-admin screengrab \

@@ -8,7 +8,7 @@ release=1
 kind=profile
 desc="dwm + picom, calm grey and white, with the ScrapLinux terminal and fonts"
 url="https://github.com/apiwo/scraplinux"
-license="MIT BSD-2-Clause"
+license="MIT GPL-3.0-or-later"
 depend="dwm dmenu st picom slstatus slock foot \
 	xorg-server xorg-xinit xauth xterm libx11 libxft libxinerama \
 	ttf-jetbrains-mono ttf-nerd-fonts-symbols noto-fonts feh"

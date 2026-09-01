@@ -1,11 +1,8 @@
-# neofetch - System information script
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# neofetch - system information script, configured with the ScrapLinux logo.
 name=neofetch
 version=7.1.0
 release=1
-desc="System information script"
+desc="System information script, configured with the ScrapLinux logo"
 url="https://github.com/dylanaraps/neofetch"
 license="MIT"
 depend="glibc"
@@ -15,7 +12,45 @@ sha256="SKIP"
 
 build() {
 	cd "neofetch-7.1.0"
-	make -j"$JOBS" PREFIX=/usr
+	# neofetch has no file-based custom-logo option (unlike fastfetch) - every
+	# distro's art lives inline in get_distro_ascii()'s own case statement,
+	# matched against $distro, which on a plain /etc/os-release system (no
+	# distro_shorthand override, neofetch's own default) resolves to
+	# "${PRETTY_NAME} ${UBUNTU_CODENAME}" trimmed - "ScrapLinux" here, since
+	# PRETTY_NAME="ScrapLinux" and there is no UBUNTU_CODENAME. Every
+	# custom/derivative distro that wants its own neofetch art adds a case arm
+	# the same way; this does that instead of leaving ScrapLinux unmatched
+	# (falls through to the generic "Linux"* art otherwise).
+	logo_snippet="$(mktemp)"
+	cat >"$logo_snippet" <<'SNIPPET'
+        "ScrapLinux"*)
+            set_colors 3 8
+            read -rd '' ascii_data <<'EOF'
+${c1}            a8888b.
+${c1}           d888888b.
+${c1}           8P"YP"Y88
+${c2}           8|X|X|888
+${c1}           8'    .88
+${c1}           8`._.' Y8.
+${c1}          d/      `8b.
+${c1}         dP   .    Y8b.
+${c1}        d8:'  "  `::88b
+${c1}       d8"         'Y88b
+${c1}      :8P    '      :888
+${c1}       8a.   :     _a88P
+${c1}     ._/"Yaa_:   .| 88P|
+${c1}     \    YP"    `| 8P  `.
+${c1}     /     \.___.d|    .'
+${c1}     `--..__)8888P`._.'
+EOF
+        ;;
+
+SNIPPET
+	# Inserted right after the case statement opens, so it is tried before
+	# every upstream entry rather than depending on where in a 2000-line
+	# case block a later anchor might or might not still exist next release.
+	sed -i "/case \$(trim \"\$ascii_distro\") in/r $logo_snippet" neofetch
+	rm -f "$logo_snippet"
 }
 
 package() {

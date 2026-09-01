@@ -11,6 +11,19 @@ source="fastfetch-$version.tar.gz::https://github.com/fastfetch-cli/fastfetch/ar
 sha256="SKIP"
 
 build() {
+	cd "fastfetch-$version"
+	# fastfetch's own CMakeLists.txt (not this toolchain) hardcodes
+	# -Werror=incompatible-pointer-types into CMAKE_C_FLAGS itself, appended
+	# after anything a caller passes in - so handing cmake a -Wno-error= of
+	# our own on the command line loses, it just gets overridden by
+	# upstream's own flag later in the same string. fastfetch's source
+	# assigns strchr()'s return (char*) out of a const char* in a couple of
+	# places (io_unix.c, FFstrbuf.c) - valid, ordinary C, just stricter than
+	# this warning likes - so the build never reached "package with the
+	# ScrapLinux logo" at all without this. Removing only that one flag from
+	# upstream's own CMakeLists.txt line, not the whole WARNING_FLAGS set.
+	sed -i 's/ -Werror=incompatible-pointer-types / /' CMakeLists.txt
+	cd ..
 	cmake -S "fastfetch-$version" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
 		-DENABLE_SYSTEM_YYJSON=OFF
@@ -32,7 +45,7 @@ cat >"$pkgdir/etc/xdg/fastfetch/config.jsonc" <<-'JSON'
 		  "logo": {
 		    "source": "/usr/share/fastfetch/logos/scraplinux.txt",
 		    "type": "file",
-		    "color": { "1": "magenta", "2": "cyan" },
+		    "color": { "1": "#e8b923", "2": "#9a9892" },
 		    "padding": { "top": 1, "left": 2 }
 		  },
 		  "display": { "separator": "  " },
