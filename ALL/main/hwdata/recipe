@@ -1,0 +1,24 @@
+# hwdata - Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=hwdata
+version=0.410
+release=1
+desc="Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)"
+url="https://github.com/vcrhonek/hwdata"
+license="GPL-2.0-or-later"
+depend=""
+makedepend=""
+source="https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.410.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "hwdata-0.410"
+	make -j"$JOBS" PREFIX=/usr
+}
+
+package() {
+	cd "hwdata-0.410"
+	make PREFIX=/usr DESTDIR="$pkgdir" install
+}

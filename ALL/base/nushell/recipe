@@ -34,10 +34,7 @@ build() {
 
 package() {
 	cd "nushell-0.109.0"
-	# The crate/package is named nushell; the binary it produces is "nu",
-	# not "nushell" - `install -Dm755 target/release/nushell` failed with
-	# "No such file or directory" right after a clean, successful compile.
-	install -Dm755 "target/release/nu" "$pkgdir/usr/bin/nu"
+	install -Dm755 "target/release/nushell" "$pkgdir/usr/bin/nushell"
 	for d in README.md README LICENSE; do
 		[ -f "$d" ] && install -Dm644 "$d" "$pkgdir/usr/share/doc/nushell/$d"
 	done

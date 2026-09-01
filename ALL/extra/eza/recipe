@@ -29,17 +29,6 @@ build() {
 	# Not clang/lld - nothing else in this tree builds with them (every other
 	# recipe just uses cc, which is gcc here), and forcing a linker that is
 	# not actually installed failed every single Rust package the same way.
-	# libgit2-sys's build.rs prefers a system libgit2 over vendoring/building
-	# its own when it finds one via pkg-config - the sandbox bind-mounts the
-	# whole host filesystem read-only, and the build host has its own real
-	# libgit2 sitting at /usr/lib64/libgit2.so.1.9.4 (Gentoo's own package,
-	# nothing ScrapLinux ships). Without this, the resulting eza binary links
-	# against that exact host copy (readelf -d showed NEEDED
-	# libgit2.so.1.9), which does not exist on any real install - it only
-	# ever worked here by accident, on this one build host. Forces
-	# libgit2-sys to build its own vendored copy and link it statically
-	# instead.
-	export LIBGIT2_SYS_USE_PKG_CONFIG=0
 	cargo build --release --locked
 }
 

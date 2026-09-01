@@ -29,14 +29,4 @@ build() {
 package() {
 	cd "pkgconf-3.0.4"
 	DESTDIR="$pkgdir" ninja -C build install
-	# pkgconf is a drop-in replacement for the original freedesktop.org
-	# pkg-config, and every build tool that looks for a system pkg-config
-	# looks for it by that exact name, not "pkgconf" - the pkg-config Rust
-	# crate (system-deps, most *-sys crates' build.rs) does, and so does
-	# any autotools ./configure with a PKG_CONFIG check. Without this,
-	# `pkg-config` is not found at all even with pkgconf installed and on
-	# PATH, and the error ("pkg-config command could not be found") looks
-	# exactly like the tool being entirely missing. Every other
-	# distribution's pkgconf package provides this same symlink.
-	ln -sf pkgconf "$pkgdir/usr/bin/pkg-config"
 }

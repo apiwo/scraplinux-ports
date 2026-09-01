@@ -1,20 +1,20 @@
-# wlroots - Wayland compositor library
+# libdisplay-info - EDID and DisplayID parsing library, a wlroots dependency
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
-name=wlroots
-version=0.20.2
+name=libdisplay-info
+version=0.3.0
 release=1
-desc="Wayland compositor library"
-url="https://gitlab.freedesktop.org/wlroots/wlroots"
+desc="EDID and DisplayID parsing library, a wlroots dependency"
+url="https://gitlab.freedesktop.org/emersion/libdisplay-info"
 license="MIT"
-depend="wayland mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info"
+depend="glibc hwdata"
 makedepend="meson ninja"
-source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.20.2/downloads/wlroots-0.20.2.tar.gz"
+source="https://gitlab.freedesktop.org/emersion/libdisplay-info/-/archive/0.3.0/libdisplay-info-0.3.0.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "wlroots-0.20.2"
+	cd "libdisplay-info-0.3.0"
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -27,6 +27,6 @@ build() {
 }
 
 package() {
-	cd "wlroots-0.20.2"
+	cd "libdisplay-info-0.3.0"
 	DESTDIR="$pkgdir" ninja -C build install
 }

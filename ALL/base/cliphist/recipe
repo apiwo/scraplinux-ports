@@ -1,0 +1,26 @@
+# cliphist - Clipboard history for Wayland (wl-clipboard companion)
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=cliphist
+version=0.7.0
+release=1
+desc="Clipboard history for Wayland (wl-clipboard companion)"
+url="https://github.com/sentriz/cliphist"
+license="GPL-3.0"
+depend="glibc"
+makedepend="go"
+source="https://github.com/sentriz/cliphist/archive/refs/tags/v0.7.0.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "cliphist-0.7.0"
+	export CGO_CPPFLAGS="$CPPFLAGS" CGO_CFLAGS="$CFLAGS" CGO_LDFLAGS="$LDFLAGS"
+	export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+	go build -o "cliphist" .
+}
+
+package() {
+	cd "cliphist-0.7.0"
+	install -Dm755 "cliphist" "$pkgdir/usr/bin/cliphist"
+}

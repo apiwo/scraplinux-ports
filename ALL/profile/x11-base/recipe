@@ -1,0 +1,21 @@
+# x11-base - A real, running X server with input/GPU drivers and a usable font path - not just client libraries. modesetting is built into xorg-server itself and covers Intel/generic KMS; xf86-video-intel is deliberately not packaged, it is unmaintained upstream since 2015 for anything past Broadwell and modesetting is its own documented replacement.
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=x11-base
+version=1.0.0
+release=1
+desc="A real, running X server with input/GPU drivers and a usable font path - not just client libraries. modesetting is built into xorg-server itself and covers Intel/generic KMS; xf86-video-intel is deliberately not packaged, it is unmaintained upstream since 2015 for anything past Broadwell and modesetting is its own documented replacement."
+url="https://github.com/apiwo/scraplinux"
+license="MIT"
+depend="xorg-server xorg-xinit xauth libx11 libxext libxcb xcb-proto libxau libxdmcp xtrans libxrandr libxi libxcursor libxfixes libxrender libxinerama libxcomposite libxdamage libxtst libxv libxxf86vm libxkbcommon xkeyboard-config libpciaccess mesa mtdev libevdev xf86-input-libinput xf86-video-amdgpu xf86-video-nouveau pixman font-util encodings font-misc-misc xkbcomp setxkbmap xrandr xset dbus"
+makedepend="clang bmake"
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload. Installing it pulls
+# in a working setup and nothing else.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "xorg-server xorg-xinit xauth libx11 libxext libxcb xcb-proto libxau libxdmcp xtrans libxrandr libxi libxcursor libxfixes libxrender libxinerama libxcomposite libxdamage libxtst libxv libxxf86vm libxkbcommon xkeyboard-config libpciaccess mesa mtdev libevdev xf86-input-libinput xf86-video-amdgpu xf86-video-nouveau pixman font-util encodings font-misc-misc xkbcomp setxkbmap xrandr xset dbus" >"$pkgdir/usr/share/scraplinux/meta/x11-base"
+}

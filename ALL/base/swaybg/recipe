@@ -1,20 +1,20 @@
-# wlroots - Wayland compositor library
+# swaybg - Wallpaper tool for Wayland
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
-name=wlroots
-version=0.20.2
+name=swaybg
+version=1.2.2
 release=1
-desc="Wayland compositor library"
-url="https://gitlab.freedesktop.org/wlroots/wlroots"
+desc="Wallpaper tool for Wayland"
+url="https://github.com/swaywm/swaybg"
 license="MIT"
-depend="wayland mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info"
+depend="wayland cairo gdk-pixbuf"
 makedepend="meson ninja"
-source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.20.2/downloads/wlroots-0.20.2.tar.gz"
+source="https://github.com/swaywm/swaybg/archive/refs/tags/v1.2.2.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "wlroots-0.20.2"
+	cd "swaybg-1.2.2"
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -27,6 +27,6 @@ build() {
 }
 
 package() {
-	cd "wlroots-0.20.2"
+	cd "swaybg-1.2.2"
 	DESTDIR="$pkgdir" ninja -C build install
 }

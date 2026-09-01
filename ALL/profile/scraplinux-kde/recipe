@@ -1,0 +1,21 @@
+# scraplinux-kde - KDE Plasma with foot and the ScrapLinux colour scheme
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=scraplinux-kde
+version=1.0.0
+release=1
+desc="KDE Plasma with foot and the ScrapLinux colour scheme"
+url="https://github.com/apiwo/scraplinux"
+license="BSD-2-Clause"
+depend="plasma-meta foot sddm sddm-scraplinux-theme scraplinux-plasma-theme dolphin kate ark spectacle gwenview okular pipewire wireplumber ttf-jetbrains-mono noto-fonts noto-fonts-emoji"
+makedepend=""
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload. Installing it pulls
+# in a working setup and nothing else.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "plasma-meta foot sddm sddm-scraplinux-theme scraplinux-plasma-theme dolphin kate ark spectacle gwenview okular pipewire wireplumber ttf-jetbrains-mono noto-fonts noto-fonts-emoji" >"$pkgdir/usr/share/scraplinux/meta/scraplinux-kde"
+}

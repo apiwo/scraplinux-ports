@@ -1,20 +1,20 @@
-# wlroots - Wayland compositor library
+# cage - Kiosk compositor that runs a single application, wlroots-based
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
-name=wlroots
-version=0.20.2
+name=cage
+version=0.3.1
 release=1
-desc="Wayland compositor library"
-url="https://gitlab.freedesktop.org/wlroots/wlroots"
+desc="Kiosk compositor that runs a single application, wlroots-based"
+url="https://github.com/cage-kiosk/cage"
 license="MIT"
-depend="wayland mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info"
+depend="wlroots wayland libxkbcommon"
 makedepend="meson ninja"
-source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.20.2/downloads/wlroots-0.20.2.tar.gz"
+source="https://github.com/cage-kiosk/cage/archive/refs/tags/v0.3.1.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "wlroots-0.20.2"
+	cd "cage-0.3.1"
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -27,6 +27,6 @@ build() {
 }
 
 package() {
-	cd "wlroots-0.20.2"
+	cd "cage-0.3.1"
 	DESTDIR="$pkgdir" ninja -C build install
 }
