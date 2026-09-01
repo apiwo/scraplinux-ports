@@ -3,14 +3,14 @@
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=steam-runtime
-version=0.20260101
+version=latest-public-stable
 release=1
 desc="The Steam runtime libraries"
 url="https://store.steampowered.com/"
 license="Valve-proprietary"
 depend="steam"
 makedepend=""
-source="https://repo.steampowered.com/steamrt-images-scout/snapshots/0.20260101/steam-runtime.tar.xz"
+source="https://repo.steampowered.com/steamrt-images-scout/snapshots/latest-public-stable/steam-runtime.tar.xz"
 sha256="SKIP"
 
 # Repackaged upstream build. ScrapLinux prefers to compile from source, but a few

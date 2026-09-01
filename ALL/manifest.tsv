@@ -553,7 +553,7 @@ nonfree	ipw2200-firmware	3.1	firmware	Intel-proprietary-redistributable	-	-	http
 nonfree	rtl8821ce	6.30.0	dkms	GPL-2.0-only Realtek-proprietary	glibc	linux-headers	https://github.com/tomaspinho/rtl8821ce	https://github.com/tomaspinho/rtl8821ce/archive/refs/tags/v{version}.tar.gz	Realtek RTL8821CE wireless driver
 nonfree	rtl8812au	5.13.6	dkms	GPL-2.0-only Realtek-proprietary	glibc	linux-headers	https://github.com/morrownr/8812au-20210629	https://github.com/morrownr/8812au-20210629/archive/refs/heads/main.tar.gz	Realtek RTL8812AU wireless driver
 nonfree	facetimehd	0.7.0	dkms	GPL-2.0-only	glibc	linux-headers	https://github.com/patjak/facetimehd	https://github.com/patjak/facetimehd/archive/refs/tags/{version}.tar.gz	Apple FaceTime HD camera driver
-nonfree	steam-runtime	0.20260101	binary	Valve-proprietary	steam	-	https://store.steampowered.com/	https://repo.steampowered.com/steamrt-images-scout/snapshots/{version}/steam-runtime.tar.xz	The Steam runtime libraries
+nonfree	steam-runtime	latest-public-stable	binary	Valve-proprietary	steam	-	https://store.steampowered.com/	https://repo.steampowered.com/steamrt-images-scout/snapshots/{version}/steam-runtime.tar.xz	The Steam runtime libraries
 nonfree	unrar	7.2.2	make	unRAR-restricted	glibc	-	https://www.rarlab.com/	https://www.rarlab.com/rar/unrarsrc-{version}.tar.gz	Extract RAR archives
 nonfree	b43-firmware	6.30.163.46	firmware	Broadcom-proprietary	-	-	https://wireless.wiki.kernel.org/en/users/drivers/b43	https://www.lwfinger.com/b43-firmware/broadcom-wl-{version}.tar.bz2	Firmware for Broadcom b43 cards
 #
