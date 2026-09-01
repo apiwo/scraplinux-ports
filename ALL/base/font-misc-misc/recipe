@@ -30,6 +30,11 @@ build() {
 	# bmake is not GNU make - automake's dependency-tracking .deps
 	# fragments need nested variable expansion bmake doesn't have.
 	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
+	# No working gzip on ScrapLinux, same as encodings - this one takes a
+	# single --with-compression=<no|compress|gzip|bzip2> instead of two
+	# --disable-gzip-*-encodings flags. "no" is a real, supported value,
+	# not a workaround: PCF fonts load exactly the same either way.
+	case "$_help" in *--with-compression*) _opts="$_opts --with-compression=no" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
 	gmake -j"$JOBS"
