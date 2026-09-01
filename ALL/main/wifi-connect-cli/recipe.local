@@ -1,0 +1,2 @@
+Marker only - see CONTRIBUTING.md. Hand-written, not gen-ports.py's generic
+template - gen-ports.py must never regenerate over this.

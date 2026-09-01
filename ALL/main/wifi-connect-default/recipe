@@ -1,0 +1,22 @@
+# wifi-connect-default - wifi-connect-cli plus what most wireless hardware
+# actually needs to work: common firmware (linux-firmware covers Intel
+# iwlwifi and most others) and a real name-resolution path, not just link
+# association - udhcpc already writes /etc/resolv.conf on a successful
+# lease, so pulling in the firmware the driver needs to associate at all is
+# the piece that was missing.
+name=wifi-connect-default
+version=1.0.0
+release=1
+desc="wifi-connect-cli plus common wireless firmware (Intel iwlwifi and more)"
+url="https://github.com/apiwo/scraplinux"
+license="GPL-3.0-or-later"
+depend="wifi-connect-cli linux-firmware"
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "wifi-connect-cli linux-firmware" \
+		>"$pkgdir/usr/share/scraplinux/meta/wifi-connect-default"
+}

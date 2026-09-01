@@ -1,0 +1,20 @@
+# wifi-connect-cli - interactive wireless connect: scan, pick a network, connect.
+#
+# Split out of scraplinux-base's own payload so the interactive tool and its
+# scanning/regulatory deps (iw) are opt-in rather than bundled into every
+# install. rc.d/wifi (still in scraplinux-base) is the unattended boot-time
+# reconnect and does not need this package or iw at all - it only replays a
+# saved network.conf. This is the tool a person runs by hand.
+name=wifi-connect-cli
+version=1.0.0
+release=1
+desc="Interactive wireless connect - scan, pick a network, connect"
+url="https://github.com/apiwo/scraplinux"
+license="GPL-3.0-or-later"
+depend="glibc wpa_supplicant iw doas"
+source="wifi-connect"
+sha256="SKIP"
+
+package() {
+	install -Dm755 wifi-connect "$pkgdir/usr/bin/wifi-connect"
+}

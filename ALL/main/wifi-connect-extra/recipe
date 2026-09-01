@@ -1,0 +1,20 @@
+# wifi-connect-extra - wifi-connect-default plus the wireless drivers that
+# should not be forced on everyone by default: Broadcom's wl, and anything
+# else that's larger or more restrictively licensed than the common case
+# linux-firmware already covers.
+name=wifi-connect-extra
+version=1.0.0
+release=1
+desc="wifi-connect-default plus less common wireless drivers (Broadcom wl)"
+url="https://github.com/apiwo/scraplinux"
+license="GPL-3.0-or-later"
+depend="wifi-connect-default broadcom-wl"
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "wifi-connect-default broadcom-wl" \
+		>"$pkgdir/usr/share/scraplinux/meta/wifi-connect-extra"
+}
