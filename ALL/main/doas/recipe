@@ -9,7 +9,6 @@ depend="glibc"
 provides="sudo-replacement"
 source="opendoas-$version.tar.gz::https://github.com/Duncaen/OpenDoas/archive/refs/tags/v$version.tar.gz"
 sha256="SKIP"
-backup="etc/doas.conf"
 
 build() {
 	cd "OpenDoas-$version"
@@ -23,9 +22,11 @@ package() {
 	make DESTDIR="$pkgdir" install
 	# Without the setuid bit doas cannot do its job.
 	chmod 4755 "$pkgdir/usr/bin/doas"
-	install -Dm400 /dev/stdin "$pkgdir/etc/doas.conf" <<-CONF
-		# ScrapLinux - doas rules
-		permit persist :wheel
-		permit nopass :wheel cmd scraps args fetch all
-	CONF
+	# doas.conf itself is not shipped here: scraplinux-base owns
+	# /etc/doas.conf (its copy adds the HOME-preserving setenv rule
+	# `doas startx` needs to find the real user's .xinitrc), and a package
+	# and its base install both declaring the same file is exactly the
+	# file-conflict `scraps` refuses to silently resolve either way.
+	rm -f "$pkgdir/etc/doas.conf"
+	rmdir "$pkgdir/etc" 2>/dev/null || :
 }

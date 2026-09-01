@@ -1,0 +1,4 @@
+Marker only - see CONTRIBUTING.md. package() is hand-written: doas.conf is
+deliberately NOT shipped from this package (scraplinux-base owns
+/etc/doas.conf so its HOME-preserving startx rule survives). gen-ports.py
+must never regenerate over this.
