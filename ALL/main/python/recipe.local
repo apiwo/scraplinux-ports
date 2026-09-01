@@ -1,0 +1,5 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: CPython's
+configure needs an explicit --with-openssl to find LibreSSL (ScrapLinux's
+only TLS - see CONTRIBUTING.md), the generic autotools template passes no
+SSL flag at all so setup.py silently skipped the _ssl module.
+gen-ports.py must never regenerate over this.
