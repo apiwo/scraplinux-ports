@@ -14,6 +14,14 @@ arch="i686"
 
 build() {
 	cd "glibc-2.44"
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# build() runs, for recipes that compile-and-run a helper against the
+	# target's own libs - this one doesn't (it cross-builds glibc itself),
+	# and the plain host mkdir/cat this build() uses next crash instead,
+	# loading the sysroot's own libc.so.6 ("undefined symbol:
+	# __pointer_chk_guard, version GLIBC_PRIVATE") - same failure, same
+	# fix, as openrc's recipe already carries.
+	unset LD_LIBRARY_PATH
 	mkdir -p build-32 && cd build-32
 	# scraps-build exports CFLAGS/CXXFLAGS/LDFLAGS for the ordinary x86_64
 	# clang case before build() ever runs - --sysroot=$SCRAPS_SYSROOT and
