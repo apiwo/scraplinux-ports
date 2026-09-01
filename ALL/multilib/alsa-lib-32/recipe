@@ -15,20 +15,17 @@ sha256="SKIP"
 
 build() {
 	cd "alsa-lib-1.2.15"
-	# Some release tarballs are raw git-tag archives with no generated
-	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
-	# dist" tarball ships one, a GitHub/GitLab auto-generated source
-	# archive does not. Bootstrap it ourselves when that happens.
+	# Same reasoning as libx11-32/glibc-32: clean flag slate, real 32-bit
+	# target flags - scraps-build's own exported CFLAGS/LDFLAGS point at the
+	# 64-bit sysroot.
+	unset CFLAGS CXXFLAGS LDFLAGS
+	export CC="clang -m32" CXX="clang++ -m32"
+	export PKG_CONFIG_PATH=/usr/lib32/pkgconfig:/usr/lib/pkgconfig
 	[ -x ./configure ] || autoreconf -fi
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib32 --host=i686-pc-linux-gnu"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# bmake is not GNU make - automake's dependency-tracking .deps
-	# fragments need nested variable expansion bmake doesn't have.
 	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts

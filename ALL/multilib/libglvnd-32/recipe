@@ -1,0 +1,38 @@
+# libglvnd-32 - GL vendor dispatch, 32-bit
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=libglvnd-32
+version=1.7.0
+release=1
+desc="GL vendor dispatch, 32-bit"
+url="https://gitlab.freedesktop.org/glvnd/libglvnd"
+license="MIT"
+depend="glibc-32 libx11-32"
+makedepend="meson ninja"
+source="https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "libglvnd-v1.7.0"
+	unset CFLAGS CXXFLAGS LDFLAGS
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib32 \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		--cross-file="$(dirname "$recipe")/../mesa-32/i686-cross.ini"
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "libglvnd-v1.7.0"
+	DESTDIR="$pkgdir" ninja -C build install
+	# Same reason the 64-bit libglvnd recipe does this: the GLVND-preferred
+	# names (libOpenGL.so, libGLX.so) are not what most build systems look
+	# for by default - they want the legacy libGL.so name.
+	ln -sf libOpenGL.so.0 "$pkgdir/usr/lib32/libGL.so.1"
+	ln -sf libGL.so.1 "$pkgdir/usr/lib32/libGL.so"
+}

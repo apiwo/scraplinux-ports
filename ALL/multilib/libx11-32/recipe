@@ -15,20 +15,19 @@ sha256="SKIP"
 
 build() {
 	cd "libX11-1.8.13"
-	# Some release tarballs are raw git-tag archives with no generated
-	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
-	# dist" tarball ships one, a GitHub/GitLab auto-generated source
-	# archive does not. Bootstrap it ourselves when that happens.
+	# Same reasoning as glibc-32: the outer CFLAGS/CXXFLAGS/LDFLAGS
+	# scraps-build exports target 64-bit clang against the 64-bit sysroot -
+	# start clean and build the 32-bit set explicitly. clang itself is fine
+	# for ordinary userspace C (the glibc-32 clang problem was specific to
+	# glibc's own weak_alias source, not clang -m32 in general).
+	unset CFLAGS CXXFLAGS LDFLAGS
+	export CC="clang -m32" CXX="clang++ -m32"
+	export PKG_CONFIG_PATH=/usr/lib32/pkgconfig:/usr/lib/pkgconfig
 	[ -x ./configure ] || autoreconf -fi
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
+	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib32 --host=i686-pc-linux-gnu"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# bmake is not GNU make - automake's dependency-tracking .deps
-	# fragments need nested variable expansion bmake doesn't have.
 	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts

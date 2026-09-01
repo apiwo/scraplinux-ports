@@ -1,0 +1,33 @@
+# 66 - Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=66
+version=0.9.1.2
+release=1
+desc="Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init"
+url="https://web.obarun.org/software/66/"
+license="BSD-Zero-Clause"
+depend="glibc oblibs execline s6"
+makedepend="meson ninja"
+source="https://git.obarun.org/Obarun/66/-/archive/0.9.1.2/66-0.9.1.2.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "66-66-0.9.1.2"
+	unset LD_LIBRARY_PATH
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "66-66-0.9.1.2"
+	DESTDIR="$pkgdir" ninja -C build install
+}

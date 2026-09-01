@@ -1,0 +1,37 @@
+# openrc-32 - Dependency-based init system from Gentoo, 32-bit
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=openrc-32
+version=0.63.2
+release=1
+desc="Dependency-based init system from Gentoo, 32-bit"
+url="https://github.com/OpenRC/openrc"
+license="BSD-2-Clause"
+depend="glibc-32 util-linux-libs libcap"
+makedepend="meson ninja"
+source="https://github.com/OpenRC/openrc/archive/refs/tags/0.63.2.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "openrc-0.63.2"
+	# Same LD_LIBRARY_PATH crash the 64-bit openrc recipe already works
+	# around (meson's python-exec2c loading the sysroot's libc.so.6 against
+	# a host python built for a different libc), plus the usual clean
+	# 32-bit flag slate.
+	unset CFLAGS CXXFLAGS LDFLAGS LD_LIBRARY_PATH
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib32 \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		--cross-file="$(dirname "$recipe")/../mesa-32/i686-cross.ini"
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "openrc-0.63.2"
+	DESTDIR="$pkgdir" ninja -C build install
+}

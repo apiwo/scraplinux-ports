@@ -1,0 +1,4 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: real 32-bit
+cross flags (shared i686 meson cross-file, --libdir=/usr/lib32) plus the
+same LD_LIBRARY_PATH workaround the 64-bit openrc recipe needs.
+gen-ports.py must never regenerate over this.

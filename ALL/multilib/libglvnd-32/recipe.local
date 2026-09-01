@@ -1,0 +1,5 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: needs the
+i686 meson cross-file (shared with mesa-32, referenced by relative path)
+and --libdir=/usr/lib32, plus the same legacy libGL.so symlink the 64-bit
+libglvnd recipe adds in package().
+gen-ports.py must never regenerate over this.

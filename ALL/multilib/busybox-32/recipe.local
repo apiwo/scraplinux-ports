@@ -1,0 +1,6 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: reuses the
+real busybox's .config (main/busybox/scraplinux.config) built with
+CC="clang -m32", installed under a distinct usr/lib32/scraplinux/busybox32
+path/name so it cannot collide with or be mistaken for the real PID1
+busybox.
+gen-ports.py must never regenerate over this.

@@ -1,0 +1,4 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: same 32-bit
+fix as libx11-32/glibc-32 - -m32, --libdir=/usr/lib32,
+--host=i686-pc-linux-gnu, clean CFLAGS/LDFLAGS.
+gen-ports.py must never regenerate over this.

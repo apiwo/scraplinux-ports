@@ -1,0 +1,7 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: 32-bit mesa
+needs a real meson cross-file (i686-cross.ini, alongside this file), a
+trimmed driver set (no LLVM/Vulkan - a 32-bit LLVM is its own multi-hour
+cross-build), and --libdir=/usr/lib32. Verified building and installing a
+genuinely 32-bit mesa via build-batch.sh.
+gen-ports.py must never regenerate over this - it clobbered this exact
+recipe once already because this marker was missing.

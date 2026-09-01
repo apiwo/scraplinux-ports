@@ -1,0 +1,6 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: the
+gen-ports.py generic template built a 64-bit libX11 into /usr/lib under a
+"-32" package name. Needs -m32, --libdir=/usr/lib32, --host=i686-pc-linux-gnu,
+and a clean CFLAGS/LDFLAGS slate (scraps-build's own exported ones target
+the 64-bit sysroot).
+gen-ports.py must never regenerate over this.

@@ -8,21 +8,49 @@ release=1
 desc="OpenGL and Vulkan, 32-bit"
 url="https://mesa3d.org/"
 license="MIT"
-depend="mesa glibc-32"
+depend="mesa glibc-32 libglvnd-32"
 makedepend="meson ninja"
 source="https://archive.mesa3d.org/mesa-26.0.2.tar.xz"
 sha256="SKIP"
 
 build() {
 	cd "mesa-26.0.2"
+	# The 64-bit mesa recipe's full driver+LLVM matrix is not realistic to
+	# cross-build a second time for 32-bit in this pass - a 32-bit LLVM
+	# alone is its own multi-hour cross-build. Trimmed to what Steam
+	# actually needs to have a working glvnd-vendored GL: softpipe (the
+	# older pure-C software rasterizer, not llvmpipe - llvmpipe is LLVM by
+	# definition and cannot coexist with -Dllvm=disabled) plus nouveau
+	# (this machine's real GPU family is NVIDIA - the proprietary driver
+	# provides the real accelerated GL through glvnd, mesa-32 mainly needs
+	# to exist as a valid glvnd vendor and software fallback, not carry
+	# every gallium driver). No LLVM, no video codecs, no Vulkan (Vulkan
+	# needs the 32-bit LLVM this is avoiding).
+	#
+	# meson's CC env var is not how cross-compilation works here - a real
+	# cross machine file is, declaring the -m32 toolchain and host_machine.
+	# pkg_config_libdir needs /usr/share/pkgconfig too: xproto and friends
+	# are headers-only, arch-independent .pc files that live in share/, not
+	# lib32/ or lib/ - meson's cross mode does not fall back to the host's
+	# own default search path the way a native build does.
+	unset CFLAGS CXXFLAGS LDFLAGS
 	meson setup build \
 		--prefix=/usr \
-		--libdir=/usr/lib \
+		--libdir=/usr/lib32 \
 		--sysconfdir=/etc \
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
-		-Db_lto=true
+		--cross-file="$(dirname "$recipe")/i686-cross.ini" \
+		-Dgallium-drivers=nouveau,softpipe \
+		-Dvulkan-drivers= \
+		-Dplatforms=x11 \
+		-Dglx=dri \
+		-Degl=enabled \
+		-Dgbm=enabled \
+		-Dllvm=disabled \
+		-Dvideo-codecs= \
+		-Dgallium-va=disabled
 	ninja -C build -j"$JOBS"
 }
 

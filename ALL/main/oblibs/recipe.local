@@ -1,0 +1,5 @@
+Marker only - see CONTRIBUTING.md. build() adds one line: unset
+LD_LIBRARY_PATH before meson setup runs, same fix openrc's recipe already
+needed - meson's own tooling crashes against the sysroot's glibc
+otherwise.
+gen-ports.py must never regenerate over this.

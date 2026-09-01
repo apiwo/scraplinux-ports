@@ -15,14 +15,47 @@ arch="i686"
 build() {
 	cd "glibc-2.44"
 	mkdir -p build-32 && cd build-32
-	CC="clang -m32" CXX="clang++ -m32" \
+	# scraps-build exports CFLAGS/CXXFLAGS/LDFLAGS for the ordinary x86_64
+	# clang case before build() ever runs - --sysroot=$SCRAPS_SYSROOT and
+	# -L$SCRAPS_SYSROOT/usr/lib among them. Left in place, LDFLAGS pulled in
+	# 64-bit CRT objects (Scrt1.o/crtn.o - scraps-build's own multilib-host
+	# workaround copies those into the sysroot for the *64-bit* case) ahead
+	# of the ones this build just compiled for i686, and glibc's own
+	# multi-ABI Makefile machinery got confused into treating this as a
+	# secondary/compat sub-build of itself: "mv: cannot stat
+	# .../csu/32/crtn.o.T". A 32-bit glibc self-build needs to start from a
+	# clean flag slate, not the 64-bit sysroot's.
+	unset CFLAGS CXXFLAGS LDFLAGS
+	# Same reason the 64-bit glibc recipe uses gcc, not clang: glibc upstream
+	# requires GCC to build itself. clang -m32 got much further than "cannot
+	# compile" - it compiled hundreds of files - before failing on
+	# getrlimit.c's weak_alias idiom with -Wignored-attributes turned fatal,
+	# which is exactly the class of clang/glibc incompatibility the 64-bit
+	# recipe's comment already warns about. -m32 on the host's native
+	# multilib gcc (confirmed working: `gcc -m32` compiles fine here) is the
+	# standard way to get a 32-bit glibc without a real cross-toolchain -
+	# --host below is what actually selects the i386 sysdeps tree; it does
+	# not need to match `gcc -dumpmachine` (which stays x86_64-pc-linux-gnu
+	# under -m32, that's just the compiler binary's own identity).
+	cat >configparms <<-CFG
+		slibdir=/usr/lib32
+		rtlddir=/usr/lib32
+		sbindir=/usr/bin
+		rootsbindir=/usr/bin
+	CFG
+	CC="gcc -m32" CXX="g++ -m32" \
 	../configure \
 		--prefix=/usr \
 		--libdir=/usr/lib32 \
 		--libexecdir=/usr/lib32/glibc \
-		--host=i686-scraplinux-linux-gnu \
-		--build=x86_64-scraplinux-linux-gnu \
+		--host=i686-pc-linux-gnu \
+		--build=x86_64-pc-linux-gnu \
 		--enable-kernel=5.15 \
+		--enable-stack-protector=strong \
+		--enable-bind-now \
+		--disable-nscd \
+		--disable-werror \
+		--without-selinux \
 		--with-headers=/usr/include \
 		libc_cv_slibdir=/usr/lib32
 	make -j"$JOBS"
@@ -31,4 +64,17 @@ build() {
 package() {
 	cd "glibc-2.44/build-32"
 	make install DESTDIR="$pkgdir" install_root="$pkgdir"
+	# Every 32-bit binary built against this (libx11-32, openrc-32,
+	# busybox-32, mesa-32...) is linked expecting its interpreter at the
+	# standard multilib path /lib/ld-linux.so.2, not /usr/lib32 - that is
+	# clang -m32's own compiled-in default, not something any of those
+	# recipes chose. /lib already means the *64-bit* usr/lib on this
+	# merged-/usr system (the top-level /lib -> usr/lib symlink), so it
+	# cannot be repointed at usr/lib32 wholesale - only this one file needs
+	# to exist at that path. Without it every 32-bit binary this session
+	# built fails at exec with "No such file or directory", silently,
+	# because the missing path is the *interpreter*, not a missing library
+	# ldd would report.
+	mkdir -p "$pkgdir/usr/lib"
+	ln -sf ../lib32/ld-linux.so.2 "$pkgdir/usr/lib/ld-linux.so.2"
 }

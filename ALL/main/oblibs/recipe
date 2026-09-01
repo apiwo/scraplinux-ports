@@ -1,0 +1,38 @@
+# oblibs - Obarun's base C library - what 66 links against
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=oblibs
+version=0.4.0.1
+release=1
+desc="Obarun's base C library - what 66 links against"
+url="https://git.obarun.org/Obarun/oblibs"
+license="BSD-Zero-Clause"
+depend="glibc"
+makedepend="meson ninja"
+source="https://git.obarun.org/Obarun/oblibs/-/archive/0.4.0.1/oblibs-0.4.0.1.tar.gz"
+sha256="SKIP"
+
+build() {
+	cd "oblibs-0.4.0.1"
+	# Same crash the 64-bit openrc recipe already works around:
+	# scraps-build points LD_LIBRARY_PATH at the sysroot before build()
+	# runs, and meson's own python-exec2c/basename calls inherit it and
+	# crash loading the sysroot's glibc against a host binary built for a
+	# different one ("symbol lookup error").
+	unset LD_LIBRARY_PATH
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Db_lto=true
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	cd "oblibs-0.4.0.1"
+	DESTDIR="$pkgdir" ninja -C build install
+}

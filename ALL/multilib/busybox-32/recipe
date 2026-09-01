@@ -1,0 +1,42 @@
+# busybox-32 - Init, getty, device manager and network tools, 32-bit
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=busybox-32
+version=1.38.0
+release=1
+desc="Init, getty, device manager and network tools, 32-bit"
+url="https://busybox.net/"
+license="GPL-2.0-only"
+depend="glibc-32"
+makedepend=""
+source="https://busybox.net/downloads/busybox-1.38.0.tar.bz2"
+sha256="SKIP"
+
+build() {
+	cd "busybox-1.38.0"
+	unset CFLAGS CXXFLAGS LDFLAGS
+	# Same .config the real 64-bit busybox package uses (main/busybox,
+	# referenced relative to this recipe rather than duplicated) - a
+	# 32-bit busybox needs the same applet set, only compiled -m32.
+	cp "$(dirname "$recipe")/../../main/busybox/scraplinux.config" .config
+	sed -i "s/^CONFIG_CROSS_COMPILER_PREFIX=.*/CONFIG_CROSS_COMPILER_PREFIX=\"\"/" .config
+	make oldconfig </dev/null >/dev/null
+	# lld defaults to PIE, and busybox's x86-32 SHA-NI hwaccel code uses
+	# absolute-addressed asm that only links non-PIE ("relocation R_386_32
+	# cannot be used against local symbol"). busybox is not PIE-hardened
+	# anywhere else in this project either - build it the way it actually
+	# links.
+	make -j"$JOBS" CC="clang -m32" CFLAGS_EXTRA="-Wno-error -fno-pie" EXTRA_LDFLAGS="-no-pie"
+}
+
+package() {
+	cd "busybox-1.38.0"
+	# Installed under a distinct name/path so it cannot collide with the
+	# real 64-bit busybox that is actually PID 1 on this system - this is
+	# a 32-bit userland component (steam/wine-style compat use), not a
+	# second init.
+	install -Dm755 busybox "$pkgdir/usr/lib32/scraplinux/busybox32"
+	mkdir -p "$pkgdir/usr/bin"
+	ln -sf ../lib32/scraplinux/busybox32 "$pkgdir/usr/bin/busybox32"
+}

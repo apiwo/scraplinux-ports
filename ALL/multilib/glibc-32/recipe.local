@@ -1,0 +1,7 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: 32-bit glibc
+needs GCC (not clang, same reason as the 64-bit glibc recipe) with -m32,
+--host=i686-pc-linux-gnu to select the i386 sysdeps tree, and
+--disable-werror (clang's own restriction doesn't apply here, but glibc's
+-Werror default still trips on some sysdeps code under -m32 the same way
+it does on native builds).
+gen-ports.py must never regenerate over this.
