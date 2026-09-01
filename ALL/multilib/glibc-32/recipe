@@ -1,7 +1,5 @@
 # glibc-32 - The C library, 32-bit
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# Hand-written - see recipe.local beside this file.
 name=glibc-32
 version=2.44
 release=1
@@ -9,33 +7,28 @@ desc="The C library, 32-bit"
 url="https://www.gnu.org/software/libc/"
 license="LGPL-2.1-or-later"
 depend="glibc"
-makedepend="gcc"
+makedepend=""
 source="https://ftp.gnu.org/gnu/glibc/glibc-2.44.tar.xz"
 sha256="SKIP"
+arch="i686"
 
 build() {
 	cd "glibc-2.44"
-	# Some release tarballs are raw git-tag archives with no generated
-	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
-	# dist" tarball ships one, a GitHub/GitLab auto-generated source
-	# archive does not. Bootstrap it ourselves when that happens.
-	[ -x ./configure ] || autoreconf -fi
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# bmake is not GNU make - automake's dependency-tracking .deps
-	# fragments need nested variable expansion bmake doesn't have.
-	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	# shellcheck disable=SC2086
-	./configure $_opts
-	gmake -j"$JOBS"
+	mkdir -p build-32 && cd build-32
+	CC="clang -m32" CXX="clang++ -m32" \
+	../configure \
+		--prefix=/usr \
+		--libdir=/usr/lib32 \
+		--libexecdir=/usr/lib32/glibc \
+		--host=i686-scraplinux-linux-gnu \
+		--build=x86_64-scraplinux-linux-gnu \
+		--enable-kernel=5.15 \
+		--with-headers=/usr/include \
+		libc_cv_slibdir=/usr/lib32
+	make -j"$JOBS"
 }
 
 package() {
-	cd "glibc-2.44"
-	gmake DESTDIR="$pkgdir" install
+	cd "glibc-2.44/build-32"
+	make install DESTDIR="$pkgdir" install_root="$pkgdir"
 }

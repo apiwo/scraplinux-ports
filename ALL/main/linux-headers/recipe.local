@@ -1,0 +1,7 @@
+Marker only - see CONTRIBUTING.md. The manifest's generic "make" template
+ran a plain `make` / `make install` on the whole kernel tree - that builds
+vmlinux and every in-tree module, then the top-level install target tries
+to run a bootloader install script. This package only ever needed
+`make headers_install`, which builds nothing and just copies the
+userspace-facing API headers. glibc and musl both depend on this package;
+gen-ports.py must never regenerate over it.
