@@ -30,6 +30,15 @@ build() {
 	# bmake is not GNU make - automake's dependency-tracking .deps
 	# fragments need nested variable expansion bmake doesn't have.
 	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
+	# No working gzip on ScrapLinux (neither toybox nor busybox provides
+	# it) - encodings' configure defaults to gzip-compressing its font
+	# encoding tables and refuses outright ("gzip is needed to compress
+	# font encodings") otherwise. Nothing reads a gzipped encoding table
+	# any differently than a plain one - X's own font loader decompresses
+	# on demand either way - so uncompressed is a real option here, not
+	# a workaround with a cost.
+	case "$_help" in *--disable-gzip-small-encodings*) _opts="$_opts --disable-gzip-small-encodings" ;; esac
+	case "$_help" in *--disable-gzip-large-encodings*) _opts="$_opts --disable-gzip-large-encodings" ;; esac
 	# shellcheck disable=SC2086
 	./configure $_opts
 	gmake -j"$JOBS"

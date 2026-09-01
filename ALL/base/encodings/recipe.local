@@ -1,0 +1,3 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: no working
+gzip on ScrapLinux, so encodings' own --disable-gzip-*-encodings flags
+are passed explicitly. gen-ports.py must never regenerate over this.
