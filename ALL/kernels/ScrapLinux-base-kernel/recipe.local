@@ -1,0 +1,3 @@
+Marker only - hand-written kernel recipe, real config recovered from a
+published package's own boot/config-*, never previously committed. gen-ports.py
+must never regenerate over this.
