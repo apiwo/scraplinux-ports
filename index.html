@@ -58,6 +58,16 @@
   </div>
 
   <section>
+    <h2>Search ports</h2>
+    <input type="text" id="pkg-search" class="search-box" placeholder="Search by name or description..." autocomplete="off">
+    <p class="search-status" id="pkg-search-status">Loading manifest...</p>
+    <table class="listing search-results" id="pkg-search-results">
+      <thead><tr><th>name</th><th>version</th><th>repo</th><th>description</th></tr></thead>
+      <tbody id="pkg-search-body"></tbody>
+    </table>
+  </section>
+
+  <section>
     <h2>What's here</h2>
     <p>This is the actual <code>ports/</code> tree - the same one ScrapLinux's
     own build system reads from, organized by repo (main, extra, base,
@@ -74,5 +84,96 @@
     <p>ScrapLinux's own code is <a href="https://github.com/apiwo/scraplinux/blob/main/LICENSE">GPLv3</a>. Packaged software keeps its own license.</p>
   </footer>
 </div>
+<script>
+// Client-side search over ALL/manifest.tsv - this site is static, no backend
+// to query. Fetched once at page load, kept in memory; typing just filters it.
+(function () {
+  var input = document.getElementById("pkg-search");
+  var status = document.getElementById("pkg-search-status");
+  var body = document.getElementById("pkg-search-body");
+  var table = document.getElementById("pkg-search-results");
+  var all = [];
+
+  function parseManifest(text) {
+    var out = [];
+    var lines = text.split("\n");
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (!line || line.charAt(0) === "#") continue;
+      var f = line.split("\t");
+      if (f.length < 10) continue;
+      // fields: repo name version buildsys license depends makedepends url source desc
+      out.push({ repo: f[0], name: f[1], version: f[2], desc: f[9] });
+    }
+    return out;
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function highlight(text, q) {
+    if (!q) return text;
+    var idx = text.toLowerCase().indexOf(q.toLowerCase());
+    if (idx === -1) return text;
+    return text.slice(0, idx) + "<mark>" + text.slice(idx, idx + q.length) + "</mark>" + text.slice(idx + q.length);
+  }
+
+  function render(q) {
+    q = q.trim();
+    body.innerHTML = "";
+    if (!q) {
+      table.style.display = "none";
+      status.textContent = all.length + " ports loaded - type to search.";
+      return;
+    }
+    var ql = q.toLowerCase();
+    var matches = all.filter(function (p) {
+      return p.name.toLowerCase().indexOf(ql) !== -1 || p.desc.toLowerCase().indexOf(ql) !== -1;
+    });
+    matches.sort(function (a, b) {
+      var an = a.name.toLowerCase().indexOf(ql) === 0 ? 0 : 1;
+      var bn = b.name.toLowerCase().indexOf(ql) === 0 ? 0 : 1;
+      return an - bn || a.name.localeCompare(b.name);
+    });
+    table.style.display = matches.length ? "" : "none";
+    status.textContent = matches.length
+      ? matches.length + " match" + (matches.length === 1 ? "" : "es")
+      : "No ports match \"" + q + "\".";
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < matches.length && i < 200; i++) {
+      var p = matches[i];
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td class="pkg-name">' + highlight(escapeHtml(p.name), q) + "</td>" +
+        "<td>" + escapeHtml(p.version) + "</td>" +
+        '<td class="pkg-repo">' + escapeHtml(p.repo) + "</td>" +
+        "<td>" + highlight(escapeHtml(p.desc), q) + "</td>";
+      frag.appendChild(tr);
+    }
+    body.appendChild(frag);
+    if (matches.length > 200) {
+      var tr2 = document.createElement("tr");
+      tr2.innerHTML = '<td colspan="4" style="color:var(--fg-dim)">' + (matches.length - 200) + " more not shown - narrow your search.</td>";
+      body.appendChild(tr2);
+    }
+  }
+
+  table.style.display = "none";
+  fetch("/ALL/manifest.tsv")
+    .then(function (r) { return r.text(); })
+    .then(function (text) {
+      all = parseManifest(text);
+      status.textContent = all.length + " ports loaded - type to search.";
+      input.disabled = false;
+      render(input.value);
+    })
+    .catch(function () {
+      status.textContent = "Could not load the manifest right now - browse /ALL/ directly instead.";
+    });
+
+  input.addEventListener("input", function () { render(input.value); });
+})();
+</script>
 </body>
 </html>
