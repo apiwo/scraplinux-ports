@@ -67,6 +67,22 @@
     </table>
   </section>
 
+  <div class="pkg-modal-backdrop" id="pkg-modal-backdrop">
+    <div class="pkg-modal" role="dialog" aria-modal="true">
+      <button type="button" class="pkg-modal-close" id="pkg-modal-close" aria-label="Close">&times;</button>
+      <h2 id="pkg-modal-name"></h2>
+      <p class="pkg-modal-desc" id="pkg-modal-desc"></p>
+      <table class="pkg-modal-fields">
+        <tr><th>version</th><td id="pkg-modal-version"></td></tr>
+        <tr><th>repo</th><td id="pkg-modal-repo"></td></tr>
+        <tr><th>license</th><td id="pkg-modal-license"></td></tr>
+        <tr><th>depends</th><td id="pkg-modal-deps"></td></tr>
+        <tr><th>upstream</th><td id="pkg-modal-url"></td></tr>
+      </table>
+      <a class="pkg-modal-download" id="pkg-modal-download" href="#">Download recipe</a>
+    </div>
+  </div>
+
   <section>
     <h2>What's here</h2>
     <p>This is the actual <code>ports/</code> tree - the same one ScrapLinux's
@@ -103,7 +119,10 @@
       var f = line.split("\t");
       if (f.length < 10) continue;
       // fields: repo name version buildsys license depends makedepends url source desc
-      out.push({ repo: f[0], name: f[1], version: f[2], desc: f[9] });
+      out.push({
+        repo: f[0], name: f[1], version: f[2], license: f[4],
+        depends: f[5], url: f[7], desc: f[9]
+      });
     }
     return out;
   }
@@ -111,6 +130,31 @@
   function escapeHtml(s) {
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+
+  var modalBackdrop = document.getElementById("pkg-modal-backdrop");
+  function openModal(p) {
+    document.getElementById("pkg-modal-name").textContent = p.name;
+    document.getElementById("pkg-modal-desc").textContent = p.desc;
+    document.getElementById("pkg-modal-version").textContent = p.version;
+    document.getElementById("pkg-modal-repo").textContent = p.repo;
+    document.getElementById("pkg-modal-license").textContent = p.license && p.license !== "-" ? p.license : "unspecified";
+    document.getElementById("pkg-modal-deps").textContent = (p.depends && p.depends !== "-") ? p.depends.replace(/,/g, " ") : "none";
+    var urlCell = document.getElementById("pkg-modal-url");
+    urlCell.innerHTML = "";
+    if (p.url && p.url !== "-") {
+      var a = document.createElement("a");
+      a.href = p.url; a.textContent = p.url; a.target = "_blank"; a.rel = "noopener";
+      urlCell.appendChild(a);
+    } else {
+      urlCell.textContent = "none listed";
+    }
+    document.getElementById("pkg-modal-download").href = "/ALL/" + p.repo + "/" + p.name + "/recipe";
+    modalBackdrop.classList.add("open");
+  }
+  function closeModal() { modalBackdrop.classList.remove("open"); }
+  document.getElementById("pkg-modal-close").addEventListener("click", closeModal);
+  modalBackdrop.addEventListener("click", function (e) { if (e.target === modalBackdrop) closeModal(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
 
   function highlight(text, q) {
     if (!q) return text;
@@ -149,6 +193,7 @@
         "<td>" + escapeHtml(p.version) + "</td>" +
         '<td class="pkg-repo">' + escapeHtml(p.repo) + "</td>" +
         "<td>" + highlight(escapeHtml(p.desc), q) + "</td>";
+      tr.addEventListener("click", (function (pkg) { return function () { openModal(pkg); }; })(p));
       frag.appendChild(tr);
     }
     body.appendChild(frag);
