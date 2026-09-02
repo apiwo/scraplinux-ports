@@ -47,7 +47,16 @@ package() {
 	install -Dm644 .config "$pkgdir/usr/share/busybox/config"
 	install -Dm600 ../busybox.conf "$pkgdir/etc/busybox.conf"
 	# Only claim the applets ScrapLinux wants from busybox; toybox takes the rest.
-	for a in init getty mdev sh ash login su passwd chpasswd adduser addgroup \
+	# "init" is deliberately NOT in this list: on def/wayland flavors busybox
+	# really is PID1 and build-tarball.sh's own init-wiring step creates that
+	# symlink explicitly (mirroring how it wires openrc-init/66); on s66
+	# flavors busybox is installed too (for these other applets) alongside
+	# the 66 package, which legitimately owns /usr/bin/init as its own PID1
+	# wrapper - busybox claiming it unconditionally here made every `scraps
+	# add`/`reins busybox` on an s66 system fail with a file conflict, even
+	# though the flavor-specific tarball build itself never hit it (a plain
+	# `cat >` during assembly has no package-manager conflict check to fail).
+	for a in getty mdev sh ash login su passwd chpasswd adduser addgroup \
 		deluser delgroup mount umount swapon swapoff mkswap fsck blkid findfs \
 		mountpoint losetup switch_root pivot_root udhcpc ip ifconfig route \
 		ping wget modprobe insmod rmmod lsmod depmod sysctl hwclock killall5 \
