@@ -1,11 +1,11 @@
-# vlc - Media player
+# vlc - A feature-rich, cross-platform media player supporting nearly any format
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=vlc
 version=3.0.22
 release=1
-desc="Media player"
+desc="A feature-rich, cross-platform media player supporting nearly any format"
 url="https://videolan.org/vlc/"
 license="GPL-2.0-or-later"
 depend="ffmpeg qt6-base alsa-lib libxcb mesa lua"

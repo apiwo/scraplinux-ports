@@ -2,7 +2,7 @@
 name=zsh
 version=5.9.2
 release=1
-desc="The Z shell, ScrapLinux's default login shell"
+desc="A powerful interactive shell with extensive scripting features, ScrapLinux's login shell"
 url="https://www.zsh.org/"
 license="MIT-Modern-Variant"
 depend="glibc netbsd-curses"

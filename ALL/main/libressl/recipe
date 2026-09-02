@@ -2,7 +2,7 @@
 name=libressl
 version=4.2.0
 release=4
-desc="OpenBSD TLS, ScrapLinux's default"
+desc="A TLS/SSL and crypto library forked from OpenSSL by the OpenBSD project"
 url="https://www.libressl.org/"
 license="ISC Apache-2.0"
 depend="glibc"

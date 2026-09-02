@@ -7,7 +7,7 @@
 name=glibc
 version=2.44
 release=1
-desc="The GNU C library"
+desc="The GNU C library, the standard C library implementation for Linux"
 url="https://www.gnu.org/software/libc/"
 license="LGPL-2.1-or-later"
 depend="linux-headers"

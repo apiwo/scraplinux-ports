@@ -1,11 +1,11 @@
-# limine - The ScrapLinux bootloader, BIOS and UEFI
+# limine - A modern, fast bootloader supporting both BIOS and UEFI
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=limine
 version=12.5.2
 release=1
-desc="The ScrapLinux bootloader, BIOS and UEFI"
+desc="A modern, fast bootloader supporting both BIOS and UEFI"
 url="https://limine-bootloader.org/"
 license="BSD-2-Clause"
 depend="glibc"

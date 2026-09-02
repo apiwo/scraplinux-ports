@@ -5,7 +5,7 @@
 name=json-c
 version=0.19
 release=1
-desc="JSON parsing library"
+desc="A C library for JSON, commonly used by low-level system tools"
 url="https://github.com/json-c/json-c"
 license="MIT"
 depend="glibc"

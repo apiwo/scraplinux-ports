@@ -10,7 +10,7 @@
 #
 # =============================================================== main
 # Everything needed to install ScrapLinux and boot it.
-main	glibc	2.44	autotools	LGPL-2.1-or-later	linux-headers	gcc,bison,python	https://www.gnu.org/software/libc/	https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz	The GNU C library, the only GNU component in ScrapLinux
+main	glibc	2.44	autotools	LGPL-2.1-or-later	linux-headers	gcc,bison,python	https://www.gnu.org/software/libc/	https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz	The GNU C library, the standard C library implementation for Linux
 main	linux-headers	7.1.3	make	GPL-2.0-only WITH Linux-syscall-note	-	-	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Kernel headers for userspace
 main	gcc-libs	15.3.0	autotools	GPL-3.0-or-later WITH GCC-exception-3.1	glibc	-	https://gcc.gnu.org/	https://ftp.gnu.org/gnu/gcc/gcc-{version}/gcc-{version}.tar.xz	libstdc++ and libgcc_s runtime only, required by the NVIDIA driver
 main	libglvnd	1.7.0	meson	MIT	glibc,libx11,libxext	meson,ninja	https://gitlab.freedesktop.org/glvnd/libglvnd	https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v{version}/libglvnd-v{version}.tar.gz	GL vendor dispatch, so mesa and NVIDIA can both provide GL
@@ -18,7 +18,7 @@ main	libepoxy	1.5.10	meson	MIT	glibc,libx11	meson,ninja,python	https://github.co
 main	busybox	1.38.0	make	GPL-2.0-only	glibc	-	https://busybox.net/	https://busybox.net/downloads/busybox-{version}.tar.bz2	Init, getty, device manager and network tools
 main	genfstab	1.0.0	make	GPL-3.0-or-later	busybox,util-linux	-	https://github.com/apiwo/scraplinux	-	Write /etc/fstab from the live mount table
 main	toybox	0.8.14	make	0BSD	glibc	-	https://landley.net/toybox/	https://landley.net/toybox/downloads/toybox-{version}.tar.gz	The classic Unix commands, BSD licensed
-main	zsh	5.9.2	autotools	MIT-Modern-Variant	glibc,netbsd-curses	clang,lld	https://www.zsh.org/	https://www.zsh.org/pub/zsh-{version}.tar.xz	The Z shell, ScrapLinux's login shell
+main	zsh	5.9.2	autotools	MIT-Modern-Variant	glibc,netbsd-curses	clang,lld	https://www.zsh.org/	https://www.zsh.org/pub/zsh-{version}.tar.xz	A powerful interactive shell with extensive scripting features, ScrapLinux's login shell
 main	doas	6.8.2	autotools	ISC	glibc,libxcrypt	clang	https://github.com/Duncaen/OpenDoas	https://github.com/Duncaen/OpenDoas/archive/refs/tags/v{version}.tar.gz	Run commands as another user
 main	netbsd-curses	0.3.2	make	BSD-3-Clause	glibc	-	https://github.com/sabotage-linux/netbsd-curses	https://github.com/sabotage-linux/netbsd-curses/archive/refs/tags/v{version}.tar.gz	NetBSD curses, replacing ncurses
 main	libxcrypt	4.5.2	autotools	LGPL-2.1-or-later	glibc	-	https://github.com/besser82/libxcrypt	https://github.com/besser82/libxcrypt/releases/download/v{version}/libxcrypt-{version}.tar.xz	crypt(), which glibc no longer provides
@@ -36,19 +36,19 @@ main	zstd	1.5.7	make	BSD-3-Clause	glibc	-	https://facebook.github.io/zstd/	https
 main	bzip2	1.0.8	make	bzip2-1.0.6	glibc	-	https://sourceware.org/bzip2/	https://sourceware.org/pub/bzip2/bzip2-{version}.tar.gz	Block-sorting compressor
 main	lz4	1.10.0	make	BSD-2-Clause	glibc	-	https://lz4.org/	https://github.com/lz4/lz4/archive/refs/tags/v{version}.tar.gz	Extremely fast compression
 main	brotli	1.1.0	cmake	MIT	glibc	cmake,ninja	https://github.com/google/brotli	https://github.com/google/brotli/archive/refs/tags/v{version}.tar.gz	Brotli compression
-main	libressl	4.2.0	autotools	ISC Apache-2.0	glibc	-	https://www.libressl.org/	https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{version}.tar.gz	OpenBSD TLS, ScrapLinux's default
+main	libressl	4.2.0	autotools	ISC Apache-2.0	glibc	-	https://www.libressl.org/	https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{version}.tar.gz	A TLS/SSL and crypto library forked from OpenSSL by the OpenBSD project
 main	ca-certificates	20260601	make	MPL-2.0	glibc	-	https://curl.se/docs/caextract.html	https://curl.se/ca/cacert.pem	Trusted certificate authority bundle
 main	curl	8.19.0	autotools	curl	glibc,libressl,zlib,nghttp2,brotli,zstd	-	https://curl.se/	https://curl.se/download/curl-{version}.tar.xz	Transfer data over any protocol
 main	nghttp2	1.68.0	autotools	MIT	glibc	-	https://nghttp2.org/	https://github.com/nghttp2/nghttp2/releases/download/v{version}/nghttp2-{version}.tar.xz	HTTP/2 library
 main	c-ares	1.34.8	cmake	MIT	glibc	cmake,ninja	https://c-ares.org/	https://github.com/c-ares/c-ares/releases/download/v{version}/c-ares-{version}.tar.gz	Asynchronous DNS resolver
 main	libpsl	0.21.5	meson	MIT	glibc	meson,ninja	https://github.com/rockdaboot/libpsl	https://github.com/rockdaboot/libpsl/releases/download/{version}/libpsl-{version}.tar.gz	Public suffix list library
-main	jansson	2.14	autotools	MIT	glibc	-	https://github.com/akheron/jansson	https://github.com/akheron/jansson/releases/download/v{version}/jansson-{version}.tar.gz	JSON parsing library
+main	jansson	2.14	autotools	MIT	glibc	-	https://github.com/akheron/jansson	https://github.com/akheron/jansson/releases/download/v{version}/jansson-{version}.tar.gz	A C library for encoding, decoding and manipulating JSON
 main	pcre2	10.46	autotools	BSD-3-Clause	glibc,zlib,bzip2	-	https://pcre2project.github.io/pcre2/	https://github.com/PCRE2Project/pcre2/releases/download/pcre2-{version}/pcre2-{version}.tar.bz2	Perl compatible regular expressions
 main	expat	2.8.2	autotools	MIT	glibc	-	https://libexpat.github.io/	https://github.com/libexpat/libexpat/releases/download/R_{V_}/expat-{version}.tar.xz	Stream-oriented XML parser
 main	libffi	3.5.2	autotools	MIT	glibc	-	https://sourceware.org/libffi/	https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz	Foreign function interface
 main	libedit	20260512	autotools	BSD-3-Clause	glibc,netbsd-curses	-	https://thrysoee.dk/editline/	https://thrysoee.dk/editline/libedit-{version}-3.1.tar.gz	BSD line editing, replacing readline
 main	sqlite	3.52.0	autotools	blessing	glibc,netbsd-curses,libedit	-	https://sqlite.org/	https://sqlite.org/2026/sqlite-autoconf-3520000.tar.gz	Embedded SQL database
-main	json-c	0.19	cmake	MIT	glibc	cmake,ninja	https://github.com/json-c/json-c	https://github.com/json-c/json-c/archive/refs/tags/json-c-{version}-20260627.tar.gz	JSON parsing library
+main	json-c	0.19	cmake	MIT	glibc	cmake,ninja	https://github.com/json-c/json-c	https://github.com/json-c/json-c/archive/refs/tags/json-c-{version}-20260627.tar.gz	A C library for JSON, commonly used by low-level system tools
 main	libxml2	2.15.2	autotools	MIT	glibc,zlib,xz,libressl	-	https://gitlab.gnome.org/GNOME/libxml2	https://download.gnome.org/sources/libxml2/2.15/libxml2-{version}.tar.xz	XML parsing library
 main	libyaml	0.2.5	autotools	MIT	glibc	-	https://pyyaml.org/wiki/LibYAML	https://github.com/yaml/libyaml/releases/download/{version}/yaml-{version}.tar.gz	YAML parser
 main	attr	2.6.0	autotools	LGPL-2.1-or-later	glibc	-	https://savannah.nongnu.org/projects/attr	https://download.savannah.nongnu.org/releases/attr/attr-{version}.tar.gz	Extended attribute tools
@@ -90,7 +90,7 @@ main	libndp	1.9	autotools	LGPL-2.1-or-later	glibc	-	https://github.com/jpirko/li
 main	networkmanager	1.50.0	meson	LGPL-2.1-or-later GPL-2.0-or-later	glibc,glib,dbus,libnl,wpa_supplicant,newt,curl,libudev-zero,libndp	meson,ninja,python	https://networkmanager.dev/	https://download.gnome.org/sources/NetworkManager/1.50/NetworkManager-{version}.tar.xz	Network configuration daemon, provides nmtui
 main	wireless-regdb	2026.05.30	make	ISC	-	-	https://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git	https://kernel.org/pub/software/network/wireless-regdb/wireless-regdb-{version}.tar.xz	Wireless regulatory database
 main	openssh	10.3p1	autotools	BSD-2-Clause	glibc,libressl,zlib,libedit	-	https://www.openssh.com/	https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-{version}.tar.gz	OpenBSD secure shell
-main	limine	12.5.2	make	BSD-2-Clause	glibc	-	https://limine-bootloader.org/	https://github.com/limine-bootloader/limine/releases/download/v{version}/limine-{version}.tar.gz	The ScrapLinux bootloader, BIOS and UEFI
+main	limine	12.5.2	make	BSD-2-Clause	glibc	-	https://limine-bootloader.org/	https://github.com/limine-bootloader/limine/releases/download/v{version}/limine-{version}.tar.gz	A modern, fast bootloader supporting both BIOS and UEFI
 main	grub	2.14	autotools	GPL-3.0-or-later	glibc	gmake,perl	https://www.gnu.org/software/grub/	https://ftp.gnu.org/gnu/grub/grub-{version}.tar.xz	GRUB2 bootloader (BIOS only)
 main	efibootmgr	18	meson	GPL-2.0-or-later	glibc,efivar	meson,ninja	https://github.com/rhboot/efibootmgr	https://github.com/rhboot/efibootmgr/archive/refs/tags/{version}.tar.gz	Edit UEFI boot entries
 main	efivar	39	make	LGPL-2.1-only	glibc	-	https://github.com/rhboot/efivar	https://github.com/rhboot/efivar/releases/download/{version}/efivar-{version}.tar.bz2	UEFI variable library
@@ -100,7 +100,7 @@ main	scraplinux-init	1.0.0	meta	GPL-3.0-or-later	busybox,scraplinux-base	-	https
 main	gmp-alt	6.3.0	autotools	LGPL-3.0-or-later	glibc	-	https://gmplib.org/	https://gmplib.org/download/gmp/gmp-{version}.tar.xz	Arbitrary precision arithmetic, for nftables
 main	base	1.0.1	meta	GPL-3.0-or-later	glibc,busybox,toybox,zsh,doas,scraps,scraplinux-base,scraplinux-init,curl,libarchive,mandoc,onetrueawk,libxcrypt,iana-etc,tzdata,ca-certificates,signify	-	https://github.com/apiwo/scraplinux	-	A minimal but complete ScrapLinux system
 main	base-devel	1.0.0	meta	GPL-3.0-or-later	llvm,bmake,byacc,pkgconf,cmake,ninja,meson,git,patch-bsd,flex-alt	-	https://github.com/apiwo/scraplinux	-	The toolchain needed to build ScrapLinux packages
-main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libxml2	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	clang, lld, libc++, the ScrapLinux toolchain
+main	llvm	22.1.8	cmake	Apache-2.0-with-LLVM-exception	glibc,zlib,zstd,libxml2	cmake,ninja,python	https://llvm.org/	https://github.com/llvm/llvm-project/releases/download/llvmorg-{version}/llvm-project-{version}.src.tar.xz	The LLVM compiler infrastructure: clang, lld, libc++, lldb
 main	cmake	4.2.1	autotools	BSD-3-Clause	glibc,libressl,curl,expat,zlib,libarchive,netbsd-curses	-	https://cmake.org/	https://github.com/Kitware/CMake/releases/download/v{version}/cmake-{version}.tar.gz	Cross-platform build generator
 main	ninja	1.13.2	cmake	Apache-2.0	glibc	cmake,python	https://ninja-build.org/	https://github.com/ninja-build/ninja/archive/refs/tags/v{version}.tar.gz	Small, fast build system
 main	samurai	1.2	make	Apache-2.0 MIT	glibc	-	https://github.com/michaelforney/samurai	https://github.com/michaelforney/samurai/releases/download/{version}/samurai-{version}.tar.gz	A ninja-compatible build tool in C
@@ -117,7 +117,7 @@ main	gettext-tiny	0.3.3	make	GPL-3.0-or-later MIT	glibc	-	https://github.com/sab
 #
 # =============================================================== extra
 # Extra pieces for a working install: terminals, editors, fonts, network tools.
-extra	foot	1.24.0	meson	MIT	glibc,wayland,fontconfig,freetype,pixman,libxkbcommon,fcft	meson,ninja,scdoc	https://codeberg.org/dnkl/foot	https://codeberg.org/dnkl/foot/archive/{version}.tar.gz	Fast Wayland terminal, the ScrapLinux default
+extra	foot	1.24.0	meson	MIT	glibc,wayland,fontconfig,freetype,pixman,libxkbcommon,fcft	meson,ninja,scdoc	https://codeberg.org/dnkl/foot	https://codeberg.org/dnkl/foot/archive/{version}.tar.gz	A fast, lightweight Wayland terminal emulator
 extra	fcft	3.3.1	meson	MIT	glibc,freetype,fontconfig,pixman,harfbuzz,utf8proc	meson,ninja	https://codeberg.org/dnkl/fcft	https://codeberg.org/dnkl/fcft/archive/{version}.tar.gz	Font loading and glyph rasterisation
 extra	utf8proc	2.11.0	cmake	MIT	glibc	cmake,ninja	https://juliastrings.github.io/utf8proc/	https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v{version}.tar.gz	Unicode processing library
 extra	alacritty	0.16.0	cargo	Apache-2.0	glibc,wayland,libxkbcommon,fontconfig	rust,cargo	https://alacritty.org/	https://github.com/alacritty/alacritty/archive/refs/tags/v{version}.tar.gz	GPU-accelerated terminal
@@ -139,9 +139,9 @@ extra	nano	9.2	autotools	GPL-3.0-or-later	glibc,netbsd-curses	-	https://nano-edi
 extra	less	679	autotools	GPL-3.0-or-later BSD-2-Clause	glibc,netbsd-curses	-	https://greenwoodsoftware.com/less/	https://www.greenwoodsoftware.com/less/less-{version}.tar.gz	Terminal pager
 extra	htop	3.5.0	autotools	GPL-2.0-or-later	glibc,netbsd-curses	-	https://htop.dev/	https://github.com/htop-dev/htop/releases/download/{version}/htop-{version}.tar.xz	Interactive process viewer
 extra	btop	1.4.7	cmake	Apache-2.0	glibc,llvm	cmake,ninja	https://github.com/aristocratos/btop	https://github.com/aristocratos/btop/archive/refs/tags/v{version}.tar.gz	Resource monitor with a nicer view
-extra	fastfetch	2.55.0	cmake	MIT	glibc	cmake,ninja	https://github.com/fastfetch-cli/fastfetch	https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{version}.tar.gz	System information, with the ScrapLinux logo
+extra	fastfetch	2.55.0	cmake	MIT	glibc	cmake,ninja	https://github.com/fastfetch-cli/fastfetch	https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/{version}.tar.gz	A fast, feature-rich system information tool with extensive customization
 extra	neofetch	7.1.0	make	MIT	glibc	-	https://github.com/dylanaraps/neofetch	https://github.com/dylanaraps/neofetch/archive/refs/tags/{version}.tar.gz	System information script
-extra	screenfetch	3.9.1	make	GPL-3.0-only	glibc	-	https://github.com/KittyKatt/screenFetch	https://github.com/KittyKatt/screenFetch/archive/refs/tags/v{version}.tar.gz	System information, with the ScrapLinux logo
+extra	screenfetch	3.9.1	make	GPL-3.0-only	glibc	-	https://github.com/KittyKatt/screenFetch	https://github.com/KittyKatt/screenFetch/archive/refs/tags/v{version}.tar.gz	A bash-based system information tool with ASCII art distro logos
 extra	pciutils	3.14.0	make	GPL-2.0-or-later	glibc,zlib	-	https://mj.ucw.cz/sw/pciutils/	https://kernel.org/pub/software/utils/pciutils/pciutils-{version}.tar.xz	lspci and setpci
 extra	usbutils	019	meson	GPL-2.0-or-later	glibc,libusb	meson,ninja	https://github.com/gregkh/usbutils	https://kernel.org/pub/linux/utils/usb/usbutils/usbutils-{version}.tar.xz	lsusb
 extra	libusb	1.0.30	autotools	LGPL-2.1-or-later	glibc	-	https://libusb.info/	https://github.com/libusb/libusb/releases/download/v{version}/libusb-{version}.tar.bz2	USB device access library
@@ -195,7 +195,7 @@ extra	libtiff	4.7.1	cmake	libtiff	glibc,zlib,libjpeg-turbo,xz,zstd,lerc	cmake,ni
 extra	lerc	4.2.0	cmake	Apache-2.0	glibc	cmake,ninja	https://github.com/Esri/lerc	https://github.com/Esri/lerc/archive/refs/tags/v{version}.tar.gz	Limited error raster compression
 extra	libavif	1.4.0	cmake	BSD-2-Clause	glibc,aom,dav1d	cmake,ninja	https://github.com/AOMediaCodec/libavif	https://github.com/AOMediaCodec/libavif/archive/refs/tags/v{version}.tar.gz	AVIF image codec
 extra	ttf-dejavu	2.37	make	Bitstream-Vera	-	-	https://dejavu-fonts.github.io/	https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_{V_}/dejavu-fonts-ttf-{version}.tar.bz2	DejaVu font family
-extra	ttf-jetbrains-mono	2.304	make	OFL-1.1	-	-	https://www.jetbrains.com/lp/mono/	https://github.com/JetBrains/JetBrainsMono/releases/download/v{version}/JetBrainsMono-{version}.zip	JetBrains Mono, the ScrapLinux terminal font
+extra	ttf-jetbrains-mono	2.304	make	OFL-1.1	-	-	https://www.jetbrains.com/lp/mono/	https://github.com/JetBrains/JetBrainsMono/releases/download/v{version}/JetBrainsMono-{version}.zip	A monospaced typeface designed for developers, by JetBrains
 extra	ttf-nerd-fonts-symbols	3.4.0	make	MIT	-	-	https://www.nerdfonts.com/	https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/NerdFontsSymbolsOnly.tar.xz	Nerd Font icon glyphs
 extra	noto-fonts	2026.08.01	make	OFL-1.1	-	-	https://fonts.google.com/noto	https://github.com/notofonts/notofonts.github.io/archive/refs/tags/noto-monthly-release-{version}.tar.gz	Google Noto fonts
 extra	noto-fonts-emoji	2.051	make	OFL-1.1	-	-	https://github.com/googlefonts/noto-emoji	https://github.com/googlefonts/noto-emoji/archive/refs/tags/v{version}.tar.gz	Noto emoji fonts
@@ -326,7 +326,7 @@ base	konsole	25.12.0	cmake	GPL-2.0-or-later	kf6,qt6-base	cmake,ninja	https://kon
 base	dolphin	25.12.0	cmake	GPL-2.0-or-later	kf6,qt6-base	cmake,ninja	https://apps.kde.org/dolphin/	https://download.kde.org/stable/release-service/{version}/src/dolphin-{version}.tar.xz	The KDE file manager
 base	kate	25.12.0	cmake	LGPL-2.0-or-later	kf6,qt6-base	cmake,ninja	https://kate-editor.org/	https://download.kde.org/stable/release-service/{version}/src/kate-{version}.tar.xz	The KDE advanced text editor
 base	ark	25.12.0	cmake	GPL-2.0-or-later	kf6,libarchive	cmake,ninja	https://apps.kde.org/ark/	https://download.kde.org/stable/release-service/{version}/src/ark-{version}.tar.xz	Archive manager
-base	spectacle	25.12.0	cmake	GPL-2.0-or-later	kf6,qt6-base	cmake,ninja	https://apps.kde.org/spectacle/	https://download.kde.org/stable/release-service/{version}/src/spectacle-{version}.tar.xz	Screenshot tool
+base	spectacle	25.12.0	cmake	GPL-2.0-or-later	kf6,qt6-base	cmake,ninja	https://apps.kde.org/spectacle/	https://download.kde.org/stable/release-service/{version}/src/spectacle-{version}.tar.xz	KDE's screenshot and screen recording tool
 base	gwenview	25.12.0	cmake	GPL-2.0-or-later	kf6,qt6-base,exiv2	cmake,ninja	https://apps.kde.org/gwenview/	https://download.kde.org/stable/release-service/{version}/src/gwenview-{version}.tar.xz	Image viewer
 base	okular	25.12.0	cmake	GPL-2.0-or-later	kf6,poppler,qt6-base	cmake,ninja	https://okular.kde.org/	https://download.kde.org/stable/release-service/{version}/src/okular-{version}.tar.xz	Document viewer
 base	exiv2	0.28.7	cmake	GPL-2.0-or-later	glibc,expat,zlib,brotli	cmake,ninja	https://exiv2.org/	https://github.com/Exiv2/exiv2/archive/refs/tags/v{version}.tar.gz	Image metadata library
@@ -423,9 +423,9 @@ base	x264	0.165	autotools	GPL-2.0-or-later	glibc	nasm	https://www.videolan.org/d
 base	x265	4.1	cmake	GPL-2.0-or-later	glibc	cmake,ninja,nasm	https://www.videolan.org/developers/x265.html	https://bitbucket.org/multicoreware/x265_git/downloads/x265_{version}.tar.gz	H.265 encoder
 base	dav1d	1.6.0	meson	BSD-2-Clause	glibc	meson,ninja,nasm	https://code.videolan.org/videolan/dav1d	https://code.videolan.org/videolan/dav1d/-/archive/{version}/dav1d-{version}.tar.gz	AV1 decoder
 base	aom	3.14.1	cmake	BSD-2-Clause	glibc	cmake,ninja,nasm	https://aomedia.googlesource.com/aom/	https://storage.googleapis.com/aom-releases/libaom-{version}.tar.gz	AV1 codec
-base	mpv	0.41.0	meson	GPL-2.0-or-later	ffmpeg,libplacebo,wayland,mesa,alsa-lib,pipewire,libxkbcommon	meson,ninja	https://mpv.io/	https://github.com/mpv-player/mpv/archive/refs/tags/v{version}.tar.gz	Media player
+base	mpv	0.41.0	meson	GPL-2.0-or-later	ffmpeg,libplacebo,wayland,mesa,alsa-lib,pipewire,libxkbcommon	meson,ninja	https://mpv.io/	https://github.com/mpv-player/mpv/archive/refs/tags/v{version}.tar.gz	A minimal, keyboard-driven media player based on mplayer/mplayer2
 base	libplacebo	7.351.0	meson	LGPL-2.1-or-later	glibc,vulkan-loader,mesa	meson,ninja	https://libplacebo.org/	https://code.videolan.org/videolan/libplacebo/-/archive/v{version}/libplacebo-v{version}.tar.gz	GPU video rendering library
-base	vlc	3.0.22	autotools	GPL-2.0-or-later	ffmpeg,qt6-base,alsa-lib,libxcb,mesa,lua	-	https://videolan.org/vlc/	https://download.videolan.org/pub/videolan/vlc/{version}/vlc-{version}.tar.xz	Media player
+base	vlc	3.0.22	autotools	GPL-2.0-or-later	ffmpeg,qt6-base,alsa-lib,libxcb,mesa,lua	-	https://videolan.org/vlc/	https://download.videolan.org/pub/videolan/vlc/{version}/vlc-{version}.tar.xz	A feature-rich, cross-platform media player supporting nearly any format
 base	obs-studio	32.0.1	cmake	GPL-2.0-or-later	ffmpeg,qt6-base,mesa,pipewire,libva,luajit	cmake,ninja	https://obsproject.com/	https://github.com/obsproject/obs-studio/archive/refs/tags/{version}.tar.gz	Live streaming and screen recording
 base	audacity	3.8.0	cmake	GPL-3.0-or-later	wxwidgets,alsa-lib,libsndfile,ffmpeg,portaudio	cmake,ninja	https://audacityteam.org/	https://github.com/audacity/audacity/archive/refs/tags/Audacity-{version}.tar.gz	Audio editor
 base	portaudio	19.7.0	cmake	MIT	alsa-lib	cmake,ninja	http://www.portaudio.com/	https://github.com/PortAudio/portaudio/archive/refs/tags/v{version}.tar.gz	Portable audio I/O
@@ -676,7 +676,7 @@ base	lxqt-archiver	1.2.0	cmake	LGPL-2.1-or-later	glibc,liblxqt,qt6-base,libarchi
 base	lxqt-about	2.4.0	cmake	LGPL-2.1-or-later	glibc,liblxqt,qt6-base	-	https://lxqt-project.org/	https://github.com/lxqt/lxqt-about/releases/download/{version}/lxqt-about-{version}.tar.xz	LXQt about dialog
 base	lxqt-admin	2.4.0	cmake	LGPL-2.1-or-later	glibc,liblxqt,qt6-base,polkit-qt-1	-	https://lxqt-project.org/	https://github.com/lxqt/lxqt-admin/releases/download/{version}/lxqt-admin-{version}.tar.xz	LXQt admin tools - time/date, users and groups
 base	obconf-qt	0.16.6	cmake	GPL-2.0-or-later	glibc,qt6-base,imlib2,pango,startup-notification	-	https://lxqt-project.org/	https://github.com/lxqt/obconf-qt/releases/download/{version}/obconf-qt-{version}.tar.xz	GUI configuration tool for the Openbox window manager
-base	screengrab	3.2.0	cmake	GPL-2.0-or-later	glibc,qt6-base,libqtxdg	-	https://lxqt-project.org/	https://github.com/lxqt/screengrab/releases/download/{version}/screengrab-{version}.tar.xz	Screenshot tool
+base	screengrab	3.2.0	cmake	GPL-2.0-or-later	glibc,qt6-base,libqtxdg	-	https://lxqt-project.org/	https://github.com/lxqt/screengrab/releases/download/{version}/screengrab-{version}.tar.xz	A cross-platform Qt-based screenshot tool
 base	libexif	0.6.26	autotools	LGPL-2.1-or-later	glibc	-	https://github.com/libexif/libexif	https://github.com/libexif/libexif/releases/download/v{version}/libexif-{version}.tar.xz	EXIF metadata library, needed by libfm-qt
 base	lxqt-menu-data	2.4.0	cmake	LGPL-2.1-or-later	glibc	cmake,ninja	https://lxqt-project.org/	https://github.com/lxqt/lxqt-menu-data/releases/download/{version}/lxqt-menu-data-{version}.tar.xz	XDG desktop menu category data, needed by libfm-qt
 base	libfm-qt	2.4.0	cmake	LGPL-2.1-or-later	glibc,qt6-base,glib,libexif,libx11,lxqt-menu-data	cmake,ninja	https://lxqt-project.org/	https://github.com/lxqt/libfm-qt/releases/download/{version}/libfm-qt-{version}.tar.xz	Qt6 file management library, needed by pcmanfm-qt

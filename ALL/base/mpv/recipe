@@ -1,11 +1,11 @@
-# mpv - Media player
+# mpv - A minimal, keyboard-driven media player based on mplayer/mplayer2
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=mpv
 version=0.41.0
 release=1
-desc="Media player"
+desc="A minimal, keyboard-driven media player based on mplayer/mplayer2"
 url="https://mpv.io/"
 license="GPL-2.0-or-later"
 depend="ffmpeg libplacebo wayland mesa alsa-lib pipewire libxkbcommon"

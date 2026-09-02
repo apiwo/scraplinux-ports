@@ -1,11 +1,11 @@
-# screengrab - Screenshot tool
+# screengrab - A cross-platform Qt-based screenshot tool
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=screengrab
 version=3.2.0
 release=1
-desc="Screenshot tool"
+desc="A cross-platform Qt-based screenshot tool"
 url="https://lxqt-project.org/"
 license="GPL-2.0-or-later"
 depend="glibc qt6-base libqtxdg"

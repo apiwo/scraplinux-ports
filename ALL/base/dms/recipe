@@ -6,7 +6,7 @@
 name=dms
 version=1.0.0
 release=1
-desc="Dynamic Minimal Session, the ScrapLinux lightweight desktop shell"
+desc="Dynamic Minimal Session, the ScrapLinux desktop shell"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
 depend="dwl foot wofi waybar mako scraplinux-base"

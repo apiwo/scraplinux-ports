@@ -1,11 +1,11 @@
-# jansson - JSON parsing library
+# jansson - A C library for encoding, decoding and manipulating JSON
 # Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
 # unless the package needs something the template cannot express - in which case
 # drop a `recipe.local` beside it and it will be preserved.
 name=jansson
 version=2.14
 release=1
-desc="JSON parsing library"
+desc="A C library for encoding, decoding and manipulating JSON"
 url="https://github.com/akheron/jansson"
 license="MIT"
 depend="glibc"

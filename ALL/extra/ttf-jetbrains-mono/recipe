@@ -2,7 +2,7 @@
 name=ttf-jetbrains-mono
 version=2.304
 release=1
-desc="JetBrains Mono, the ScrapLinux terminal font"
+desc="A monospaced typeface designed for developers, by JetBrains"
 url="https://www.jetbrains.com/lp/mono/"
 license="OFL-1.1"
 depend=""
