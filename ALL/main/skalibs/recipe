@@ -1,7 +1,4 @@
 # skalibs - skarnet base library, needed by s6
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=skalibs
 version=2.14.4.0
 release=1
@@ -14,24 +11,19 @@ source="https://skarnet.org/software/skalibs/skalibs-2.14.4.0.tar.gz"
 sha256="SKIP"
 
 build() {
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# build() runs - this recipe's plain ./configure/gmake never runs a
+	# just-built binary against it, so the export only crashes host tools
+	# instead (same fix as execline/s6/glibc-32's recipes already carry).
+	unset LD_LIBRARY_PATH
 	cd "skalibs-2.14.4.0"
-	# Some release tarballs are raw git-tag archives with no generated
-	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
-	# dist" tarball ships one, a GitHub/GitLab auto-generated source
-	# archive does not. Bootstrap it ourselves when that happens.
 	[ -x ./configure ] || autoreconf -fi
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# bmake is not GNU make - automake's dependency-tracking .deps
-	# fragments need nested variable expansion bmake doesn't have.
-	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	# shellcheck disable=SC2086
-	./configure $_opts
+	# execline/s6/66/oblibs all statically link against libskarnet.a
+	# (--enable-allstatic on their own configure) - explicitly keep static
+	# archives here rather than letting the generic template's
+	# --disable-static auto-detection strip them.
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--libdir=/usr/lib --enable-static
 	gmake -j"$JOBS"
 }
 

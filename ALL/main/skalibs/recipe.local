@@ -1,0 +1,7 @@
+Marker only - see CONTRIBUTING.md. build() is hand-written: skalibs must ship
+libskarnet.a (static), not just the .so - execline/s6/66/oblibs all link
+against it statically (--enable-allstatic), matching what skarnet.org itself
+ships upstream. gen-ports.py's generic template auto-detected --disable-static
+in this configure script and passed it, which is exactly backwards for a
+dependency every downstream skarnet package needs statically.
+gen-ports.py must never regenerate over this.
