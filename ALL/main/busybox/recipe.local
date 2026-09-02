@@ -1,0 +1,3 @@
+Marker only - see CONTRIBUTING.md. package()'s applet list is hand-curated
+(only claims what ScrapLinux wants from busybox, toybox takes the rest) -
+gen-ports.py must never regenerate over this.

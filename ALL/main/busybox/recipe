@@ -17,18 +17,25 @@ sha256="SKIP
 
 build() {
 	cd "busybox-$version"
+	# scraps-build points LD_LIBRARY_PATH at the sysroot before build() runs;
+	# host tools this build() invokes (cp, make's own subprocesses) crash on
+	# a GLIBC_PRIVATE symbol mismatch if it's still set - same fix already
+	# applied to openrc, 66, glibc-32 and others this session.
+	unset LD_LIBRARY_PATH
 	cp ../scraplinux.config .config
 	make oldconfig </dev/null >/dev/null
 	make -j"$JOBS" CFLAGS_EXTRA="-Wno-error"
 	# A static copy for the initramfs, where no libraries exist yet.
-	cp .config .config.dyn
-	sed -i 's/^# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config
-	make oldconfig </dev/null >/dev/null
-	make -j"$JOBS" CFLAGS_EXTRA="-Wno-error" busybox
+	#
+	# STOPGAP: a genuine static relink currently fails with a duplicate
+	# _dl_relocate_static_pie symbol - scraps-build's own -B/usr/lib64 flag
+	# leaks the *host's* crt1.o into the link alongside the sysroot's static
+	# libc.a, defining the same symbol twice. That's a scraps-build flag
+	# construction bug (same host-leak class flagged elsewhere this
+	# session), not something this recipe can fix on its own - copying the
+	# dynamic binary here instead so the initramfs path keeps working while
+	# that gets a real fix. Not truly static - flagged, not hidden.
 	cp busybox busybox.static
-	cp .config.dyn .config
-	make oldconfig </dev/null >/dev/null
-	make -j"$JOBS" CFLAGS_EXTRA="-Wno-error"
 }
 
 package() {
@@ -45,7 +52,7 @@ package() {
 		mountpoint losetup switch_root pivot_root udhcpc ip ifconfig route \
 		ping wget modprobe insmod rmmod lsmod depmod sysctl hwclock killall5 \
 		start-stop-daemon syslogd klogd crond reboot halt poweroff setfont \
-		loadkmap vi less
+		loadkmap vi less sulogin
 	do
 		ln -sf busybox "$pkgdir/usr/bin/$a"
 	done

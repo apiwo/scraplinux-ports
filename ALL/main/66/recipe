@@ -36,4 +36,7 @@ build() {
 package() {
 	cd "66-66-0.9.1.2"
 	DESTDIR="$pkgdir" ninja -C build install
+	# 66 boot expects this to already exist and prints a warning at boot
+	# otherwise - it doesn't mkdir it itself before first use.
+	install -d "$pkgdir/var/lib/66/system"
 }
