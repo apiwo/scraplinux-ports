@@ -18,13 +18,20 @@ stage_deps() {
 	STAGE="$SCRAPS_BUILDROOT/skarnet-stage"
 	mkdir -p "$STAGE"
 	for d in skalibs execline; do
-		pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/"$d"-*.scrapsz 2>/dev/null | head -1)
+		pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/"$d"-*.spz 2>/dev/null | head -1)
 		[ -n "$pkg" ] || { echo "$d package not found - build it first" >&2; return 1; }
 		tar -xf "$pkg" -C "$STAGE" --exclude=.PKGINFO --exclude=.FILES --exclude=.INSTALL
 	done
 }
 
 build() {
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# build() runs, for recipes that compile-and-run a helper against the
+	# target's own libs - this one doesn't, and stage_deps()'s plain
+	# mkdir/tar crash instead, loading the sysroot's own libc.so.6
+	# ("undefined symbol: __pointer_chk_guard, version GLIBC_PRIVATE") -
+	# same fix as openrc/glibc-32's recipes already carry.
+	unset LD_LIBRARY_PATH
 	stage_deps || exit 1
 	cd "s6-$version"
 	./configure --prefix=/usr --libdir=/usr/lib \
@@ -34,7 +41,12 @@ build() {
 		--with-lib="$STAGE/usr/lib" \
 		--with-dynlib="$STAGE/usr/lib" \
 		--with-sysdeps="$STAGE/usr/lib/skalibs/sysdeps" \
-		--disable-allstatic
+		--enable-allstatic
+	# --disable-allstatic linked s6's own binaries against libs6.so/
+	# libexecline.so/libskarnet.so - .so files package() never actually
+	# installs (only .a archives), so every s6 binary shipped unrunnable.
+	# --enable-allstatic matches what skarnet actually ships: fully
+	# self-contained binaries, same fix as execline's recipe.
 	make -j"$JOBS"
 }
 

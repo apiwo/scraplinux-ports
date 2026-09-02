@@ -18,13 +18,20 @@ sha256="SKIP"
 stage_skalibs() {
 	STAGE="$SCRAPS_BUILDROOT/skarnet-stage"
 	[ -f "$STAGE/usr/lib/skalibs/sysdeps/target" ] && return 0
-	pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/skalibs-*.scrapsz 2>/dev/null | head -1)
+	pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/skalibs-*.spz 2>/dev/null | head -1)
 	[ -n "$pkg" ] || { echo "skalibs package not found - build skalibs first" >&2; return 1; }
 	mkdir -p "$STAGE"
 	tar -xf "$pkg" -C "$STAGE" --exclude=.PKGINFO --exclude=.FILES --exclude=.INSTALL
 }
 
 build() {
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# build() runs, for recipes that compile-and-run a helper against the
+	# target's own libs - this one doesn't, and stage_skalibs()'s plain
+	# mkdir/tar crash instead, loading the sysroot's own libc.so.6
+	# ("undefined symbol: __pointer_chk_guard, version GLIBC_PRIVATE") -
+	# same fix as openrc/glibc-32's recipes already carry.
+	unset LD_LIBRARY_PATH
 	stage_skalibs || exit 1
 	cd "execline-$version"
 	./configure --prefix=/usr --libdir=/usr/lib \
@@ -33,7 +40,13 @@ build() {
 		--with-lib="$STAGE/usr/lib" \
 		--with-dynlib="$STAGE/usr/lib" \
 		--with-sysdeps="$STAGE/usr/lib/skalibs/sysdeps" \
-		--disable-allstatic
+		--enable-allstatic
+	# --disable-allstatic linked execlineb against libexecline.so/
+	# libskarnet.so, .so files package() never actually installs (only
+	# the .a archives) - every execline binary shipped unrunnable, missing
+	# its own interpreter's own shared libraries. --enable-allstatic
+	# matches what skarnet actually ships: fully self-contained binaries,
+	# no runtime dependency on a same-package .so that was never there.
 	make -j"$JOBS"
 }
 
