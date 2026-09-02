@@ -1,0 +1,22 @@
+# x11-extra - Scalable fonts, a nerd font for terminal glyphs, and feh for
+# wallpapers - the non-essential pieces a working desktop still wants beyond
+# x11-base's minimal server+driver set.
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=x11-extra
+version=1.0.0
+release=1
+desc="Scalable fonts, a nerd font for terminal glyphs, and feh for wallpapers - the non-essential pieces a working desktop still wants beyond x11-base's minimal server+driver set."
+url="https://github.com/apiwo/scraplinux"
+license="GPL-3.0-or-later"
+depend="ttf-dejavu liberation-fonts noto-fonts ttf-jetbrains-mono-nerd feh"
+makedepend=""
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "ttf-dejavu liberation-fonts noto-fonts ttf-jetbrains-mono-nerd feh" >"$pkgdir/usr/share/scraplinux/meta/x11-extra"
+}
