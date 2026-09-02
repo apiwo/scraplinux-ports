@@ -1,0 +1,3 @@
+Marker only - see CONTRIBUTING.md. package() is hand-written: repackages
+Valve's own steam client tarball, a binary repack a generic template
+would never produce. gen-ports.py must never regenerate over this.

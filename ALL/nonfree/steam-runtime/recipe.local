@@ -1,0 +1,4 @@
+Marker only - see CONTRIBUTING.md. package() is hand-written: repackages
+Valve's own steam-runtime tarball, plus an LD_LIBRARY_PATH unset (see
+comment in recipe) that a generic template would never carry.
+gen-ports.py must never regenerate over this.

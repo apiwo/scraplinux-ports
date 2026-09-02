@@ -15,6 +15,13 @@ sha256="SKIP"
 
 build() {
 	cd "mesa-26.0.2"
+	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
+	# with a real, complete glibc-32 now published into the sysroot, plain
+	# host tools this recipe's own build invokes (dirname, python-exec2c
+	# via meson) crash loading the sysroot's libc.so.6 instead of the
+	# host's own ("undefined symbol: __pointer_chk_guard, version
+	# GLIBC_PRIVATE").
+	unset LD_LIBRARY_PATH
 	# The 64-bit mesa recipe's full driver+LLVM matrix is not realistic to
 	# cross-build a second time for 32-bit in this pass - a 32-bit LLVM
 	# alone is its own multi-hour cross-build. Trimmed to what Steam
@@ -57,4 +64,11 @@ build() {
 package() {
 	cd "mesa-26.0.2"
 	DESTDIR="$pkgdir" ninja -C build install
+	# Same reason libx11-32 strips down to usr/lib32: headers, drirc.d and
+	# glvnd vendor JSON land at the same paths the 64-bit mesa package
+	# already owns ("now owned by mesa-32, was mesa" - silently tolerated
+	# because the content happened to be identical, but wrong: removing
+	# mesa-32 later would orphan files mesa still needs). A 32-bit build
+	# only needs to contribute its runtime libraries.
+	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

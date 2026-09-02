@@ -72,6 +72,16 @@ build() {
 package() {
 	cd "glibc-2.44/build-32"
 	make install DESTDIR="$pkgdir" install_root="$pkgdir"
+	# configparms set sbindir/rootsbindir to /usr/bin (see build() comment),
+	# so `make install` puts ldd, sln, ldconfig, mtrace, sprof, pldd,
+	# sotruss, catchsegv - the ordinary glibc bin utilities, identical
+	# regardless of target arch - at the exact same paths the 64-bit glibc
+	# package already owns: "file conflict: /usr/bin/mtrace is owned by
+	# glibc". A 32-bit glibc has nothing to add there - the 64-bit ldd
+	# already handles 32-bit binaries fine - so it ships only its runtime
+	# libraries (usr/lib32) and the interpreter compat symlink below, not a
+	# second copy of tools the 64-bit package already provides.
+	rm -rf "$pkgdir/usr/bin" "$pkgdir/usr/sbin"
 	# Every 32-bit binary built against this (libx11-32, openrc-32,
 	# busybox-32, mesa-32...) is linked expecting its interpreter at the
 	# standard multilib path /lib/ld-linux.so.2, not /usr/lib32 - that is

@@ -18,6 +18,11 @@ build() {
 	# Same reasoning as libx11-32/glibc-32: clean flag slate, real 32-bit
 	# target flags - scraps-build's own exported CFLAGS/LDFLAGS point at the
 	# 64-bit sysroot.
+	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
+	# with a real, complete glibc-32 now published into the sysroot, even
+	# /bin/sh crashes loading the sysroot's libc.so.6 while running
+	# ./configure.
+	unset LD_LIBRARY_PATH
 	unset CFLAGS CXXFLAGS LDFLAGS
 	export CC="clang -m32" CXX="clang++ -m32"
 	export PKG_CONFIG_PATH=/usr/lib32/pkgconfig:/usr/lib/pkgconfig
@@ -35,4 +40,9 @@ build() {
 package() {
 	cd "alsa-lib-1.2.15"
 	gmake DESTDIR="$pkgdir" install
+	# Same reason libx11-32 strips down to usr/lib32: headers and other
+	# arch-independent files land at the same paths the 64-bit alsa-lib
+	# package already owns. A 32-bit build only needs to contribute its
+	# runtime libraries.
+	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

@@ -15,6 +15,13 @@ sha256="SKIP"
 
 build() {
 	cd "libglvnd-v1.7.0"
+	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
+	# with a real, complete glibc-32 now published into the sysroot, plain
+	# host tools this recipe's own build invokes (dirname, python-exec2c
+	# via meson) crash loading the sysroot's libc.so.6 instead of the
+	# host's own ("undefined symbol: __pointer_chk_guard, version
+	# GLIBC_PRIVATE").
+	unset LD_LIBRARY_PATH
 	unset CFLAGS CXXFLAGS LDFLAGS
 	meson setup build \
 		--prefix=/usr \
@@ -35,4 +42,8 @@ package() {
 	# for by default - they want the legacy libGL.so name.
 	ln -sf libOpenGL.so.0 "$pkgdir/usr/lib32/libGL.so.1"
 	ln -sf libGL.so.1 "$pkgdir/usr/lib32/libGL.so"
+	# Same reason libx11-32 strips down to usr/lib32: headers and glvnd's
+	# own vendor-config JSON land at the same paths the 64-bit libglvnd
+	# package already owns. A 32-bit build only needs its runtime libraries.
+	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

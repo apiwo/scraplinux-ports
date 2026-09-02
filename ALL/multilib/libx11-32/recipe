@@ -20,6 +20,13 @@ build() {
 	# start clean and build the 32-bit set explicitly. clang itself is fine
 	# for ordinary userspace C (the glibc-32 clang problem was specific to
 	# glibc's own weak_alias source, not clang -m32 in general).
+	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
+	# with a real, complete glibc-32 now published into the sysroot, even
+	# /bin/sh crashes loading the sysroot's libc.so.6 while running
+	# ./configure - fails silent and unhelpful (exit 127, no message,
+	# because ./configure --help's own stderr is intentionally redirected
+	# to /dev/null a few lines down).
+	unset LD_LIBRARY_PATH
 	unset CFLAGS CXXFLAGS LDFLAGS
 	export CC="clang -m32" CXX="clang++ -m32"
 	export PKG_CONFIG_PATH=/usr/lib32/pkgconfig:/usr/lib/pkgconfig
@@ -37,4 +44,14 @@ build() {
 package() {
 	cd "libX11-1.8.13"
 	gmake DESTDIR="$pkgdir" install
+	# `make install` puts headers (usr/include), locale data
+	# (usr/share/X11/locale/locale.alias) and other arch-independent files
+	# at the exact same paths the 64-bit libx11 package already owns -
+	# identical content, not 32-bit-specific, but scraps still checks byte
+	# content and correctly refuses when a build produced even a slightly
+	# different copy: "file conflict: /usr/share/X11/locale/locale.alias is
+	# owned by libx11". The 64-bit package already provides all of this;
+	# a 32-bit libx11-32 only needs to contribute what's actually
+	# architecture-specific, its runtime libraries.
+	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

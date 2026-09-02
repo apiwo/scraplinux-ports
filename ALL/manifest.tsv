@@ -455,7 +455,7 @@ base	nspr	4.38	autotools	MPL-2.0	glibc	-	https://firefox-source-docs.mozilla.org
 base	icu	78.1	autotools	ICU	glibc	-	https://icu.unicode.org/	https://github.com/unicode-org/icu/releases/download/release-78.1/icu4c-78.1-sources.tgz	Unicode and globalisation support
 #
 # --- games and compatibility
-base	steam	1.0.0.87	binary	Valve-proprietary	glibc,mesa,libx11,alsa-lib,glibc-32,mesa-32,libx11-32	-	https://store.steampowered.com/	https://repo.steampowered.com/steam/archive/stable/steam_{version}.tar.gz	The Steam client
+base	steam	1.0.0.87	binary	Valve-proprietary	glibc,mesa,libx11,alsa-lib,steam-deps-32	-	https://store.steampowered.com/	https://repo.steampowered.com/steam/archive/stable/steam_{version}.tar.gz	The Steam client
 base	wine	11.0	autotools	LGPL-2.1-or-later	glibc,mesa,libx11,freetype,alsa-lib,vulkan-loader,glibc-32	flex-alt,byacc	https://winehq.org/	https://dl.winehq.org/wine/source/11.0/wine-{version}.tar.xz	Run Windows applications
 base	proton-ge	GE-Proton10-30	binary	LGPL-2.1-or-later	wine,dxvk,vkd3d-proton	-	https://github.com/GloriousEggroll/proton-ge-custom	https://github.com/GloriousEggroll/proton-ge-custom/releases/download/{version}/{version}.tar.gz	Proton with extra patches, for Steam
 base	dxvk	2.7.1	meson	Zlib	vulkan-loader,wine	meson,ninja	https://github.com/doitsujin/dxvk	https://github.com/doitsujin/dxvk/releases/download/v{version}/dxvk-{version}.tar.gz	Direct3D 9/10/11 over Vulkan

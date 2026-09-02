@@ -19,6 +19,12 @@ options="!strip"
 
 package() {
 	cd "steam-runtime"
+	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
+	# package() runs; this step's own `install` is a plain host tool, not
+	# something built against the sysroot, so it loads the sysroot's own
+	# libc.so.6 and crashes ("undefined symbol: __pointer_chk_guard,
+	# version GLIBC_PRIVATE") - same failure, same fix, as openrc/glibc-32.
+	unset LD_LIBRARY_PATH
 	install -d "$pkgdir/opt/steam-runtime"
 	cp -a . "$pkgdir/opt/steam-runtime/"
 	install -d "$pkgdir/usr/bin"

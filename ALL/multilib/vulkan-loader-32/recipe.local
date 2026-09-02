@@ -1,0 +1,4 @@
+Marker only - see CONTRIBUTING.md. build()/package() carry the
+LD_LIBRARY_PATH-poisoning workaround (unset before any host tool
+invocation) a generic template would never produce.
+gen-ports.py must never regenerate over this.
