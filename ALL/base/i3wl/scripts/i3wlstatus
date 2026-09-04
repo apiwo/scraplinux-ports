@@ -1,0 +1,87 @@
+#!/bin/sh
+# i3wlstatus - feeds i3wl's bar status line (right-side pills) via stdin,
+# dwm/dwl-style. Emits one line per cycle: fields joined by \037 (unit
+# separator) so the compositor can split them into individual pills.
+#
+# Usage: i3wlstatus | i3wl
+
+FS=$(printf '\037')
+
+# Nerd Font glyphs, written as UTF-8 hex escapes (see glyphs.h for the same
+# codepoints used on the compositor side) so this file stays plain ASCII.
+I_CPU=$(printf '\xef\x92\xbc')       # U+F4BC  cpu
+I_MEM=$(printf '\xf3\xb0\x8d\x9b')   # U+F035B memory
+I_GPU=$(printf '\xef\x8b\x9b')       # U+F2DB  microchip
+I_VOL_MUTED=$(printf '\xef\x80\xa6') # U+F026
+I_VOL_LOW=$(printf '\xef\x80\xa7')   # U+F027
+I_VOL_HIGH=$(printf '\xef\x80\xa8')  # U+F028
+I_NET_WIFI=$(printf '\xef\x87\xab')  # U+F1EB
+I_NET_ETH=$(printf '\xef\x83\xa8')   # U+F0E8
+I_NET_OFF=$(printf '\xef\x91\xa7')   # U+F467
+
+prev_total=0
+prev_idle=0
+
+cpu_pct() {
+	set -- $(awk '/^cpu /{print $2+$3+$4+$5+$6+$7+$8, $5}' /proc/stat)
+	total=$1
+	idle=$2
+	dtotal=$((total - prev_total))
+	didle=$((idle - prev_idle))
+	prev_total=$total
+	prev_idle=$idle
+	[ "$dtotal" -le 0 ] && { printf '0'; return; }
+	printf '%d' $(( (dtotal - didle) * 100 / dtotal ))
+}
+
+mem_pct() {
+	awk '
+		/^MemTotal:/     { total = $2 }
+		/^MemAvailable:/ { avail = $2 }
+		END { if (total > 0) printf "%d", (total - avail) * 100 / total }
+	' /proc/meminfo
+}
+
+gpu_pct() {
+	nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits -i 0 2>/dev/null | head -n1 | tr -d ' \n'
+}
+
+vol_field() {
+	line=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+	[ -z "$line" ] && { printf '%s --' "$I_VOL_MUTED"; return; }
+	pct=$(printf '%s' "$line" | awk '{printf "%d", $2*100}')
+	case "$line" in
+	*MUTED*) printf '%s %s%%' "$I_VOL_MUTED" "$pct" ;;
+	*)
+		if [ "$pct" -ge 50 ]; then icon=$I_VOL_HIGH; else icon=$I_VOL_LOW; fi
+		printf '%s %s%%' "$icon" "$pct"
+		;;
+	esac
+}
+
+net_field() {
+	route=$(ip route get 1.1.1.1 2>/dev/null)
+	iface=$(printf '%s' "$route" | awk '{for(i=1;i<=NF;i++) if($i=="dev") print $(i+1)}')
+	[ -z "$iface" ] && { printf '%s off' "$I_NET_OFF"; return; }
+	case "$iface" in
+	wl*)
+		sig=$(awk -v i="$iface:" '$1==i{gsub("\\.",""); printf "%d", $3}' /proc/net/wireless 2>/dev/null)
+		[ -z "$sig" ] && sig=0
+		[ "$sig" -gt 100 ] && sig=100
+		printf '%s %s%%' "$I_NET_WIFI" "$sig"
+		;;
+	*)
+		printf '%s up' "$I_NET_ETH"
+		;;
+	esac
+}
+
+while :; do
+	printf '%s %s%%%s%s %s%%%s%s %s%%%s%s%s%s\n' \
+		"$I_CPU" "$(cpu_pct)" "$FS" \
+		"$I_MEM" "$(mem_pct)" "$FS" \
+		"$I_GPU" "$(gpu_pct)" "$FS" \
+		"$(vol_field)" "$FS" \
+		"$(net_field)"
+	sleep 2
+done
