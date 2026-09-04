@@ -1,0 +1,36 @@
+# tllist - typed linked list, header-only. Real, packaged dependency of fcft
+# (fcft.pc declares Requires: tllist for its own public headers) - fcft's own
+# published binary already works without this installed system-wide because
+# its build vendors tllist as a meson subproject, but that only covers fcft's
+# own build, not any other package's `pkg-config --cflags fcft` afterward.
+# A single header, nothing to compile - installed directly, no build system.
+name=tllist
+version=1.1.0
+release=1
+desc="Typed linked list, header-only C library"
+url="https://codeberg.org/dnkl/tllist"
+license="MIT"
+depend="glibc"
+source="tllist.h::https://codeberg.org/dnkl/tllist/raw/tag/1.1.0/tllist.h"
+sha256="SKIP"
+
+package() {
+	# Same LD_LIBRARY_PATH-poisoning workaround already established for
+	# glibc-32/openrc/steam-runtime/i3wl: an inherited LD_LIBRARY_PATH
+	# pointing into the sysroot makes even plain host coreutils (install,
+	# mkdir - not just target-arch binaries) try to resolve against that
+	# libc instead of the host's own and crash with a GLIBC_PRIVATE symbol
+	# mismatch.
+	unset LD_LIBRARY_PATH
+	install -Dm644 tllist.h "$pkgdir/usr/include/tllist.h"
+	mkdir -p "$pkgdir/usr/lib/pkgconfig"
+	cat >"$pkgdir/usr/lib/pkgconfig/tllist.pc" <<-PC
+		prefix=/usr
+		includedir=\${prefix}/include
+
+		Name: tllist
+		Description: Typed linked list, header-only C library
+		Version: 1.1.0
+		Cflags: -I\${includedir}
+	PC
+}

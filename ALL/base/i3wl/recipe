@@ -1,0 +1,111 @@
+# i3wl - apiwo's own dwl fork: i3-style binary-tree tiling and keybindings,
+# a StatusNotifierItem tray, and a bar styled after the waybar rice, on top
+# of the suckless dwl (dwm for Wayland) compositor. No upstream to fetch -
+# the source is vendored here, same as ScrapLinux's own dms.
+name=i3wl
+version=1.0.0
+release=1
+desc="dwl fork with i3-style binary-tree tiling, tray and status bar"
+url="https://github.com/apiwo/scraplinux"
+license="GPL-2.0-only"
+depend="glibc wayland wlroots libinput libxkbcommon dbus fcft pixman"
+makedepend="bmake clang lld pkgconf wayland-protocols"
+source="CHANGELOG.md LICENSE LICENSE.dwm LICENSE.sway LICENSE.tinywl Makefile
+	README.md btrtile.c client.h config.def.h config.mk dbus.c dbus.h
+	drwl.h dwl.1 dwl.c dwl.desktop glyphs.h util.c util.h
+	protocols/wlr-layer-shell-unstable-v1.xml
+	protocols/wlr-output-power-management-unstable-v1.xml
+	systray/helpers.c systray/helpers.h systray/icon.c systray/icon.h
+	systray/item.c systray/item.h systray/menu.c systray/menu.h
+	systray/tray.c systray/tray.h systray/watcher.c systray/watcher.h
+	scripts/autostart.sh scripts/i3wlstatus"
+sha256="SKIP SKIP SKIP SKIP SKIP SKIP
+	SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP
+	SKIP
+	SKIP
+	SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP SKIP
+	SKIP SKIP"
+backup="etc/i3wl/autostart.sh"
+
+build() {
+	# Same LD_LIBRARY_PATH-poisoning workaround already established for
+	# glibc-32/openrc/steam-runtime: an inherited LD_LIBRARY_PATH pointing
+	# into the sysroot makes even plain host coreutils (mkdir, cp - not
+	# just target-arch binaries) try to resolve against that libc instead
+	# of the host's own and crash with a GLIBC_PRIVATE symbol mismatch.
+	unset LD_LIBRARY_PATH
+
+	# scraps-build fetches every local source= entry by its basename alone
+	# (see scraps-build's own fetch loop: fn=$(basename "$s")) and copies
+	# each one flat into $srcdir - the protocols/, systray/ and scripts/
+	# prefixes in source= above only tell it where to find each file next
+	# to this recipe, not where it lands in the build. Everything below
+	# starts out sitting flat in this directory; put it back into the
+	# layout dwl.c's #include lines and the Makefile actually expect.
+	mkdir -p protocols scripts systray
+	mv wlr-layer-shell-unstable-v1.xml wlr-output-power-management-unstable-v1.xml protocols/
+	mv helpers.c helpers.h icon.c icon.h item.c item.h menu.c menu.h \
+		tray.c tray.h watcher.c watcher.h systray/
+	mv autostart.sh i3wlstatus scripts/
+
+	# Same lineage as ScrapLinux's dwl port (this is a fork of it), so it
+	# hits the exact same wlroots 0.20 build break dwl's own recipe documents
+	# (both CONFIGURE_BOUNDS and WM_CAPABILITIES undeclared in client.h) -
+	# see ports/base/dwl/recipe for the full explanation. i3wl's fork adds a
+	# third: dwl.c itself (not just client.h) references
+	# XDG_TOPLEVEL_STATE_TILED_RIGHT_SINCE_VERSION directly for its
+	# binary-tree tiling code, so all three guards are needed here, not a
+	# swap of one for another - confirmed by a real build actually reaching
+	# "undeclared identifier 'XDG_TOPLEVEL_WM_CAPABILITIES_SINCE_VERSION'"
+	# in dwl.c after only the other two were defined. Real values confirmed
+	# against the xdg-shell.xml ScrapLinux ships: configure_bounds
+	# since="4", wm_capabilities since="5", tiled_right since="2".
+	cp config.def.h config.h
+	sed -i 's/wlroots-0.19/wlroots-0.20/g' config.mk
+	sed -i '1i\
+#ifndef XDG_TOPLEVEL_CONFIGURE_BOUNDS_SINCE_VERSION\
+#define XDG_TOPLEVEL_CONFIGURE_BOUNDS_SINCE_VERSION 4\
+#endif\
+#ifndef XDG_TOPLEVEL_WM_CAPABILITIES_SINCE_VERSION\
+#define XDG_TOPLEVEL_WM_CAPABILITIES_SINCE_VERSION 5\
+#endif\
+#ifndef XDG_TOPLEVEL_STATE_TILED_RIGHT_SINCE_VERSION\
+#define XDG_TOPLEVEL_STATE_TILED_RIGHT_SINCE_VERSION 2\
+#endif' client.h
+	make -j"$JOBS" PREFIX=/usr
+}
+
+package() {
+	# Installed as i3wl-bin, not dwl - ScrapLinux's own dwl package already
+	# owns /usr/bin/dwl, and both are meant to be installable side by side.
+	install -Dm755 dwl "$pkgdir/usr/bin/i3wl-bin"
+	install -Dm644 config.h "$pkgdir/usr/share/i3wl/config.h"
+	install -Dm644 dwl.1 "$pkgdir/usr/share/man/man1/i3wl.1"
+
+	# The autostart script hardcodes apiwo's own wallpaper and lock-script
+	# paths - this is apiwo's personal session, packaged so it installs
+	# cleanly, not a generic distro default. backup= so a real edit here
+	# survives a package upgrade, same as dms.conf.
+	install -Dm755 scripts/autostart.sh "$pkgdir/etc/i3wl/autostart.sh"
+	install -Dm755 scripts/i3wlstatus "$pkgdir/usr/share/i3wl/i3wlstatus"
+
+	mkdir -p "$pkgdir/usr/bin" "$pkgdir/usr/share/wayland-sessions"
+	cat >"$pkgdir/usr/bin/i3wl" <<-'WRAPPER'
+		#!/bin/sh
+		# i3wl session launcher: dbus-run-session, same as this project's
+		# other Wayland sessions, so mako/systray/xsettingsd get a real
+		# session bus.
+		exec dbus-run-session sh -c \
+			'/usr/share/i3wl/i3wlstatus | exec /usr/bin/i3wl-bin -s /etc/i3wl/autostart.sh'
+	WRAPPER
+	chmod 755 "$pkgdir/usr/bin/i3wl"
+
+	cat >"$pkgdir/usr/share/wayland-sessions/i3wl.desktop" <<-'DESKTOP'
+		[Desktop Entry]
+		Name=i3wl
+		Comment=dwl with i3-style binary-tree tiling
+		Exec=i3wl
+		Type=Application
+	DESKTOP
+	chmod 644 "$pkgdir/usr/share/wayland-sessions/i3wl.desktop"
+}
