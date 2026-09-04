@@ -168,6 +168,44 @@ check_iface() {
 	[ -d "/sys/class/net/$1/wireless" ] || { oops "$1 is not a wireless interface"; exit 1; }
 }
 
+# "no wireless interface found - is the driver loaded?" used to be the whole
+# story: a hint, not a diagnosis. udev coldplugs a card's driver on its own
+# on a system that actually has the .ko shipped, so by the time anyone is
+# running wifi-connect by hand the auto-load has usually already succeeded
+# or already failed - this never called modprobe itself, so whichever one of
+# those two happened, and why, was never something a user could see. Found
+# the hard way: a kernel package that never made it fully onto a live image
+# gave `modprobe iwlwifi` -> "Operation not permitted" (missing .ko, not a
+# permissions problem despite the errno) and this script printed the same
+# five words it would have for "no card in this machine at all".
+#
+# Only tried when nothing already exists - a card that coldplugged fine
+# never needs this, and re-modprobing an already-loaded driver is a
+# harmless no-op but a pointless one.
+probe_wireless_driver() {
+	[ -n "$(wireless_ifaces)" ] && return 0
+	command -v modprobe >/dev/null 2>&1 || return 0
+	_err=/tmp/.wifi-modprobe-err.$$
+	for _drv in iwlwifi ath9k ath10k_pci ath11k_pci rtw88_pci rtw89_pci mt7921e mt7601u brcmfmac; do
+		modprobe "$_drv" >"$_err" 2>&1 && break
+	done
+	if [ -z "$(wireless_ifaces)" ] && [ -s "$_err" ]; then
+		oops "no wireless interface, and the last driver probed would not load:"
+		sed 's/^/     /' "$_err" >&2
+		case "$(cat "$_err")" in
+		*"Operation not permitted"*)
+			printf '     %sthe kernel refused to load it - a signed-modules policy\n' "$GREY"
+			printf '     with no signing behind it, or the .ko is not actually on\n'
+			printf '     this system despite scraps thinking it is (try: scraps\n'
+			printf '     reins <the kernel package>).%s\n' "$R" ;;
+		*"not found"*)
+			printf '     %sthe module is not on this system at all - a kernel\n' "$GREY"
+			printf '     package that never fully installed, most likely.%s\n' "$R" ;;
+		esac
+	fi
+	rm -f "$_err"
+}
+
 # A scan takes a few seconds and says nothing while it runs, which reads as a
 # hang on a machine that has just booted and has no other sign of life.
 #
@@ -517,8 +555,11 @@ interactive() {
 }
 
 # Once, before anything below touches a radio at all - scanning, listing or
-# connecting equally need a soft-blocked card unblocked first.
+# connecting equally need a soft-blocked card unblocked first, and a driver
+# that never auto-loaded needs a real attempt (and a real error) before
+# either code path below falls back to a generic "is it loaded?" guess.
 unblock_rfkill
+probe_wireless_driver
 
 mode=connect
 case "${1:-}" in
