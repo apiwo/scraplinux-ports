@@ -49,4 +49,13 @@ package() {
 	# synchronization path (a plain pipe to the forked stage2) instead of
 	# this fifo dance, which does not hang in either case.
 	sed -i 's/^CATCHLOG=1$/CATCHLOG=0/' "$pkgdir/etc/66/init.conf"
+	# With CATCHLOG=0 every one of those messages goes straight to the
+	# console, and the console is the tty the login prompt is on - so at
+	# VERBOSITY=2 the tail of boot ("Starting enabled trees", "Empty tree:
+	# global", "Successfully executed start on tree: global") lands on top
+	# of a prompt somebody is already typing at. VERBOSITY=1 keeps warnings
+	# and errors, which are the ones actually worth interrupting for, and
+	# drops the running commentary. The catch-all logger would be the other
+	# way to solve this, but see above: it hangs this system's boot.
+	sed -i 's/^VERBOSITY=2$/VERBOSITY=1/' "$pkgdir/etc/66/init.conf"
 }

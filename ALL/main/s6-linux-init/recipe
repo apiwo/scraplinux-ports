@@ -15,10 +15,19 @@ sha256="SKIP"
 # needs each earlier package's headers and libraries to exist somewhere real
 # at configure time, so this stages them out of the repo itself.
 stage_deps() {
+	# Same LD_LIBRARY_PATH poisoning worked around in glibc-32/openrc/
+	# steam-runtime: an inherited LD_LIBRARY_PATH pointing into the sysroot
+	# makes even plain host coreutils resolve against that libc instead of
+	# the host's own and die with "undefined symbol: __pointer_chk_guard,
+	# version GLIBC_PRIVATE". Here it killed the mkdir and the head in this
+	# very function, so $pkg came back empty and the build failed with the
+	# misleading "skalibs package not found - build it first" - while
+	# skalibs was sitting in the repo the whole time.
+	unset LD_LIBRARY_PATH
 	STAGE="$SCRAPS_BUILDROOT/skarnet-stage"
 	mkdir -p "$STAGE"
 	for d in skalibs execline s6; do
-		pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/"$d"-*.scrapsz 2>/dev/null | head -1)
+		pkg=$(ls -t "${SCRAPS_REPO:-/home/apiwo/scraplinux-build/repo}"/main/x86_64/"$d"-*.spz 2>/dev/null | head -1)
 		[ -n "$pkg" ] || { echo "$d package not found - build it first" >&2; return 1; }
 		tar -xf "$pkg" -C "$STAGE" --exclude=.PKGINFO --exclude=.FILES --exclude=.INSTALL
 	done

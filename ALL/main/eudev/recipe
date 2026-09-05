@@ -14,6 +14,15 @@ source="https://github.com/eudev-project/eudev/releases/download/v3.2.14/eudev-3
 sha256="SKIP"
 
 build() {
+	# Same LD_LIBRARY_PATH poisoning worked around in glibc-32/openrc/
+	# steam-runtime: with the sysroot's libc ahead of the host's, ordinary
+	# host binaries die with "undefined symbol: __pointer_chk_guard, version
+	# GLIBC_PRIVATE". configure is a shell script that shells out constantly,
+	# so it produced no output at all - `./configure --help` came back empty,
+	# the option probe below saw nothing, and the build aborted before it
+	# ever compiled a line. The same ./configure --help run by hand outside
+	# the sandbox prints its usage perfectly well.
+	unset LD_LIBRARY_PATH
 	cd "eudev-3.2.14"
 	# Some release tarballs are raw git-tag archives with no generated
 	# ./configure at all (only configure.ac/Makefile.am) - a proper "make
