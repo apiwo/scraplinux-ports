@@ -1,6 +1,6 @@
-release=2, not 1: a real install already has 3.2.14-2 deployed (repackaged
-by hand once during the xf86-input-libinput/libudev-zero conflict fix - see
-libudev-zero's recipe.local for the actual fix, which lives on that
-package's replaces="eudev" instead). Keeping this at 2 so a rebuild from
-this recipe does not look like a downgrade against what is already out
-there.
+Hand-maintained: package() drops eudev's own usr/sbin/udevadm compatibility
+symlink, which cannot be expressed in manifest.tsv's template. ScrapLinux is a
+merged-/usr system (/usr/sbin -> bin), so that symlink and the real binary at
+usr/bin/udevadm are the same path - unpacking the package wrote the binary and
+then replaced it with a link to itself, leaving udevadm unusable and every
+coldplug silently doing nothing. See the comment in package().

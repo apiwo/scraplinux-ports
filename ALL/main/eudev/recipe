@@ -4,7 +4,7 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=eudev
 version=3.2.14
-release=2
+release=3
 desc="Standalone udev, for desktops that need it"
 url="https://github.com/eudev-project/eudev"
 license="GPL-2.0-or-later"
@@ -38,4 +38,17 @@ build() {
 package() {
 	cd "eudev-3.2.14"
 	gmake DESTDIR="$pkgdir" install
+	# eudev installs the real udevadm at usr/bin/udevadm and leaves a
+	# compatibility symlink at usr/sbin/udevadm pointing back at it - correct
+	# on a split-/usr system, destructive here. ScrapLinux is merged-/usr
+	# (/usr/sbin -> bin), so both entries name the *same* path: unpacking
+	# wrote the 371 KB binary, then overwrote it with a symlink to itself.
+	# udevadm was then unusable ("Too many levels of symbolic links"), so
+	# every `udevadm trigger` in the boot path silently did nothing and no
+	# driver for already-present hardware was ever loaded - the machine came
+	# up with no wifi despite iwlwifi.ko and its firmware both being present
+	# and correct. Nothing needs the second path when it is the first path.
+	if [ -L "$pkgdir/usr/sbin/udevadm" ]; then
+		rm -f "$pkgdir/usr/sbin/udevadm"
+	fi
 }
