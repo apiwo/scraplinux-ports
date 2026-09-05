@@ -13,11 +13,30 @@ source="netbsd-curses-$version.tar.gz::https://github.com/sabotage-linux/netbsd-
 sha256="SKIP"
 
 build() {
+	# Same LD_LIBRARY_PATH poisoning worked around in eudev/glibc-32/openrc/
+	# steam-runtime: with the sysroot's libc ahead of the host's, ordinary
+	# host binaries die with "symbol lookup error: .../libc.so.6: undefined
+	# symbol: __pointer_chk_guard, version GLIBC_PRIVATE". Here it killed
+	# make itself, before a single object was compiled.
+	unset LD_LIBRARY_PATH
 	cd "netbsd-curses-$version"
-	make -j"$JOBS" PREFIX=/usr all-dynamic
+	# --sysroot has to be on the *link* line, not just in CFLAGS. This
+	# GNUmakefile links with `$(CC) $(LDFLAGS) ... -o $@` and never passes
+	# CFLAGS, so the --sysroot scraps-build puts in CFLAGS never reaches
+	# the linker. The sysroot's own /usr/lib/libc.so is a GNU ld script
+	# holding *absolute* paths (GROUP ( /usr/lib/libc.so.6
+	# /usr/lib/libc_nonshared.a ... )), and with no --sysroot to rewrite
+	# them against, lld resolves them on the real filesystem - where
+	# multilib support put a 32-bit libc at /usr/lib. The link then died
+	# with "/usr/lib/libc.so.6 is incompatible with elf64-x86-64" on
+	# exactly the two files that script names. This built before multilib
+	# existed, which is why the recipe never needed it until now.
+	make -j"$JOBS" PREFIX=/usr \
+		LDFLAGS="--sysroot=$SCRAPS_SYSROOT $LDFLAGS" all-dynamic
 }
 
 package() {
+	unset LD_LIBRARY_PATH
 	cd "netbsd-curses-$version"
 	make PREFIX=/usr DESTDIR="$pkgdir" install-dynamic
 
@@ -54,7 +73,21 @@ package() {
 	install -Dm644 terminfo.cdb "$pkgdir/usr/share/terminfo.cdb"
 
 	# Anything looking for -lncurses finds this instead.
-	for n in ncurses ncursesw tinfo terminfo; do
-		ln -sf libcurses.so "$pkgdir/usr/lib/lib$n.so"
-	done
+	#
+	# Only libtinfo.so is actually missing. install-dynamic already creates
+	# libncurses.so and libncursesw.so pointing at libcurses.so, and
+	# libtermcap.so pointing at libterminfo.so (install-dynlib-curses and
+	# install-dynlib-terminfo in the GNUmakefile).
+	#
+	# This used to be a loop over "ncurses ncursesw tinfo terminfo" all
+	# pointing at libcurses.so, which quietly replaced the *real*
+	# libterminfo.so - a separate 98 KB library - with a symlink to
+	# libcurses.so. libcurses.so links against libterminfo for its symbols,
+	# so the result was a library pointing at something that depends on it:
+	# every program using curses died at startup with "symbol lookup error:
+	# /usr/lib/libcurses.so: undefined symbol: ti_puts", including the login
+	# shell. It only surfaced now because this is the first rebuild since
+	# that loop was last changed - 0.3.2-1 on the mirror still has the
+	# correct layout, with libterminfo.so as a real file.
+	ln -sf libterminfo.so "$pkgdir/usr/lib/libtinfo.so"
 }
