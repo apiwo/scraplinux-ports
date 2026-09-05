@@ -3,7 +3,7 @@
 # the ncurses ABI names as symlinks, which is enough for everything in base.
 name=netbsd-curses
 version=0.3.2
-release=1
+release=2
 desc="NetBSD curses, a BSD-licensed replacement for ncurses"
 url="https://github.com/sabotage-linux/netbsd-curses"
 license="BSD-3-Clause"
@@ -20,6 +20,39 @@ build() {
 package() {
 	cd "netbsd-curses-$version"
 	make PREFIX=/usr DESTDIR="$pkgdir" install-dynamic
+
+	# The terminfo database. install-dynamic does not install one, and
+	# neither does plain `install`: read the GNUmakefile's own target list -
+	# install-dynamic is headers + progs + pcs + dynlibs, and no target
+	# anywhere in it touches the database. The database lives in its own
+	# terminfo/ subdirectory with a NetBSD-style Makefile (bsd.prog.mk),
+	# which GNU make never runs, so it was silently skipped and this
+	# distribution shipped no terminfo at all.
+	#
+	# What that broke, all one bug: with no database, libterminfo cannot
+	# look up a single capability, so nothing can emit a cursor movement or
+	# a real colour escape. Backspace at any zsh prompt echoed a bare space
+	# and walked the cursor forward instead of erasing - the line editor
+	# deleted correctly and then could not tell the terminal to move back -
+	# and prompt colours came out as malformed escapes (\e[3245m, the
+	# unresolved form of \e[38;5;245m), which is why the accent read as red.
+	#
+	# The compiled-in lookup path, not a guess: libterminfo/term.c defines
+	# _PATH_TERMINFO as INSTALL_PREFIX "/share/terminfo" (INSTALL_PREFIX is
+	# $PREFIX, set to /usr here), and term.c:279 then opens it as
+	# snprintf(..., "%s.cdb", path) - so the file has to be exactly
+	# /usr/share/terminfo.cdb. The compile command is the one terminfo/
+	# Makefile itself uses: tic -ax -o <out> <source>.
+	#
+	# tic is built and installed by install-dynamic above (install-progs ->
+	# install-tic), so the binary just staged into $pkgdir is the one used
+	# to compile the database - it is a native build, so it runs here.
+	# LD_LIBRARY_PATH because it links against the libterminfo alongside it,
+	# which is not installed on the build host.
+	LD_LIBRARY_PATH="$pkgdir/usr/lib" \
+		"$pkgdir/usr/bin/tic" -ax -o terminfo.cdb terminfo/terminfo
+	install -Dm644 terminfo.cdb "$pkgdir/usr/share/terminfo.cdb"
+
 	# Anything looking for -lncurses finds this instead.
 	for n in ncurses ncursesw tinfo terminfo; do
 		ln -sf libcurses.so "$pkgdir/usr/lib/lib$n.so"

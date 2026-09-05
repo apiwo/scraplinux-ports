@@ -1,0 +1,6 @@
+Hand-maintained: package() compiles and installs the terminfo database, which
+no upstream GNU make target installs (the database has its own NetBSD-style
+Makefile that GNU make never runs). Without it libterminfo has no capabilities
+to look up, so backspace could not emit a cursor movement and colour escapes
+came out malformed. Cannot be expressed in manifest.tsv's template - see the
+comment in package() for the compiled-in path and the exact tic invocation.
