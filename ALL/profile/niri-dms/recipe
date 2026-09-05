@@ -14,7 +14,7 @@ license="GPL-3.0-or-later"
 replaces="foot"
 depend="niri dankmaterialshell foot fuzzel mako swaylock wl-clipboard grim slurp \
 	xorg-xwayland pipewire wireplumber ttf-jetbrains-mono ttf-nerd-fonts-symbols \
-	noto-fonts noto-fonts-emoji nemo firefox"
+	noto-fonts noto-fonts-emoji pcmanfm firefox"
 makedepend=""
 source="config.kdl foot.ini"
 sha256="SKIP SKIP"
