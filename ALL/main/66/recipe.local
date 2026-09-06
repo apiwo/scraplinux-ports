@@ -1,4 +1,9 @@
-# CATCHLOG=0/VERBOSITY=1 sed fixes in package() and the release=2 bump that
-# ships them are hand edits, not something gen-ports.py's template can
-# express - the manifest has no field for post-install sed patches.
-# Regenerating this recipe from the manifest would silently drop both.
+Marker only - see CONTRIBUTING.md. build() unsets LD_LIBRARY_PATH (meson's
+own tooling crashes the same way other native builds do if it's still
+pointed at the sysroot) and package() creates /var/lib/66/system (66 boot
+expects it and warns at boot otherwise, doesn't mkdir it itself). package()
+also sed-patches /etc/66/init.conf to CATCHLOG=0/VERBOSITY=1 (upstream's
+CATCHLOG=1 can hang boot indefinitely in this system's fork/fifo rendezvous;
+VERBOSITY=2 prints tree-management chatter over the console) and release=2
+is the bump that ships that fix. gen-ports.py must never regenerate over
+this - none of the above has a manifest.tsv field.
