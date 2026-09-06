@@ -98,7 +98,16 @@ package() {
 	for f in Kbuild Kconfig Module.symvers; do
 		[ -f "$f" ] && install -Dm644 "$f" "$builddir/$f"
 	done
-	cp -a tools/objtool "$builddir/tools/objtool" 2>/dev/null || :
+	# objtool is not optional and must not fail quietly. This config has
+	# CONFIG_OBJTOOL, so kbuild runs tools/objtool/objtool on every object it
+	# compiles for an external module - and when it is absent the build stops
+	# with a bare "Error 127" from /bin/sh, naming a path rather than saying
+	# what was missing. Copied unconditionally, and the build fails here
+	# instead if it was never built.
+	install -d "$builddir/tools"
+	cp -a tools/objtool "$builddir/tools/objtool"
+	[ -x "$builddir/tools/objtool/objtool" ] || \
+		die "objtool missing from the build tree - external modules cannot compile without it"
 	find . -name 'Makefile*' -o -name 'Kbuild*' -o -name 'Kconfig*' | \
 		while read -r f; do
 			case "$f" in
