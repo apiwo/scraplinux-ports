@@ -48,7 +48,15 @@ build() {
 	# insert instead of at build, which is exactly the class of failure this
 	# package exists to prevent.
 	make -j"$JOBS" modules_prepare
-	make -j"$JOBS" modules
+	# vmlinux, not just modules: modpost resolves every module's imports
+	# against the symbols vmlinux.o exports, so `make modules` on its own
+	# stops with "vmlinux.o is missing ... you may get many unresolved symbol
+	# errors" and then does exactly that - 190685 of them here - and produces
+	# no Module.symvers at all. The kernel package does not hit this because
+	# it builds bzImage first. bzImage itself is not wanted here (this package
+	# ships no kernel image), so vmlinux is the cheaper way to the same
+	# resolved symbol table.
+	make -j"$JOBS" vmlinux modules
 }
 
 package() {
