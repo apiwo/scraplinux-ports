@@ -5,3 +5,13 @@ needs GCC (not clang, same reason as the 64-bit glibc recipe) with -m32,
 -Werror default still trips on some sysdeps code under -m32 the same way
 it does on native builds).
 gen-ports.py must never regenerate over this.
+
+arch was "i686", which is wrong: scraps filters/resolves packages by the
+HOST architecture (SCRAPS_ARCH=x86_64 on every real install), not by the
+architecture of the code inside them - every other multilib package here
+correctly says arch="x86_64" despite also shipping 32-bit i686 code. With
+arch="i686" this package was completely invisible to `scraps add glibc-32`
+on a real x86_64 system - the one package the whole multilib chain
+(openrc-32, mesa-32, busybox-32, ...) depends on could never actually be
+installed. release=2 re-tags the same already-built binary (repackaged,
+not rebuilt - this host has no GCC to reproduce glibc-32's build with).
