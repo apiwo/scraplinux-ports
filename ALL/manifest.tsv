@@ -118,7 +118,7 @@ main	gettext-tiny	0.3.3	make	GPL-3.0-or-later MIT	glibc	-	https://github.com/sab
 # =============================================================== extra
 # Extra pieces for a working install: terminals, editors, fonts, network tools.
 extra	foot	1.24.0	meson	MIT	glibc,wayland,fontconfig,freetype,pixman,libxkbcommon,fcft	meson,ninja,scdoc	https://codeberg.org/dnkl/foot	https://codeberg.org/dnkl/foot/archive/{version}.tar.gz	A fast, lightweight Wayland terminal emulator
-extra	fcft	3.3.1	meson	MIT	glibc,freetype,fontconfig,pixman,harfbuzz,utf8proc	meson,ninja	https://codeberg.org/dnkl/fcft	https://codeberg.org/dnkl/fcft/archive/{version}.tar.gz	Font loading and glyph rasterisation
+extra	fcft	3.3.1	meson	MIT	glibc,freetype,fontconfig,pixman,harfbuzz,utf8proc,tllist	meson,ninja	https://codeberg.org/dnkl/fcft	https://codeberg.org/dnkl/fcft/archive/{version}.tar.gz	Font loading and glyph rasterisation
 extra	utf8proc	2.11.0	cmake	MIT	glibc	cmake,ninja	https://juliastrings.github.io/utf8proc/	https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v{version}.tar.gz	Unicode processing library
 extra	alacritty	0.16.0	cargo	Apache-2.0	glibc,wayland,libxkbcommon,fontconfig	rust,cargo	https://alacritty.org/	https://github.com/alacritty/alacritty/archive/refs/tags/v{version}.tar.gz	GPU-accelerated terminal
 extra	kitty	0.48.2	python	GPL-3.0-only	glibc,harfbuzz,wayland,libpng,freetype,fontconfig	python,go	https://sw.kovidgoyal.net/kitty/	https://github.com/kovidgoyal/kitty/releases/download/v{version}/kitty-{version}.tar.xz	Fast, feature-rich terminal

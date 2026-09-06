@@ -1,0 +1,29 @@
+package() strips ${pc_sysrootdir} out of the shipped .pc's pkgdatadir.
+wayland-protocols' own meson.build writes pkgdatadir using pkgconf's
+${pc_sysrootdir} variable (upstream's own correct cross-sysroot
+mechanism) - but scraps-build's sysroot-publish step (scraps-build itself,
+"publishing into the build sysroot") *unconditionally* bakes the real
+sysroot path straight into every .pc's prefix= for every package it seeds,
+with no ${pc_sysrootdir} involved, on the assumption that a .pc just has
+plain /usr-rooted paths. Both mechanisms firing on the same file doubled
+the sysroot: pkgdatadir resolved to $SYSROOT$SYSROOT/usr/share/wayland-
+protocols, a path that does not exist, so wayland-scanner got told to
+read protocol XML from nowhere ("Could not open input file") for anything
+using $(pkg-config --variable=pkgdatadir wayland-protocols) - i3wl and dwl
+included. A first attempt at fixing this by resetting prefix= back to
+/usr in package() did NOT work: scraps-build's own publish step reapplies
+its prefix= rewrite to *every* .pc already in the sysroot on every single
+package build, unconditionally, so that reset never survives past the
+next build of anything. Stripping ${pc_sysrootdir} instead makes this
+package's .pc shape match every other package's (plain paths only), which
+is what scraps-build's rewrite is actually built to handle. release=2
+ships the fix. gen-ports.py must never regenerate over this - no manifest
+field expresses a post-install sed.
+
+build() also unsets LD_LIBRARY_PATH - same meson/python-exec2c crash as
+fcft's recipe.local describes. And -Dtests=false - the upstream test suite
+compiles a build-check .cc file per protocol with -Werror, and one of
+libc++'s headers trips "using namespace std - refers to implicitly-defined
+namespace" under it; these are wayland-protocols' own self-tests, not
+needed to ship the protocol XML/pkgconfig this package actually exists
+for.

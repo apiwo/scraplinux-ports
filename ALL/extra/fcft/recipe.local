@@ -1,0 +1,23 @@
+fcft.pc's own Requires.private lists tllist >= 1.0.1 (a header-only lib),
+but depend= never carried it - any consumer's `pkg-config --cflags` query
+that includes fcft failed *entirely* (pkgconf refuses the whole combined
+query when one Requires is unresolved), silently zeroing out cflags for
+every package in that query, not just fcft's own. Found chasing i3wl's
+build failing on missing dbus/dbus.h and pixman.h despite both being
+installed - neither was actually the problem. release=2 ships the fix.
+gen-ports.py must never regenerate over this - manifest.tsv is also fixed
+now, but its own template resets release=1 on every regen.
+
+build() also unsets LD_LIBRARY_PATH now - the same LD_LIBRARY_PATH-poisoning
+workaround already established for glibc-32/openrc/steam-runtime/i3wl: an
+inherited LD_LIBRARY_PATH pointing into the sysroot makes even plain host
+tooling (here, meson's python-exec2c dispatch) try to resolve against that
+libc instead of the host's own and crash with a GLIBC_PRIVATE symbol
+mismatch.
+
+build() also passes -Ddocs=disabled - fcft's meson.build wants a real scdoc
+binary (not just its pkg-config metadata) to build man pages, and no scdoc
+package/recipe exists anywhere in this tree yet (foot's own makedepend
+lists it too but foot has never actually been built either - same gap,
+untested). Disabling docs avoids the dependency entirely since i3wl only
+needs fcft's library and headers.

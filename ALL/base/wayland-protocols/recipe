@@ -4,7 +4,7 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=wayland-protocols
 version=1.48
-release=1
+release=2
 desc="Wayland protocol extensions"
 url="https://wayland.freedesktop.org/"
 license="MIT"
@@ -15,6 +15,9 @@ sha256="SKIP"
 
 build() {
 	cd "wayland-protocols-1.48"
+	# See fcft's recipe.local: meson's python-exec2c dispatch crashes
+	# against the sysroot's own libc if this leaks in.
+	unset LD_LIBRARY_PATH
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -22,6 +25,7 @@ build() {
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
+		-Dtests=false \
 		-Db_lto=true
 	ninja -C build -j"$JOBS"
 }
@@ -29,4 +33,15 @@ build() {
 package() {
 	cd "wayland-protocols-1.48"
 	DESTDIR="$pkgdir" ninja -C build install
+	# wayland-protocols' own meson.build writes pkgdatadir using pkgconf's
+	# ${pc_sysrootdir} variable, upstream's own cross-sysroot mechanism -
+	# but scraps-build's own sysroot-publish step (see scraps-build itself,
+	# "publishing into the build sysroot") *already* bakes the real sysroot
+	# path straight into every .pc's prefix= unconditionally, for every
+	# package, with no ${pc_sysrootdir} involved. Applying both means
+	# pkgdatadir gets the sysroot prefixed twice: once baked into prefix=,
+	# once again from ${pc_sysrootdir} at query time. Strip the variable
+	# here so this package follows the same plain-path shape scraps-build's
+	# rewrite already assumes every other package uses. See recipe.local.
+	sed -i 's|\${pc_sysrootdir}||' "$pkgdir/usr/share/pkgconfig/wayland-protocols.pc"
 }

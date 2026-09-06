@@ -4,17 +4,21 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=fcft
 version=3.3.1
-release=1
+release=2
 desc="Font loading and glyph rasterisation"
 url="https://codeberg.org/dnkl/fcft"
 license="MIT"
-depend="glibc freetype fontconfig pixman harfbuzz utf8proc"
+depend="glibc freetype fontconfig pixman harfbuzz utf8proc tllist"
 makedepend="meson ninja"
 source="https://codeberg.org/dnkl/fcft/archive/3.3.1.tar.gz"
 sha256="SKIP"
 
 build() {
 	cd "fcft"
+	# meson's own tooling (python-exec2c dispatching to the host's python3)
+	# crashes the same way other native builds do if this is still pointed
+	# at the sysroot - see recipe.local.
+	unset LD_LIBRARY_PATH
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -22,6 +26,7 @@ build() {
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
+		-Ddocs=disabled \
 		-Db_lto=true
 	ninja -C build -j"$JOBS"
 }
