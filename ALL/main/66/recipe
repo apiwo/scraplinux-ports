@@ -4,7 +4,7 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=66
 version=0.9.1.2
-release=1
+release=2
 desc="Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init"
 url="https://web.obarun.org/software/66/"
 license="BSD-Zero-Clause"

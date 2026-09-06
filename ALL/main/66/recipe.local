@@ -1,5 +1,4 @@
-Marker only - see CONTRIBUTING.md. build() unsets LD_LIBRARY_PATH (meson's
-own tooling crashes the same way other native builds do if it's still
-pointed at the sysroot) and package() creates /var/lib/66/system (66 boot
-expects it and warns at boot otherwise, doesn't mkdir it itself).
-gen-ports.py must never regenerate over this.
+# CATCHLOG=0/VERBOSITY=1 sed fixes in package() and the release=2 bump that
+# ships them are hand edits, not something gen-ports.py's template can
+# express - the manifest has no field for post-install sed patches.
+# Regenerating this recipe from the manifest would silently drop both.
