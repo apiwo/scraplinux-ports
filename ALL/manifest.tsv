@@ -524,6 +524,7 @@ base	dash	0.5.13	autotools	BSD-3-Clause	glibc	-	http://gondor.apana.org.au/~herb
 #
 # =============================================================== kernels
 kernels	ScrapLinux-base-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel with broad hardware support
+kernels	ScrapLinux-base-kernel-devel	7.1.3	make	GPL-2.0-only	ScrapLinux-base-kernel	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	Kernel build tree for out-of-tree modules
 kernels	ScrapLinux-libre-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel, fully free, no blob loading
 kernels	ScrapLinux-small-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel, monolithic and minimal
 kernels	ScrapLinux-rt-kernel	7.1.3	make	GPL-2.0-only	glibc	clang,lld,bmake	https://kernel.org/	https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-{version}.tar.xz	ScrapLinux kernel with full preemption, for audio work
@@ -536,7 +537,7 @@ kernels	alsa-ucm-conf	1.2.15	make	BSD-3-Clause	-	-	https://alsa-project.org/	htt
 # =============================================================== nonfree
 # Proprietary firmware and drivers. Every entry here has a free counterpart in
 # alt-nonfree, and the installer offers the choice.
-nonfree	nvidia-drivers	590.48	dkms	NVIDIA-proprietary	glibc,gcc-libs,libglvnd,libx11,libxext,libxxf86vm,libdrm,wayland,mesa,libpciaccess	linux-headers,gmake,clang	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA proprietary driver and kernel module (needs libstdc++ and libgcc_s from gcc-libs)
+nonfree	nvidia-drivers	595.99.02	dkms	NVIDIA-proprietary	glibc,gcc-libs,libglvnd,libx11,libxext,libxxf86vm,libdrm,wayland,mesa,libpciaccess	gmake,ScrapLinux-base-kernel-devel	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA proprietary driver and kernel module (needs libstdc++ and libgcc_s from gcc-libs)
 nonfree	nvidia-utils	590.48	binary	NVIDIA-proprietary	nvidia-drivers,gcc-libs,libglvnd,mesa	-	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA userspace libraries, nvidia-smi and CUDA loader
 nonfree	nvidia-settings	595.84	make	GPL-2.0-only	nvidia-utils,gcc-libs,gtk3,jansson	-	https://github.com/NVIDIA/nvidia-settings	https://github.com/NVIDIA/nvidia-settings/archive/refs/tags/{version}.tar.gz	NVIDIA control panel
 nonfree	nvidia-lts-drivers	590.48	dkms	NVIDIA-proprietary	glibc,ScrapLinux-lts-kernel	linux-headers	https://www.nvidia.com/	https://us.download.nvidia.com/XFree86/Linux-x86_64/{version}/NVIDIA-Linux-x86_64-{version}.run	NVIDIA driver built for the LTS kernel

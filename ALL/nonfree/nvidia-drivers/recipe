@@ -4,7 +4,7 @@
 # mesa and xf86-video-nouveau from alt-nonfree instead; on Turing and newer the
 # open GSP path is genuinely usable now.
 name=nvidia-drivers
-version=590.48
+version=595.99.02
 release=1
 desc="NVIDIA proprietary graphics driver and kernel module"
 url="https://www.nvidia.com/"
@@ -14,12 +14,49 @@ license="NVIDIA-proprietary"
 # is why ScrapLinux ships gcc-libs despite otherwise avoiding GNU components - a
 # prebuilt blob cannot be relinked against libc++.
 depend="glibc gcc-libs libglvnd libx11 libxext libxxf86vm libdrm wayland mesa libpciaccess"
-makedepend="gmake linux-headers clang"
+# ScrapLinux-base-kernel-devel, not linux-headers: linux-headers is
+# `make headers_install`, the userspace UAPI only, with no Makefile, no .config
+# and no scripts/. An out-of-tree module needs the real kbuild tree, which is
+# what the -devel package ships at /usr/lib/modules/<release>/build.
+makedepend="gmake ScrapLinux-base-kernel-devel"
 provides="nvidia"
 conflicts="nouveau-drivers"
 source="NVIDIA-Linux-x86_64-$version.run::https://us.download.nvidia.com/XFree86/Linux-x86_64/$version/NVIDIA-Linux-x86_64-$version.run"
 sha256="SKIP"
 options="!strip"
+
+# The kernel this package is being built *for*, which is not the kernel the
+# build host happens to be running.
+#
+# This used to be `for kdir in /usr/lib/modules/*/build` in build() and
+# `for kver in $(ls /usr/lib/modules)` in package(), both reading the host's
+# own /usr - and inside the sandbox that is the build machine's distribution
+# kernel, bind-mounted read-only. On this machine that enumerated
+# 7.1.3-gentoo-dist-bin while the target runs 7.1.3-scraplinux-base, so the
+# modules were compiled against the wrong tree and then installed under a
+# kernel directory that does not exist on any ScrapLinux system. depmod would
+# never have found them and the driver could never have loaded.
+#
+# scraplinux-base.release is written by ScrapLinux-base-kernel's own package()
+# and holds exactly one line, the release string - a single unambiguous
+# answer, unlike globbing the modules directory, which finds nothing on a
+# fresh sysroot and more than one as soon as a second kernel flavour is
+# installed.
+_target_kver() {
+	if [ -r "$SCRAPS_SYSROOT/usr/lib/modules/scraplinux-base.release" ]; then
+		head -1 "$SCRAPS_SYSROOT/usr/lib/modules/scraplinux-base.release"
+		return 0
+	fi
+	# No release file: fall back to the one module directory that actually
+	# has a build tree, which is the only one a module can be built against.
+	for _d in "$SCRAPS_SYSROOT"/usr/lib/modules/*/build; do
+		[ -d "$_d" ] || continue
+		_d=${_d%/build}
+		basename "$_d"
+		return 0
+	done
+	return 1
+}
 
 prepare() {
 	sh "NVIDIA-Linux-x86_64-$version.run" --extract-only
@@ -27,23 +64,41 @@ prepare() {
 
 build() {
 	cd "NVIDIA-Linux-x86_64-$version/kernel"
-	# Build against every installed kernel, so a later kernel upgrade still has
-	# a module. scraps's post_upgrade hook rebuilds this when the kernel changes.
-	# gmake, not make: Linux kbuild is written against GNU make, and /usr/bin/make
-	# on ScrapLinux is bmake.
-	for kdir in /usr/lib/modules/*/build; do
-		[ -d "$kdir" ] || continue
-		gmake -j"$JOBS" SYSSRC="$kdir" modules
-	done
+	local kver kdir
+	kver=$(_target_kver) || die "cannot determine the target kernel version"
+	kdir="$SCRAPS_SYSROOT/usr/lib/modules/$kver/build"
+	[ -d "$kdir" ] || die "no kernel build tree at $kdir - install ScrapLinux-base-kernel-devel"
+	msg2 "building against $kver"
+	# gmake, not make: Linux kbuild is written against GNU make, and
+	# /usr/bin/make on ScrapLinux is bmake.
+	#
+	# CC is forced back to the compiler the kernel itself was built with.
+	# scraps-build exports CC=clang for every package, but this kernel's
+	# .config records CONFIG_CC_IS_GCC=y - kbuild refuses a compiler that
+	# disagrees with the one in the config, and a module that did slip
+	# through built by a different toolchain is not something to hand
+	# someone as a graphics driver.
+	gmake -j"$JOBS" CC=gcc SYSSRC="$kdir" modules
 }
 
 package() {
 	cd "NVIDIA-Linux-x86_64-$version"
-	for kver in $(ls /usr/lib/modules); do
-		install -d "$pkgdir/usr/lib/modules/$kver/extra/nvidia"
-		install -Dm644 kernel/*.ko \
-			"$pkgdir/usr/lib/modules/$kver/extra/nvidia/" 2>/dev/null || true
+	local kver
+	kver=$(_target_kver) || die "cannot determine the target kernel version"
+
+	install -d "$pkgdir/usr/lib/modules/$kver/extra/nvidia"
+	for m in kernel/*.ko; do
+		[ -f "$m" ] || continue
+		install -Dm644 "$m" \
+			"$pkgdir/usr/lib/modules/$kver/extra/nvidia/$(basename "$m")"
 	done
+	# options="!strip" is there for the userspace blobs, which must not be
+	# touched - but it also exempts the modules, and nvidia.ko alone is 149 MB
+	# of mostly DWARF. --strip-debug only drops the debug sections, leaving
+	# the symbol table the kernel needs to link the module at insert time.
+	find "$pkgdir/usr/lib/modules/$kver/extra/nvidia" -name '*.ko' \
+		-exec strip --strip-debug {} +
+
 	install -Dm644 nvidia_drv.so "$pkgdir/usr/lib/xorg/modules/drivers/nvidia_drv.so"
 	install -Dm755 nvidia-smi "$pkgdir/usr/bin/nvidia-smi"
 	# Wayland compositors need these two to use the card at all.
@@ -52,6 +107,8 @@ package() {
 		"$pkgdir/usr/share/glvnd/egl_vendor.d/10_nvidia.json" 2>/dev/null || true
 
 	# ScrapLinux defaults that people otherwise spend an evening discovering.
+	# The install hook beside this recipe asks before writing its own copies of
+	# these into /etc; these are the packaged defaults it starts from.
 	mkdir -p "$(dirname $pkgdir/etc/modprobe.d/nvidia.conf)"
 cat >"$pkgdir/etc/modprobe.d/nvidia.conf" <<-'CONF'
 		# ScrapLinux NVIDIA defaults

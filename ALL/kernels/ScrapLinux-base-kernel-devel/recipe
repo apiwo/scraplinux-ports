@@ -1,0 +1,106 @@
+# ScrapLinux-base-kernel-devel - the kbuild tree, for building modules out of tree.
+#
+# ScrapLinux-base-kernel deliberately drops the build/ and source/ symlinks from
+# its own package ("nothing in a package should point back at the build tree"),
+# and linux-headers is only the userspace UAPI headers - `make headers_install`,
+# no Makefile, no .config, no scripts/. Correct for both of them, and between
+# them it left nothing on the system that can build a kernel module: any
+# out-of-tree driver - NVIDIA, ZFS, VirtualBox, v4l2loopback - needs the real
+# kbuild tree at /usr/lib/modules/<release>/build. That is what this package is.
+#
+# It rebuilds the kernel from the same source and the same scraplinux-base.config
+# the kernel package itself uses, so the tree it ships describes exactly the
+# kernel that is running. That matters more than it sounds: a devel tree from a
+# differently configured kernel still compiles modules, and those modules then
+# load against a kernel whose structures do not match what they were compiled
+# against. Failing to build is a much better outcome than that, so the config is
+# shared rather than copied.
+name=ScrapLinux-base-kernel-devel
+version=7.1.3
+release=1
+desc="Kernel build tree for ScrapLinux-base-kernel, for out-of-tree modules"
+url="https://kernel.org/"
+license="GPL-2.0-only"
+depend="ScrapLinux-base-kernel"
+makedepend="clang lld bmake"
+source="https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-$version.tar.xz
+	scraplinux-base.config"
+sha256="SKIP
+	SKIP"
+# The tree ships .o-bearing host tools under scripts/ and unstripped generated
+# objects; stripping them breaks the very tools kbuild is about to run.
+options="!strip"
+
+build() {
+	cd "linux-$version"
+	cp ../scraplinux-base.config .config
+	make olddefconfig
+	# modules_prepare gets the tree to the point where an external module can
+	# be compiled: generated headers, autoconf.h, and the host tools under
+	# scripts/. It does not link vmlinux, which is the expensive part and
+	# which nothing here needs.
+	#
+	# modules on top of it, only for Module.symvers: kbuild emits it while
+	# building in-tree modules, and an out-of-tree build reads it to resolve
+	# the symbols it imports. This config has no CONFIG_MODVERSIONS, so a
+	# missing Module.symvers is a warning rather than an error - but the
+	# warning is "all symbols undefined", and the resulting module fails at
+	# insert instead of at build, which is exactly the class of failure this
+	# package exists to prevent.
+	make -j"$JOBS" modules_prepare
+	make -j"$JOBS" modules
+}
+
+package() {
+	cd "linux-$version"
+	local kver builddir
+	kver=$(make -s kernelrelease)
+	builddir="$pkgdir/usr/lib/modules/$kver/build"
+	install -d "$builddir"
+
+	# The top-level pieces kbuild reads on every external module build.
+	install -Dm644 Makefile "$builddir/Makefile"
+	install -Dm644 .config "$builddir/.config"
+	install -Dm644 Module.symvers "$builddir/Module.symvers"
+	install -Dm644 System.map "$builddir/System.map"
+
+	# Whole directories, copied rather than installed file by file: scripts/
+	# carries compiled host binaries that have to keep their mode, and
+	# include/generated is created by the build rather than shipped in the
+	# tarball.
+	cp -a scripts "$builddir/scripts"
+	cp -a include "$builddir/include"
+
+	# Only x86 - this package is built for x86_64 and the other architectures'
+	# headers are a large amount of dead weight in a package that is already
+	# not small.
+	install -d "$builddir/arch/x86"
+	cp -a arch/x86/include "$builddir/arch/x86/include"
+	install -Dm644 arch/x86/Makefile "$builddir/arch/x86/Makefile"
+	# Kbuild descends into arch/x86/entry/syscalls and arch/x86/tools for the
+	# generated syscall tables and relocs; without these an external build
+	# stops with "No rule to make target".
+	for d in entry tools kernel/cpu; do
+		[ -d "arch/x86/$d" ] || continue
+		install -d "$builddir/arch/x86/$(dirname "$d")"
+		cp -a "arch/x86/$d" "$builddir/arch/x86/$d"
+	done
+
+	# Kbuild's own makefiles, which live beside the sources it no longer needs.
+	for f in Kbuild Kconfig Module.symvers; do
+		[ -f "$f" ] && install -Dm644 "$f" "$builddir/$f"
+	done
+	cp -a tools/objtool "$builddir/tools/objtool" 2>/dev/null || :
+	find . -name 'Makefile*' -o -name 'Kbuild*' -o -name 'Kconfig*' | \
+		while read -r f; do
+			case "$f" in
+			./arch/*) case "$f" in ./arch/x86/*) ;; *) continue ;; esac ;;
+			esac
+			install -Dm644 "$f" "$builddir/${f#./}" 2>/dev/null || :
+		done
+
+	# The source symlink the kernel package drops: with the tree present it is
+	# meaningful again, and kbuild follows it for anything it cannot find under
+	# build/.
+	ln -sf "build" "$pkgdir/usr/lib/modules/$kver/source"
+}

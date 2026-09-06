@@ -1,0 +1,13 @@
+Marker only - hand-written. The manifest's generic "make" template would run a
+plain `make` / `make install` over the whole kernel tree; this package only ever
+needs modules_prepare + modules and then copies the kbuild tree into place.
+gen-ports.py must never regenerate over it.
+
+scraplinux-base.config beside this recipe is a real copy of the one in
+ScrapLinux-base-kernel/, not a symlink: scraps-build copies local sources with
+`cp -a`, which preserves a symlink rather than following it, so a link would
+arrive in the build directory dangling. The two files must be kept identical -
+this package exists to describe the kernel that is actually running, and a
+devel tree built from a different config produces modules that compile and then
+misbehave against the real kernel. Change one, change both, and check with
+`cmp` before publishing.
