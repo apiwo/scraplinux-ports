@@ -7,7 +7,16 @@
 #
 # ScrapLinux asks rather than assuming, because plenty of people have a working
 # hand-rolled setup they do not want touched.
+# Every path below is written under $SCRAPS_ROOT, not to a bare /etc.
+# scraps sets SCRAPS_ROOT for the root it is operating on, and it is "/" for an
+# ordinary install - so this is a no-op in the normal case and the difference
+# only shows up under `scraps --root=/mnt`, where the unprefixed version wrote
+# the driver's modprobe config, its modules-load list and a regenerated
+# initramfs onto the *build host* while claiming to have configured the target.
+# The target got the modules and none of the configuration; the host got
+# configuration for a driver it does not have.
 # shellcheck shell=sh
+R=${SCRAPS_ROOT:-/}; R=${R%/}
 
 post_install() {
 	printf '\n'
@@ -36,7 +45,7 @@ post_install() {
 
 post_upgrade() {
 	# On an upgrade, only rebuild what already exists - never re-ask.
-	if [ -f /etc/modprobe.d/nvidia.conf ]; then
+	if [ -f "$R/etc/modprobe.d/nvidia.conf" ]; then
 		printf '  nvidia: rebuilding the kernel module for the running kernels\n'
 		for kdir in /usr/lib/modules/*/build; do
 			[ -d "$kdir" ] || continue
@@ -47,16 +56,24 @@ post_upgrade() {
 }
 
 pre_remove() {
-	rm -f /etc/modprobe.d/nvidia.conf /etc/modules-load.d/nvidia.conf
-	rm -f /etc/modprobe.d/nouveau-blacklist.conf
+	rm -f "$R/etc/modprobe.d/nvidia.conf" "$R/etc/modules-load.d/nvidia.conf"
+	rm -f "$R/etc/modprobe.d/nouveau-blacklist.conf"
 }
 
-have_initramfs() { command -v scraplinux-mkinitramfs >/dev/null 2>&1; }
+# Only meaningful for the running system. Under `scraps --root=/mnt` the
+# host's scraplinux-mkinitramfs would regenerate the *host's* initramfs from
+# the host's own modules, which is both wrong and destructive - the target's
+# initramfs is rebuilt when it next boots and installs its own kernel, or by
+# running scraplinux-mkinitramfs inside a chroot of it.
+have_initramfs() {
+	[ "$R" = "" ] || return 1
+	command -v scraplinux-mkinitramfs >/dev/null 2>&1
+}
 
 nvidia_configure() {
-	mkdir -p /etc/modprobe.d /etc/modules-load.d
+	mkdir -p "$R/etc/modprobe.d" "$R/etc/modules-load.d"
 
-	cat >/etc/modprobe.d/nvidia.conf <<-'CONF'
+	cat >"$R/etc/modprobe.d/nvidia.conf" <<-'CONF'
 		# Written by scraps when the NVIDIA driver was installed.
 		# Remove this file to hand configuration back to yourself.
 
@@ -68,13 +85,13 @@ nvidia_configure() {
 		options nvidia_drm modeset=1 fbdev=1
 	CONF
 
-	cat >/etc/modprobe.d/nouveau-blacklist.conf <<-'CONF'
+	cat >"$R/etc/modprobe.d/nouveau-blacklist.conf" <<-'CONF'
 		# nouveau and the proprietary driver cannot both drive the card.
 		blacklist nouveau
 		options nouveau modeset=0
 	CONF
 
-	cat >/etc/modules-load.d/nvidia.conf <<-'CONF'
+	cat >"$R/etc/modules-load.d/nvidia.conf" <<-'CONF'
 		nvidia
 		nvidia_modeset
 		nvidia_drm
