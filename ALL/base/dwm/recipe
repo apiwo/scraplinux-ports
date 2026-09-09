@@ -7,11 +7,11 @@
 # else's whole config.
 name=dwm
 version=6.6
-release=2
+release=3
 desc="Dynamic window manager for X"
 url="https://dwm.suckless.org/"
 license="MIT"
-depend="glibc libx11 libxft libxinerama freetype fontconfig harfbuzz"
+depend="x11-base glibc libx11 libxft libxinerama freetype fontconfig harfbuzz"
 makedepend="bmake clang lld"
 source="https://dl.suckless.org/dwm/dwm-$version.tar.gz"
 sha256="SKIP"

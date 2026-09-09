@@ -1,0 +1,21 @@
+# wayland-base - Everything needed for a working Wayland session: wlroots, GL/EGL via glvnd, seatd, input, keymaps, Xwayland and fonts. Install this and a wlroots compositor runs.
+# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
+# unless the package needs something the template cannot express - in which case
+# drop a `recipe.local` beside it and it will be preserved.
+name=wayland-base
+version=1.0.0
+release=1
+desc="Everything needed for a working Wayland session: wlroots, GL/EGL via glvnd, seatd, input, keymaps, Xwayland and fonts. Install this and a wlroots compositor runs."
+url="https://github.com/apiwo/scraplinux"
+license="GPL-3.0-or-later"
+depend="wayland wayland-protocols wlroots libglvnd mesa libinput libxkbcommon xkeyboard-config pixman seatd libdrm libdisplay-info libxcb xcb-util-wm xcb-util-renderutil xcb-util-keysyms dbus ttf-dejavu ttf-jetbrains-mono-nerd"
+makedepend=""
+source=""
+sha256=""
+
+# A meta package: the dependency list is the whole payload. Installing it pulls
+# in a working setup and nothing else.
+package() {
+	install -d "$pkgdir/usr/share/scraplinux/meta"
+	printf '%s\n' "wayland wayland-protocols wlroots libglvnd mesa libinput libxkbcommon xkeyboard-config pixman seatd libdrm libdisplay-info libxcb xcb-util-wm xcb-util-renderutil xcb-util-keysyms dbus ttf-dejavu ttf-jetbrains-mono-nerd" >"$pkgdir/usr/share/scraplinux/meta/wayland-base"
+}
