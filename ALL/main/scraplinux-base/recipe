@@ -12,7 +12,7 @@
 # notices the live ISO and a real install disagree.
 name=scraplinux-base
 version=1.5.0
-release=1
+release=2
 desc="ScrapLinux base configuration, init scripts and branding"
 url="https://github.com/apiwo/scraplinux"
 license="BSD-2-Clause"
