@@ -1,0 +1,10 @@
+scraplinux-base is hand-written, not generated from manifest.tsv: its
+package() copies the whole skel/ and branding/ trees out of the committed
+skel.tar/branding.tar, which the generic meta template cannot express.
+gen-ports.py overwrote it once with the generic stub (source="", no
+package()), which silently turned scraplinux-base into an empty package -
+this file is what stops that happening again.
+
+Regenerate the tars with build/gen-skel-tar.sh before every release. They
+are frozen archives, so every skel/ fix is invisible to a real install
+until that is run and this package is rebuilt and republished.

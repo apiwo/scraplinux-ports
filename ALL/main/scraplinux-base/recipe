@@ -1,21 +1,63 @@
-# scraplinux-base - ScrapLinux base configuration, init and branding
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# scraplinux-base - the files that make a system an ScrapLinux system.
+#
+# skel.tar/branding.tar are real committed archives, not fetched from a URL -
+# a real `scraps add -s scraplinux-base` on someone else's machine only has this
+# recipe and its declared source files, never the monorepo skel/ and
+# branding/ directories live in. That means they go stale the moment skel/
+# changes and nobody remembers to regenerate them - which is exactly what
+# happened for most of this release cycle: mkiso reads skel/ directly for
+# the live ISO, so every fix landed there and nowhere else, and a real
+# scraplinux-install target kept shipping whatever skel.tar was last frozen at.
+# Run build/gen-skel-tar.sh before every release, not just when someone
+# notices the live ISO and a real install disagree.
 name=scraplinux-base
-version=1.0.0
+version=1.5.0
 release=1
-desc="ScrapLinux base configuration, init and branding"
+desc="ScrapLinux base configuration, init scripts and branding"
 url="https://github.com/apiwo/scraplinux"
-license="GPL-3.0-or-later"
-depend="busybox toybox zsh doas scraps libxcrypt"
-makedepend=""
-source=""
-sha256=""
+license="BSD-2-Clause"
+depend="busybox toybox zsh doas scraps"
+source="skel.tar branding.tar"
+sha256="SKIP SKIP"
+backup="etc/inittab etc/profile etc/zsh/zshrc etc/doas.conf etc/scraps/scraps.conf"
 
-# A meta package: the dependency list is the whole payload. Installing it pulls
-# in a working setup and nothing else.
 package() {
-	install -d "$pkgdir/usr/share/scraplinux/meta"
-	printf '%s\n' "busybox toybox zsh doas scraps libxcrypt" >"$pkgdir/usr/share/scraplinux/meta/scraplinux-base"
+	# skel.tar and branding.tar both end in .tar, and scraps-build's own
+	# generic source handling already untars anything matching that suffix
+	# straight into $srcdir before package() ever runs - skel.tar's etc/ and
+	# usr/, and branding.tar's ascii/fastfetch/icons/limine/misc/plasma/
+	# sddm/wallpaper, all landed there already, merged at $srcdir's root.
+	# There is no skel.tar left as a file to re-extract; copy what is
+	# already unpacked instead.
+	#
+	# ${_HOST_CP:-cp}: scraps-build sets _HOST_CP to a cp resolved before
+	# $SCRAPS_SYSROOT/usr/bin joins PATH; a real `scraps add -s scraplinux-base`
+	# never sets it, so this is still plain `cp` there. LD_LIBRARY_PATH=
+	# (empty, not unset) on the same line: by the time package() runs,
+	# scraps-build has already pointed LD_LIBRARY_PATH at the sysroot for
+	# build()'s own linking, and a *host* binary loaded against ScrapLinux's
+	# own glibc instead of the host's is exactly as broken as the reverse -
+	# this is what "undefined symbol: __pointer_chk_guard, version
+	# GLIBC_PRIVATE" turned out to mean, from a plain cp/tar.
+	LD_LIBRARY_PATH= "${_HOST_CP:-cp}" -a etc usr "$pkgdir/"
+	LD_LIBRARY_PATH= "${_HOST_INSTALL:-install}" -d "$pkgdir/usr/share/scraplinux"
+	for _ab_d in ascii fastfetch icons limine misc plasma sddm wallpaper; do
+		[ -e "$_ab_d" ] && LD_LIBRARY_PATH= "${_HOST_CP:-cp}" -a "$_ab_d" "$pkgdir/usr/share/scraplinux/"
+	done
+	# Shell builtins only, no external command. Every other write in this
+	# package() already guards its host binary with an empty LD_LIBRARY_PATH,
+	# because by this point scraps-build has pointed it at the sysroot for
+	# build()'s linking and a *host* binary loaded against ScrapLinux's glibc
+	# dies with "undefined symbol: __pointer_chk_guard, version GLIBC_PRIVATE".
+	# This heredoc was the one call that never got that guard, so it took the
+	# whole package down at the very last step - after skel and branding had
+	# already been copied in perfectly - and scraplinux-base silently stayed
+	# source-only for the entire release cycle. `echo` needs no binary at all.
+	{
+		echo '#!/bin/sh'
+		echo 'cat /etc/scraplinux-release'
+	} >"$pkgdir/usr/bin/scraplinux-release"
+LD_LIBRARY_PATH= "${_HOST_CHMOD:-chmod}" 755 "$pkgdir/usr/bin/scraplinux-release"
+	# The greeting shown once, when a fresh install first boots.
+	LD_LIBRARY_PATH= "${_HOST_INSTALL:-install}" -d "$pkgdir/var/lib/scraplinux"
 }
