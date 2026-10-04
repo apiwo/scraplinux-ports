@@ -611,9 +611,9 @@ main	s6-linux-init	1.1.3.0	1	PID 1 for an s6 system
 main	s6-rc	0.5.6.0	1	Service manager for s6
 main	s6	2.13.2.0	1	skarnet supervision suite
 main	samurai	1.2	1	A ninja-compatible build tool in C
-main	scraplinux-base	1.5.0	2	ScrapLinux base configuration, init scripts and branding
+main	scraplinux-base	1.5.0	3	ScrapLinux base configuration, init scripts and branding
 main	scraplinux-init	1.0.0	1	The ScrapLinux init scripts and service manager
-main	scraps	1.0.0	1	ScrapLinux Package Manager
+main	scraps	1.5.0	1	ScrapLinux Package Manager
 main	seatd	0.9.1	1	Seat management, replacing logind
 main	signify	33	1	Cryptographically sign and verify files (Ed25519)
 main	skalibs	2.14.4.0	1	skarnet base library, needed by s6

@@ -1,26 +1,29 @@
-# scraps - the ScrapLinux Package Manager itself.
-# Deliberately thin: scraps has to work on a system with nothing else on it.
-# (scraps-rs/ has a Rust rewrite sitting in the tree, unused for now.)
 name=scraps
-version=1.0.0
+version=1.5.0
 release=1
 desc="ScrapLinux Package Manager"
 url="https://github.com/apiwo/scraplinux"
-license="BSD-2-Clause"
-depend="busybox"
+license="GPL-3.0-or-later"
+depend="busybox onetrueawk xz libarchive curl"
 provides="package-manager"
-source="scraps scraps-build scraps-repo libscraps.sh scraps.conf"
-sha256="SKIP SKIP SKIP SKIP SKIP"
+# takes etc/scraps over from older scraplinux-base
+replaces="scraplinux-base"
+_commit=5fc0c20b5808a925d506601e753d33a1c087fbfe
+source="scraplinux-$_commit.tar.gz::https://github.com/apiwo/scraplinux/archive/$_commit.tar.gz"
+sha256="0d05b444e56134ce371c9fc5411a69af760bf4f6eb061dae381e53ecbb65c946"
 backup="etc/scraps/scraps.conf"
 
 package() {
-	install -Dm755 scraps       "$pkgdir/usr/bin/scraps"
-	install -Dm755 scraps-build "$pkgdir/usr/bin/scraps-build"
-	install -Dm755 scraps-repo  "$pkgdir/usr/bin/scraps-repo"
-	install -Dm644 libscraps.sh "$pkgdir/usr/lib/scraps/libscraps.sh"
-	install -Dm644 scraps.conf  "$pkgdir/etc/scraps/scraps.conf"
-	install -d "$pkgdir/etc/scraps/repos.d"
-	install -d "$pkgdir/var/lib/scraps/local" "$pkgdir/var/lib/scraps/sync"
-	install -d "$pkgdir/var/lib/scraps/hold" "$pkgdir/var/lib/scraps/snapshots"
-	install -d "$pkgdir/var/cache/scraps/pkg" "$pkgdir/var/cache/scraps/src"
+	unset LD_LIBRARY_PATH
+	cd "scraplinux-$_commit"
+	install -Dm755 scraps/scraps       "$pkgdir/usr/bin/scraps"
+	install -Dm755 scraps/scraps-build "$pkgdir/usr/bin/scraps-build"
+	install -Dm755 scraps/scraps-repo  "$pkgdir/usr/bin/scraps-repo"
+	install -Dm755 scraps/scraps-strap "$pkgdir/usr/bin/scraps-strap"
+	install -Dm644 scraps/libscraps.sh "$pkgdir/usr/lib/scraps/libscraps.sh"
+	mkdir -p "$pkgdir/etc"
+	cp -a skel/etc/scraps "$pkgdir/etc/scraps"
+	install -d "$pkgdir/var/lib/scraps/local" "$pkgdir/var/lib/scraps/sync" \
+		"$pkgdir/var/lib/scraps/hold" "$pkgdir/var/lib/scraps/snapshots" \
+		"$pkgdir/var/cache/scraps/pkg" "$pkgdir/var/cache/scraps/src"
 }
