@@ -1,22 +1,42 @@
-# sddm-scraplinux-theme - The ScrapLinux login screen
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# sddm-scraplinux-theme - the login screen.
 name=sddm-scraplinux-theme
 version=1.0.0
 release=1
-desc="The ScrapLinux login screen"
+desc="ScrapLinux theme for the SDDM login screen"
 url="https://github.com/apiwo/scraplinux"
-license="GPL-3.0-or-later"
+license="BSD-2-Clause"
 depend="sddm qt6-declarative"
-recommend=""
-makedepend=""
-source=""
-sha256=""
+source="Main.qml theme.conf"
+sha256="SKIP SKIP"
+backup="etc/sddm.conf.d/scraplinux.conf"
 
-# A meta package: the dependency list is the whole payload. Installing it pulls
-# in a working setup and nothing else.
 package() {
-	install -d "$pkgdir/usr/share/scraplinux/meta"
-	printf '%s\n' "sddm qt6-declarative" >"$pkgdir/usr/share/scraplinux/meta/sddm-scraplinux-theme"
+	t="$pkgdir/usr/share/sddm/themes/scraplinux"
+	install -Dm644 Main.qml "$t/Main.qml"
+	install -Dm644 theme.conf "$t/theme.conf"
+	mkdir -p "$(dirname $t/metadata.desktop)"
+cat >"$t/metadata.desktop" <<-'DESK'
+		[SddmGreeterTheme]
+		Name=ScrapLinux
+		Description=ScrapLinux login screen
+		Author=ScrapLinux
+		Theme-Id=scraplinux
+		Theme-API=2.0
+		QtVersion=6
+		MainScript=Main.qml
+		ConfigFile=theme.conf
+DESK
+chmod 644 "$t/metadata.desktop"
+	# X11, not Wayland: this release's LXQt+SDDM chain has no compositor
+	# built (no kwin_wayland, no Plasma) - lxqt-session runs under plain
+	# Xorg via an .desktop file lxqt-session's own package already
+	# installs into /usr/share/xsessions, which SDDM auto-discovers.
+	mkdir -p "$(dirname $pkgdir/etc/sddm.conf.d/scraplinux.conf)"
+cat >"$pkgdir/etc/sddm.conf.d/scraplinux.conf" <<-'CONF'
+		[Theme]
+		Current=scraplinux
+		[General]
+		DisplayServer=x11
+CONF
+chmod 644 "$pkgdir/etc/sddm.conf.d/scraplinux.conf"
 }

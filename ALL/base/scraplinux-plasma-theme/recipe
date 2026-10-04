@@ -1,22 +1,43 @@
-# scraplinux-plasma-theme - ScrapLinux theme, wallpapers and icons for Plasma
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# scraplinux-plasma-theme - the ScrapLinux look for Plasma, SDDM and the icon theme.
 name=scraplinux-plasma-theme
 version=1.0.0
 release=1
-desc="ScrapLinux theme, wallpapers and icons for Plasma"
+desc="ScrapLinux theme, wallpapers and icons for KDE Plasma"
 url="https://github.com/apiwo/scraplinux"
-license="GPL-3.0-or-later CC-BY-SA-4.0"
+license="BSD-2-Clause CC-BY-SA-4.0"
 depend="plasma-workspace"
-recommend=""
-makedepend=""
-source=""
-sha256=""
+source="branding.tar"
+sha256="SKIP"
 
-# A meta package: the dependency list is the whole payload. Installing it pulls
-# in a working setup and nothing else.
 package() {
-	install -d "$pkgdir/usr/share/scraplinux/meta"
-	printf '%s\n' "plasma-workspace" >"$pkgdir/usr/share/scraplinux/meta/scraplinux-plasma-theme"
+	install -d "$pkgdir/usr/share"
+	tar -xf branding.tar -C "$pkgdir/usr/share/scraplinux-theme"
+
+	# Icon theme, so the logo shows up wherever an app icon is wanted.
+	install -d "$pkgdir/usr/share/icons"
+	cp -a "$pkgdir/usr/share/scraplinux-theme/icons/hicolor" \
+		"$pkgdir/usr/share/icons/hicolor-scraplinux"
+
+	# Wallpaper, in the layout Plasma expects.
+	wp="$pkgdir/usr/share/wallpapers/ScrapLinux/contents/images"
+	install -d "$wp"
+	for f in "$pkgdir"/usr/share/scraplinux-theme/wallpaper/scraplinux-*.png; do
+		n=$(basename "$f" .png); n=${n#scraplinux-}
+		install -Dm644 "$f" "$wp/$n.png"
+	done
+	mkdir -p "$(dirname $pkgdir/usr/share/wallpapers/ScrapLinux/metadata.json)"
+cat >"$pkgdir/usr/share/wallpapers/ScrapLinux/metadata.json" <<-'JSON'
+		{
+		  "KPlugin": {
+		    "Id": "ScrapLinux",
+		    "Name": "ScrapLinux",
+		    "License": "CC-BY-SA-4.0"
+		  }
+		}
+JSON
+chmod 644 "$pkgdir/usr/share/wallpapers/ScrapLinux/metadata.json"
+
+	# The Plasma splash and the logo used by the application launcher.
+	install -Dm644 "$pkgdir/usr/share/scraplinux-theme/plasma/scraplinux-logo.svg" \
+		"$pkgdir/usr/share/icons/hicolor/scalable/apps/scraplinux.svg"
 }
