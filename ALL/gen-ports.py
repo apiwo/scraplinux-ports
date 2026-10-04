@@ -39,6 +39,7 @@ desc="{desc}"
 url="{url}"
 license="{license}"
 depend="{depends}"
+recommend="{recommends}"
 makedepend="{makedepends}"
 source="{source}"
 sha256="{sums}"
@@ -419,6 +420,7 @@ def render(row):
     text = HEADER.format(
         name=name, version=version, desc=desc, url=url, license=lic,
         depends=" ".join(d.strip() for d in deps.split(",") if d.strip() and d != "-"),
+        recommends=RECOMMENDS.get(name, ""),
         makedepends=" ".join(d.strip() for d in mdeps.split(",") if d.strip() and d != "-"),
         source=src, sums=sums,
     )
@@ -445,6 +447,31 @@ def load():
     return rows
 
 
+RECOMMENDS = {}
+
+
+def load_recommends(root):
+    """package -> companions, from recommends.tsv.
+
+    Kept out of manifest.tsv on purpose: a recommendation is not dependency
+    data, it must never take part in resolution, and the manifest's columns
+    are consumed positionally by other tooling.
+    """
+    out = {}
+    path = os.path.join(root, "recommends.tsv")
+    if not os.path.exists(path):
+        return out
+    for line in open(path):
+        line = line.rstrip("\n")
+        if not line or line.startswith("#") or "\t" not in line:
+            continue
+        name, recs = line.split("\t", 1)
+        recs = recs.strip()
+        if recs:
+            out[name.strip()] = recs
+    return out
+
+
 def main():
     rows = load()
     mode = sys.argv[1] if len(sys.argv) > 1 else "--write"
@@ -466,6 +493,9 @@ def main():
         for b, n in buildsys.most_common():
             print(f"  {b:<14} {n:>4}")
         return
+
+    # Populated once, before anything is rendered: render() reads it per row.
+    RECOMMENDS.update(load_recommends(HERE))
 
     written = 0
     for row in rows:

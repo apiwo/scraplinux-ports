@@ -9,6 +9,7 @@ desc="Convenience functions for the Render extension, needed by Qt6's XCB platfo
 url="https://xcb.freedesktop.org/"
 license="MIT"
 depend="glibc libxcb"
+recommend=""
 makedepend=""
 source="https://xcb.freedesktop.org/dist/xcb-util-renderutil-0.3.10.tar.xz"
 sha256="SKIP"

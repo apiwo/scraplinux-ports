@@ -9,6 +9,7 @@ desc="X11 authority file utility, needed by xinit/startx to set up display acces
 url="https://x.org/"
 license="MIT"
 depend="glibc libx11 libxau libxext libxmu"
+recommend=""
 makedepend=""
 source="https://x.org/pub/individual/app/xauth-1.1.3.tar.xz"
 sha256="SKIP"

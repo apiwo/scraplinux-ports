@@ -9,6 +9,7 @@ desc="Generates configure scripts from configure.ac, needed for packages that sh
 url="https://www.gnu.org/software/autoconf/"
 license="GPL-3.0-or-later"
 depend="glibc m4 perl"
+recommend=""
 makedepend=""
 source="https://ftp.gnu.org/gnu/autoconf/autoconf-2.73.tar.xz"
 sha256="SKIP"

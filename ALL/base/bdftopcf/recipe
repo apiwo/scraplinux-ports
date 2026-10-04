@@ -9,6 +9,7 @@ desc="Convert X font from Bitmap Distribution Format to Portable Compiled Format
 url="https://x.org/"
 license="MIT"
 depend="glibc libxfont2 libfontenc"
+recommend=""
 makedepend=""
 source="https://x.org/pub/individual/app/bdftopcf-1.1.tar.gz"
 sha256="SKIP"

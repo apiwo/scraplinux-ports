@@ -9,6 +9,7 @@ desc="Qt6 DBus menu protocol implementation, needed by lxqt-panel's status notif
 url="https://lxqt-project.org/"
 license="LGPL-2.1-or-later"
 depend="qt6-base"
+recommend=""
 makedepend="cmake ninja"
 source="https://github.com/lxqt/libdbusmenu-lxqt/releases/download/0.4.0/libdbusmenu-lxqt-0.4.0.tar.xz"
 sha256="SKIP"

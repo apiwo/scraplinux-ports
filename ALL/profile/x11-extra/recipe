@@ -9,6 +9,7 @@ desc="Scalable fonts, a nerd font for terminal glyphs, and feh for wallpapers - 
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
 depend="ttf-dejavu liberation-fonts noto-fonts ttf-jetbrains-mono-nerd feh"
+recommend=""
 makedepend=""
 source=""
 sha256=""

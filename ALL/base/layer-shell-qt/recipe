@@ -9,6 +9,7 @@ desc="Qt6 bindings for the wlr-layer-shell Wayland protocol, needed by lxqt-sess
 url="https://api.kde.org/layer-shell-qt/"
 license="LGPL-2.1-or-later"
 depend="qt6-base qt6-wayland wayland"
+recommend=""
 makedepend="cmake ninja"
 source="https://download.kde.org/stable/plasma/6.5.0/layer-shell-qt-6.5.0.tar.xz"
 sha256="SKIP"

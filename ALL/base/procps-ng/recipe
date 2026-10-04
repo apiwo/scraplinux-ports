@@ -9,6 +9,7 @@ desc="Process monitoring utilities (ps, top, free); libproc2, needed by lxqt-ses
 url="https://gitlab.com/procps-ng/procps"
 license="GPL-2.0-or-later LGPL-2.1-or-later"
 depend="glibc ncurses"
+recommend=""
 makedepend=""
 source="https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-4.0.7.tar.xz"
 sha256="SKIP"

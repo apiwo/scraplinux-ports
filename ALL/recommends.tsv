@@ -1,0 +1,16 @@
+# package<TAB>space separated companions
+#
+# These are printed once after an install and never installed. The rule: a
+# dependency is what the program needs to run, a recommendation is something
+# someone may want alongside it. dwm needs its X libraries to start; it does
+# not need a terminal and a menu picked on the user's behalf.
+dwm	x11-base st dmenu
+dwl	wayland-base foot bemenu
+st	x11-base
+foot	wayland-base
+sway	wayland-base foot bemenu swaybg swayidle swaylock
+niri	wayland-base foot
+i3	x11-base
+xorg-server	x11-base
+wlroots	wayland-base
+sddm	x11-base wayland-base

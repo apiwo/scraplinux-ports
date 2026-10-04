@@ -9,6 +9,7 @@ desc="Everything needed for a working Wayland session: wlroots, GL/EGL via glvnd
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
 depend="wayland wayland-protocols wlroots libglvnd mesa libinput libxkbcommon xkeyboard-config pixman seatd libdrm libdisplay-info libxcb xcb-util-wm xcb-util-renderutil xcb-util-keysyms dbus ttf-jetbrains-mono-nerd"
+recommend=""
 makedepend=""
 source=""
 sha256=""

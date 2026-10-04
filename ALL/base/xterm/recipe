@@ -9,6 +9,7 @@ desc="Terminal emulator for X11 - the fallback every xinitrc needs a real one of
 url="https://invisible-island.net/xterm/"
 license="MIT"
 depend="glibc libx11 libxt libxaw libxft ncurses"
+recommend=""
 makedepend=""
 source="https://invisible-mirror.net/archives/xterm/xterm-400.tgz"
 sha256="SKIP"

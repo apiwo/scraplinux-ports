@@ -9,6 +9,7 @@ desc="Command-line helpers (xdg-terminal, xdg-launch) and the qtxdg-tools cmake 
 url="https://lxqt-project.org/"
 license="LGPL-2.1-or-later"
 depend="glibc qt6-base libqtxdg"
+recommend=""
 makedepend=""
 source="https://github.com/lxqt/qtxdg-tools/releases/download/4.4.0/qtxdg-tools-4.4.0.tar.xz"
 sha256="SKIP"
