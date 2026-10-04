@@ -1,19 +1,31 @@
-# wlroots - Wayland compositor library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# wlroots - Wayland compositor library (0.20 series).
+#
+# Hand-written, not generated: the backends are required explicitly. The
+# generated recipe left everything on meson's `auto`, and wlroots silently
+# drops its whole DRM backend when it cannot find hwdata through pkg-config
+# - which it could not, because the hwdata package shipped no hwdata.pc. The
+# published 0.20.2-1 had no wlr_drm_backend_create at all, so every wlroots
+# compositor on ScrapLinux could run nested inside another display but never
+# on a real screen. Required backends make that a build failure instead.
 name=wlroots
 version=0.20.2
-release=1
+release=2
 desc="Wayland compositor library"
 url="https://gitlab.freedesktop.org/wlroots/wlroots"
 license="MIT"
-depend="wayland mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info"
-makedepend="meson ninja"
+# The actual DT_NEEDED set of libwlroots-0.20.so. 0.20.2-1 declared eight of
+# these and linked twenty-six: libEGL/libGLESv2 are libglvnd, libvulkan is
+# vulkan-loader, liblcms2 is lcms2, libudev is eudev, and the xcb extension
+# libraries are libxcb, xcb-util-wm and xcb-util-renderutil. hwdata and
+# Xwayland are runtime data and a runtime exec respectively.
+depend="wayland libglvnd mesa vulkan-loader lcms2 libinput libxkbcommon pixman seatd libdrm libdisplay-info eudev libxcb xcb-util-wm xcb-util-renderutil hwdata xorg-xwayland"
+makedepend="meson ninja wayland-protocols hwdata glslang"
 source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.20.2/downloads/wlroots-0.20.2.tar.gz"
 sha256="SKIP"
 
 build() {
+	# Host meson is a python-exec wrapper that dies against the sysroot glibc.
+	unset LD_LIBRARY_PATH
 	cd "wlroots-0.20.2"
 	meson setup build \
 		--prefix=/usr \
@@ -22,11 +34,18 @@ build() {
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
-		-Db_lto=true
+		-Db_lto=true \
+		-Dxwayland=enabled \
+		-Dbackends=drm,libinput,x11 \
+		-Drenderers=gles2,vulkan \
+		-Dsession=enabled \
+		-Dallocators=gbm \
+		-Dexamples=false
 	ninja -C build -j"$JOBS"
 }
 
 package() {
+	unset LD_LIBRARY_PATH
 	cd "wlroots-0.20.2"
 	DESTDIR="$pkgdir" ninja -C build install
 }

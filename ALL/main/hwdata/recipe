@@ -4,7 +4,7 @@
 # drop a `recipe.local` beside it and it will be preserved.
 name=hwdata
 version=0.410
-release=1
+release=3
 desc="Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)"
 url="https://github.com/vcrhonek/hwdata"
 license="GPL-2.0-or-later"
@@ -14,11 +14,27 @@ source="https://github.com/vcrhonek/hwdata/archive/refs/tags/v0.410.tar.gz"
 sha256="SKIP"
 
 build() {
+	# Host sh/sed run ./configure; with LD_LIBRARY_PATH on the sysroot they load
+	# ScrapLinux glibc and die. hwdata builds no binaries, so nothing needs it.
+	unset LD_LIBRARY_PATH
 	cd "hwdata-0.410"
-	make -j"$JOBS" PREFIX=/usr
+	# configure is what writes Makefile.inc - datadir, libdir and friends.
+	# Without it `make install` still copies the .ids files, but has no
+	# datadir to put hwdata.pc under, so the package shipped with no
+	# pkg-config file at all. wlroots finds hwdata only through that file,
+	# and when it can't, it silently leaves out its entire DRM backend -
+	# a compositor that cannot drive a real display.
+	./configure --prefix=/usr --libdir=/usr/lib --datadir=/usr/share
+	make -j"$JOBS"
 }
 
 package() {
+	unset LD_LIBRARY_PATH
 	cd "hwdata-0.410"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	make DESTDIR="$pkgdir" install
+	# ${pc_sysrootdir} in pkgdatadir gets the sysroot applied twice under
+	# meson's get_variable(pkgconfig:) - once by pkg-config itself, once by
+	# the variable - which pointed wlroots at <sysroot>/<sysroot>/usr/share/
+	# hwdata/pnp.ids. Same double-prefix wayland-protocols' .pc had.
+	sed -i 's|\${pc_sysrootdir}||' "$pkgdir/usr/share/pkgconfig/hwdata.pc"
 }

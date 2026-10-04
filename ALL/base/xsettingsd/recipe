@@ -1,0 +1,33 @@
+# xsettingsd - XSETTINGS daemon.
+#
+# Hands fonts, cursor theme, DPI and GTK theme settings to X11 applications
+# running under XWayland, which have no other way to learn them on a Wayland
+# session. apwc's autostart starts it.
+name=xsettingsd
+version=1.0.4
+release=1
+desc="Provides settings (fonts, theme, cursor, DPI) to X11 applications via XSETTINGS"
+url="https://codeberg.org/derat/xsettingsd"
+license="BSD-3-Clause"
+depend="glibc libx11 llvm"
+makedepend="cmake ninja"
+source="xsettingsd-$version.tar.gz::https://codeberg.org/derat/xsettingsd/archive/v$version.tar.gz"
+sha256="SKIP"
+
+build() {
+	# Host cmake dies against the sysroot glibc just like meson does.
+	unset LD_LIBRARY_PATH
+	cd "xsettingsd"
+	cmake -S . -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_TESTING=OFF \
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	unset LD_LIBRARY_PATH
+	cd "xsettingsd"
+	DESTDIR="$pkgdir" ninja -C build install
+}

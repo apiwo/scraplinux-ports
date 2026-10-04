@@ -1,32 +1,44 @@
-# wireplumber - PipeWire session manager
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
+# wireplumber - session and policy manager for PipeWire.
+#
+# Without it PipeWire runs but links nothing: no default sink, no
+# per-application routing, silent audio.
 name=wireplumber
 version=0.5.10
 release=1
-desc="PipeWire session manager"
+desc="Session / policy manager implementation for PipeWire"
 url="https://pipewire.pages.freedesktop.org/wireplumber/"
 license="MIT"
-depend="pipewire glib lua"
+depend="pipewire glib lua elogind"
 makedepend="meson ninja"
-source="https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/0.5.10/wireplumber-0.5.10.tar.gz"
+source="https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/$version/wireplumber-$version.tar.gz"
 sha256="SKIP"
 
 build() {
-	cd "wireplumber-0.5.10"
+	unset LD_LIBRARY_PATH
+	cd "wireplumber-$version"
+	# -Dsystem-lua=true: the default is a bundled Lua fetched through a meson
+	# wrap, and downloads are disabled here, so the build stopped at
+	# "Subproject lua is buildable: NO". WirePlumber only uses luaL_newstate()
+	# and the stable auxlib API, which ScrapLinux's Lua 5.5 still provides, so
+	# meson's `lua >= 5.3` fallback picks up the system package.
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
 		--sysconfdir=/etc \
-		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
-		-Db_lto=true
+		-Dsystem-lua=true \
+		-Delogind=enabled \
+		-Dsystemd=disabled \
+		-Dsystem-lua-version=auto \
+		-Ddoc=disabled \
+		-Dintrospection=disabled \
+		-Dtests=false
 	ninja -C build -j"$JOBS"
 }
 
 package() {
-	cd "wireplumber-0.5.10"
+	unset LD_LIBRARY_PATH
+	cd "wireplumber-$version"
 	DESTDIR="$pkgdir" ninja -C build install
 }

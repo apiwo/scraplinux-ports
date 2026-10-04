@@ -1,0 +1,53 @@
+# xdg-desktop-portal-wlr - screencast and screenshot portal backend for
+# wlroots compositors.
+#
+# What lets OBS, browsers and anything else using the ScreenCast/Screenshot
+# portals capture a wlroots session - apwc, dwl, sway, labwc. Without it
+# screen sharing simply has no backend to talk to.
+name=xdg-desktop-portal-wlr
+version=0.8.1
+release=1
+desc="xdg-desktop-portal backend for wlroots compositors (screencast, screenshot)"
+url="https://github.com/emersion/xdg-desktop-portal-wlr"
+license="MIT"
+# The binary's actual DT_NEEDED set: libelogind (sd-bus, from elogind),
+# libpipewire, libinih, libgbm (mesa), libdrm, libwayland-client.
+# xdg-desktop-portal is the frontend that loads it.
+depend="glibc wayland pipewire inih mesa libdrm elogind xdg-desktop-portal"
+makedepend="meson ninja wayland-protocols"
+source="xdg-desktop-portal-wlr-$version.tar.gz::https://github.com/emersion/xdg-desktop-portal-wlr/archive/refs/tags/v$version.tar.gz"
+sha256="SKIP"
+
+build() {
+	unset LD_LIBRARY_PATH
+	cd "xdg-desktop-portal-wlr-$version"
+	# libelogind, not basu or libsystemd: elogind is what ScrapLinux already
+	# ships for sd-bus. Man pages need scdoc, which is not packaged.
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--libexecdir=/usr/libexec \
+		--sysconfdir=/etc \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Dsd-bus-provider=libelogind \
+		-Dman-pages=disabled \
+		-Dsystemd=disabled
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	unset LD_LIBRARY_PATH
+	cd "xdg-desktop-portal-wlr-$version"
+	DESTDIR="$pkgdir" ninja -C build install
+	# Route ScreenCast/Screenshot to this backend for any session that sets
+	# XDG_CURRENT_DESKTOP=wlroots (apwc's autostart does). Everything else
+	# falls through to whatever other portal backend is installed.
+	install -d "$pkgdir/usr/share/xdg-desktop-portal"
+	{
+		echo '[preferred]'
+		echo 'default=gtk'
+		echo 'org.freedesktop.impl.portal.ScreenCast=wlr'
+		echo 'org.freedesktop.impl.portal.Screenshot=wlr'
+	} >"$pkgdir/usr/share/xdg-desktop-portal/wlroots-portals.conf"
+}

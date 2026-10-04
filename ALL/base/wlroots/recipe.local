@@ -1,0 +1,1 @@
+Hand-written: explicit required backends (drm/libinput/x11), xwayland and renderers, plus the full DT_NEEDED dependency set. The generated recipe let meson silently drop the DRM backend.

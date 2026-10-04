@@ -1,0 +1,4 @@
+Hand-written: a slotted second wlroots series with explicit meson options
+(xwayland/backends/renderers/session/allocators) matched to the reference
+build apwc is developed against. The generic meson template has no way to
+express those options.

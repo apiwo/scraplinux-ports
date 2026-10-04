@@ -1,0 +1,62 @@
+# wlroots0.19 - the 0.19 series of the wlroots compositor library, slotted
+# beside 0.20.
+#
+# apwc (and dwl-derived compositors generally) track a specific wlroots
+# series and do not build against the next one - the API changes between
+# minor releases. 0.19 and 0.20 install versioned names
+# (libwlroots-0.19.so, include/wlroots-0.19, wlroots-0.19.pc), so both can
+# be installed at once without owning any of the same files.
+#
+# Configured to match what apwc is actually developed against: XWayland on,
+# DRM and libinput backends, GLES2 renderer, libseat sessions, GBM
+# allocator. No Vulkan renderer - that is what the reference build uses too.
+name=wlroots0.19
+version=0.19.2
+release=1
+desc="Wayland compositor library, 0.19 series (slotted beside wlroots 0.20)"
+url="https://gitlab.freedesktop.org/wlroots/wlroots"
+license="MIT"
+# Every one of these is an actual DT_NEEDED of libwlroots-0.19.so, not a
+# guess: libEGL/libGLESv2 come from libglvnd (mesa only ships the _mesa
+# vendor libraries), libgbm from mesa, libudev from eudev, libseat from
+# seatd, libxcb-ewmh/icccm from xcb-util-wm, the other xcb extensions from
+# libxcb itself. hwdata is read at runtime for monitor names, and Xwayland
+# is exec'd by the xwayland backend.
+depend="wayland libglvnd mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info eudev libxcb xcb-util-wm hwdata xorg-xwayland"
+makedepend="meson ninja wayland-protocols hwdata"
+source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.19.2/downloads/wlroots-0.19.2.tar.gz"
+sha256="SKIP"
+
+build() {
+	# Host meson is a python-exec wrapper; with LD_LIBRARY_PATH still pointed
+	# at the sysroot it loads ScrapLinux's glibc and dies with "undefined
+	# symbol: __pointer_chk_guard". The compiler already gets --sysroot from
+	# CFLAGS, so nothing here needs the variable - same fix as fcft's recipe.
+	unset LD_LIBRARY_PATH
+	# -Dwerror=false: glibc 2.44 declares strchr() the C23 way, returning
+	# const char * for a const char * argument, and 0.19's xcursor.c assigns
+	# that to a plain char *. Correct code, just stricter than the -Werror
+	# 0.19 ships with; 0.20 fixed the declaration upstream.
+	cd "wlroots-0.19.2"
+	meson setup build \
+		--prefix=/usr \
+		--libdir=/usr/lib \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--buildtype=release \
+		--wrap-mode=nodownload \
+		-Dxwayland=enabled \
+		-Dbackends=drm,libinput \
+		-Drenderers=gles2 \
+		-Dsession=enabled \
+		-Dallocators=gbm \
+		-Dexamples=false \
+		-Dwerror=false
+	ninja -C build -j"$JOBS"
+}
+
+package() {
+	unset LD_LIBRARY_PATH
+	cd "wlroots-0.19.2"
+	DESTDIR="$pkgdir" ninja -C build install
+}

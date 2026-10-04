@@ -1,0 +1,1 @@
+Hand-edited: build() runs ./configure so hwdata.pc is actually installed - wlroots drops its DRM backend without it.

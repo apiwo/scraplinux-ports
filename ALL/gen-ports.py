@@ -155,6 +155,11 @@ package() {{
     # ------------------------------------------------------------------ meson
     "meson": """
 build() {{
+	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
+	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
+	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
+	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
+	unset LD_LIBRARY_PATH
 	cd "{srcdir}"
 	meson setup build \\
 		--prefix=/usr \\
@@ -168,6 +173,7 @@ build() {{
 }}
 
 package() {{
+	unset LD_LIBRARY_PATH
 	cd "{srcdir}"
 	DESTDIR="$pkgdir" ninja -C build install
 }}
