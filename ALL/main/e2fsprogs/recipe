@@ -1,13 +1,6 @@
-# e2fsprogs - ext2/3/4 filesystem tools
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=e2fsprogs
 version=1.47.4
 release=3
-# chattr, lsattr and logsave are e2fsprogs' own - toybox ships fallback
-# applets under the same names, sysvinit a second logsave, and util-linux a
-# second fsck man page. The dedicated implementation is the one wanted.
 replaces="toybox sysvinit util-linux-libs"
 desc="ext2/3/4 filesystem tools"
 url="https://e2fsprogs.sourceforge.net/"
@@ -19,20 +12,11 @@ sha256="SKIP"
 
 build() {
 	cd "e2fsprogs-1.47.4"
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
 	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# fuse2fs auto-detects libfuse3 on the build host and links against it
-	# if found. ScrapLinux doesn't ship libfuse3, so the resulting fuse2fs
-	# failed to start with "cannot open shared object file: libfuse3.so.4".
-	# The core e2fsprogs tools (mkfs.ext4, e2fsck, resize2fs, ...) don't
-	# need FUSE at all; only the userspace-mount tool does.
 	case "$_help" in *--disable-fuse2fs*)  _opts="$_opts --disable-fuse2fs" ;; esac
-	# shellcheck disable=SC2086
 	./configure $_opts
 	make -j"$JOBS"
 }

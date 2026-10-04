@@ -1,5 +1,0 @@
-# -DCMAKE_DISABLE_PRECOMPILE_HEADERS=ON in build(): Qt's PCH translation unit
-# hits a libc++ 22 std::abs(double) resolution edge case that a normal
-# compile does not (see the comment in the recipe). The template has no
-# field for extra cmake options, and gen-ports.py silently reverted this
-# once already because there was no marker.

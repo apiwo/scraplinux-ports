@@ -1,0 +1,682 @@
+# generated from the recipes by scraps-repo ports, never edit
+# repo	name	version	release	desc
+alt-nonfree	amdgpu-free	26.0.2	1	The free AMD stack, replaces amdgpu-pro-vulkan
+alt-nonfree	ath9k-htc-open	1.4.0	1	Free firmware for Atheros ath9k_htc devices
+alt-nonfree	b43-open	5.2	1	Free openfwwf firmware for Broadcom b43 wireless cards
+alt-nonfree	chromium-free	146.0.7500.60	1	Chromium with nothing proprietary, replaces chromium
+alt-nonfree	intel-media-free	26.0.2	1	The free Intel stack, replaces intel-compute-runtime
+alt-nonfree	libre-firmware	20260701	1	Firmware with no binary blobs at all
+alt-nonfree	mesa-only-stack	26.0.2	1	A graphics stack with no proprietary components
+alt-nonfree	nouveau-drivers	1.0.18	1	Free NVIDIA graphics driver (nouveau), replaces nvidia-drivers
+alt-nonfree	nouveau-firmware	20260622	1	Redistributable GSP firmware for nouveau
+alt-nonfree	nvidia-alternative	1.0.0	1	Everything needed to run an NVIDIA card without blobs
+alt-nonfree	unar	1.10.8	1	Free RAR extractor, replaces unrar
+base	adwaita-icon-theme	50.0	1	The Adwaita (GNOME) icon theme, for LXQt and any GTK app on the desktop
+base	alsa-lib	1.2.15	1	ALSA library
+base	alsa-utils	1.2.15	1	alsamixer, amixer and friends
+base	aom	3.14.1	1	AV1 codec
+base	aquamarine	0.10.0	1	Hyprland rendering backend
+base	ark	25.12.0	1	Archive manager
+base	at-spi2-core	2.58.0	1	Accessibility bus
+base	audacity	3.8.0	1	Audio editor
+base	babl	0.1.114	1	Pixel format conversion library
+base	bdftopcf	1.1	1	Convert X font from Bitmap Distribution Format to Portable Compiled Format
+base	blender	5.2.0	1	3D creation suite
+base	bluez-utils	5.85	1	bluetoothctl and friends
+base	bluez	5.85	1	Bluetooth stack
+base	boost	1.90.0	1	C++ libraries
+base	botan	3.10.0	1	C++ cryptography library
+base	brave	1.95.24	1	The Brave browser
+base	breeze	6.5.0	1	The Breeze widget style and icons
+base	cage	0.3.1	1	Kiosk compositor that runs a single application, wlroots-based
+base	cairo	1.18.4	1	2D graphics library
+base	chromium	140.0.7339.80	1	The Chromium browser
+base	cliphist	0.7.0	1	Clipboard history for Wayland (wl-clipboard companion)
+base	conmon	2.1.13	1	OCI container monitor
+base	containerd	2.2.0	1	Container runtime
+base	crun	1.25	1	Fast OCI runtime in C
+base	cups	2.4.15	1	Printing system
+base	dankmaterialshell	1.5.0	1	DankMaterialShell, the DMS bar and shell for niri
+base	dash	0.5.13	1	POSIX-compliant minimal shell
+base	dav1d	1.6.0	1	AV1 decoder
+base	dbusmenu-lxqt	0.4.0	1	Qt6 DBus menu protocol implementation, needed by lxqt-panel's status notifier plugin
+base	discord	0.0.130	1	Discord client
+base	dmenu	5.4	1	Dynamic menu for X
+base	dms	1.0.0	1	Dynamic Minimal Session, the ScrapLinux desktop shell
+base	dnsmasq	2.92	1	Lightweight DNS and DHCP server
+base	docker	28.5.2	1	Container engine
+base	dolphin	25.12.0	1	The KDE file manager
+base	double-conversion	3.3.1	1	Binary to decimal conversion
+base	duktape	2.7.0	1	Embeddable JavaScript engine
+base	dunst	1.13.0	1	Notification daemon for X
+base	dwl	0.8	3	Dynamic window manager for Wayland, in the spirit of dwm
+base	dwm	6.6	4	Dynamic window manager for X
+base	dxvk	2.7.1	1	Direct3D 9/10/11 over Vulkan
+base	elogind	257.16	1	Session/seat tracking, the systemd-logind fork for init systems without systemd
+base	embree	4.4.0	1	Ray tracing kernels
+base	encodings	1.1.0	1	Font encoding tables, needed by legacy X core fonts to load at all
+base	exiv2	0.28.7	1	Image metadata library
+base	exo	4.20.0	1	Xfce extension library
+base	extra-cmake-modules	6.20.0	1	KDE's shared CMake modules, needed to build any KDE Frameworks component
+base	feh	3.10.3	1	Lightweight image viewer and wallpaper setter
+base	ffmpeg	8.0	1	Audio and video converter
+base	firefox-esr	140.7.0	1	Firefox Extended Support Release
+base	firefox	147.0	1	Mozilla Firefox
+base	fish	4.2.0	1	Friendly interactive shell
+base	flac	1.5.0	1	Free lossless audio codec
+base	flatpak	1.17.0	1	Application sandboxing and distribution
+base	font-misc-misc	1.1.3	1	Core bitmap fonts (fixed, 6x13, ...) - the traditional default X font set
+base	font-util	1.4.1	1	Font package creation/installation utilities
+base	fribidi	1.0.16	1	Bidirectional text algorithm
+base	fuzzel	1.13.0	1	Application launcher for Wayland
+base	gamemode	1.8	1	Optimise the system while a game runs
+base	gamescope	3.16.20	1	Micro-compositor for games
+base	garcon	4.20.0	1	Freedesktop menu library
+base	gdk-pixbuf	2.44.4	2	Image loading library
+base	gegl	0.4.62	1	Generic graphics library
+base	gimp	3.2.0	1	Image editor
+base	glibmm	2.84.0	1	C++ bindings for glib
+base	gmmlib	22.9.0	1	Intel Graphics Memory Management
+base	gnupg	2.5.14	1	Encryption and signing
+base	graphene	1.10.8	1	Thin type library for graphics
+base	greetd	0.10.3	1	Minimal login daemon
+base	grim	1.6.0	1	Screenshot utility for Wayland compositors (wlr-screencopy)
+base	gsl	2.8	1	GNU scientific library, for inkscape
+base	gtk3	3.24.43	2	GTK 3 toolkit
+base	gtk4	4.22.2	1	GTK 4 toolkit
+base	gtkmm3	3.24.10	1	C++ bindings for GTK 3
+base	gwenview	25.12.0	1	Image viewer
+base	helium	0.5.4	1	Private, ungoogled Chromium fork
+base	hyprcursor	0.1.13	1	Hyprland cursor format
+base	hyprgraphics	0.2.0	1	Hyprland graphics resources
+base	hyprland	0.53.0	1	Dynamic tiling Wayland compositor with eye candy
+base	hyprlang	0.6.4	1	Hyprland configuration language
+base	hyprlock	0.9.4	1	Screen locker for Hyprland
+base	hyprpaper	0.7.6	1	Wallpaper daemon for Hyprland
+base	hyprutils	0.10.0	1	Hyprland utility library
+base	i3wl	1.0.0	1	dwl fork with i3-style binary-tree tiling, tray and status bar
+base	icewm	3.7.4	1	A small, fast window manager
+base	icu	78.1	1	Unicode and globalisation support
+base	imath	3.2.2	1	Maths library for graphics
+base	imlib2	1.12.5	2	Image loading and rendering library
+base	inkscape	1.5.1	1	Vector graphics editor
+base	intel-media-driver	26.1.0	1	Intel VA-API driver for Gen9+
+base	iptables-nft	1.8.11	1	iptables compatibility over nftables
+base	java-openjdk	25.0.2	1	The OpenJDK Java runtime and compiler
+base	jsoncpp	1.9.6	1	C++ JSON library
+base	kate	25.12.0	1	The KDE advanced text editor
+base	kde-gtk-config	6.5.0	1	Make GTK applications match Plasma
+base	keepassxc	2.7.12	1	Password manager
+base	kf6	6.20.0	1	KDE Frameworks 6
+base	kidletime	6.20.0	1	KF6IdleTime, cross-platform idle-time detection, needed by lxqt-powermanagement
+base	kiwmi	0-20220730	1	Lua-scriptable Wayland compositor
+base	konsole	25.12.0	1	The KDE terminal
+base	krita	5.3.0	1	Digital painting
+base	kscreen	6.5.0	1	Plasma display configuration
+base	kwin	6.5.0	1	The KDE window manager and compositor
+base	kwindowsystem	6.20.0	1	KF6WindowSystem, cross-platform access to window manager features, needed by liblxqt
+base	labwc	0.20.2	1	Stacking Wayland compositor with an Openbox look and feel
+base	layer-shell-qt	6.5.0	1	Qt6 bindings for the wlr-layer-shell Wayland protocol, needed by lxqt-session even on X11 builds (linked unconditionally)
+base	lcms2	2.17	1	Colour management engine
+base	libargon2	20190702	1	Argon2 library, alias for argon2
+base	libassuan	3.0.2	1	IPC library for GnuPG
+base	libb2	0.98.1	1	BLAKE2 hash library
+base	libconfig	1.8.2	1	Structured configuration file library
+base	libdisplay-info	0.3.0	1	EDID and DisplayID parsing library, a wlroots dependency
+base	libdrm	2.4.130	2	Direct Rendering Manager library
+base	libev	4.33	2	High performance event loop
+base	libevdev	1.13.4	1	Wrapper for evdev devices
+base	libexif	0.6.26	1	EXIF metadata library, needed by libfm-qt
+base	libfm-qt	2.4.0	1	Qt6 file management library, needed by pcmanfm-qt
+base	libfm	1.3.2	1	File management library for LXDE
+base	libfontenc	1.1.8	1	X font encoding library
+base	libgcrypt	1.11.2	1	Cryptographic library
+base	libgpg-error	1.55	1	Error codes for GnuPG
+base	libgudev	238	1	GObject bindings for libudev
+base	libical	3.0.20	1	iCalendar library
+base	libice	1.1.2	1	X Inter-Client Exchange library
+base	libinput	1.30.0	3	Input device handling
+base	libksba	1.6.7	1	X.509 and CMS library
+base	liblxqt	2.4.0	1	Core LXQt library
+base	libnetfilter_conntrack	1.1.0	1	Connection tracking library
+base	libnfnetlink	1.0.2	1	Low-level netfilter netlink library
+base	libogg	1.3.6	1	Ogg container library
+base	libostree	2026.1	1	Git-like filesystem trees
+base	libpciaccess	0.18.1	1	PCI access library
+base	libplacebo	7.351.0	1	GPU video rendering library
+base	libqtxdg	4.4.0	1	Qt implementation of the XDG specifications
+base	libraw	0.21.4	1	Raw image decoder
+base	libreoffice	26.2.0.3	1	Office suite
+base	librewolf	147.0	1	Firefox without the telemetry
+base	librsvg	2.61.0	1	SVG rendering library
+base	libsecret	0.21.7	1	Secret storage library
+base	libsigcplusplus	3.6.0	1	Typesafe callback framework
+base	libsm	1.2.6	1	X Session Management library
+base	libsndfile	1.2.2	1	Audio file library
+base	libstatgrab	0.92.1	1	System statistics library, needed by lxqt-panel's CPU load plugin
+base	libsysstat	1.1.0	1	Qt6 hardware/network/disk stats library, needed by lxqt-panel's Sysstat plugin
+base	libtirpc	1.3.7	1	TI-RPC library, needed by xorg-server (Xorg links against it directly)
+base	libva-mesa-driver	26.0.2	1	VA-API driver for AMD via mesa
+base	libva	2.24.0	1	Video Acceleration API
+base	libvdpau	1.5	1	Video Decode and Presentation API
+base	libvirt	12.0.0	1	Virtualisation management API
+base	libvorbis	1.3.7	1	Vorbis audio codec
+base	libvpx	1.15.2	1	VP8 and VP9 codec
+base	libwnck	43.3	1	Window navigator construction kit
+base	libx11	1.8.13	1	X11 client library
+base	libxau	1.0.12	1	X authorisation library
+base	libxaw	1.0.16	1	X Athena widget set
+base	libxcb	1.17.0	1	X protocol C-language binding
+base	libxcomposite	0.4.6	1	X composite extension library
+base	libxcursor	1.2.3	1	X cursor management
+base	libxcvt	0.1.3	1	VESA CVT mode-line generator, needed by xorg-server
+base	libxdamage	1.1.6	1	X Damage extension library, needed by gdk-pixbuf/GTK3's Wayland backend
+base	libxdmcp	1.1.5	1	X Display Manager Control Protocol
+base	libxext	1.3.7	1	X miscellaneous extensions
+base	libxfce4ui	4.20.2	1	Xfce widget library
+base	libxfce4util	4.20.1	1	Xfce utility library
+base	libxfce4windowing	4.20.7	1	Windowing abstraction for Xfce
+base	libxfixes	6.0.2	1	X Fixes extension
+base	libxfont2	2.0.7	1	X font library
+base	libxft	2.3.9	1	X FreeType interface
+base	libxi	1.8.3	1	X Input extension library
+base	libxinerama	1.1.6	1	Xinerama extension library
+base	libxkbcommon	1.13.2	1	Keyboard handling library
+base	libxkbfile	1.1.3	1	X keyboard file library, needed by xkbcomp
+base	libxmu	1.2.1	1	X miscellaneous utility library
+base	libxpm	3.5.17	1	X11 pixmap library
+base	libxrandr	1.5.5	1	X Resize and Rotate extension
+base	libxrender	0.9.12	1	X Render extension library
+base	libxres	1.2.3	1	X Resource extension library
+base	libxscrnsaver	1.2.4	1	X screen saver extension library
+base	libxshmfence	1.3.3	1	Shared-memory fences
+base	libxt	1.3.1	1	X Toolkit Intrinsics
+base	libxtst	1.2.5	1	X Test extension library, needed by lxqt-panel's tray plugin
+base	libxv	1.0.13	1	X Video extension library
+base	libxxf86vm	1.1.5	1	X XFree86 video mode extension library, needed by mesa's GLX
+base	lightdm-gtk-greeter	2.0.9	1	The GTK greeter for LightDM
+base	lightdm	1.32.0	1	Cross-desktop display manager
+base	lutris	0.5.22	1	Game manager
+base	lxappearance	0.6.3	1	LXDE theme switcher
+base	lxpanel	0.10.1	1	The LXDE panel
+base	lxqt-about	2.4.0	1	LXQt about dialog
+base	lxqt-admin	2.4.0	1	LXQt admin tools - time/date, users and groups
+base	lxqt-archiver	1.2.0	1	LXQt archive manager
+base	lxqt-build-tools	2.4.0	1	Build tools for LXQt
+base	lxqt-config	2.4.0	1	LXQt system settings - appearance, desktop, monitors, keyboard, locale
+base	lxqt-globalkeys	2.4.0	1	Global hotkey daemon + config UI, needed by lxqt-panel
+base	lxqt-menu-data	2.4.0	1	XDG desktop menu category data, needed by libfm-qt
+base	lxqt-notificationd	2.4.0	1	LXQt notification daemon
+base	lxqt-panel	2.4.1	1	The LXQt panel
+base	lxqt-policykit	2.4.0	1	LXQt polkit authentication agent
+base	lxqt-powermanagement	2.4.0	1	LXQt power management daemon and applet
+base	lxqt-runner	2.4.0	1	LXQt application launcher (Alt+F2)
+base	lxqt-session	2.4.0	1	The LXQt session manager
+base	lxterminal	0.4.0	1	The LXDE terminal emulator
+base	mako	1.11.0	1	Notification daemon for Wayland
+base	mangohud	0.8.4	1	Vulkan and OpenGL overlay
+base	md4c	0.5.2	1	Markdown parser, used by Qt6 tooling (qtpaths, qsb)
+base	menu-cache	1.1.0	1	Menu cache library for LXDE
+base	mesa	26.0.2	4	Open source OpenGL and Vulkan implementation
+base	mkfontscale	1.2.3	1	Create an index of scalable font files for X
+base	mksh	60c	1	The MirBSD Korn shell
+base	mpv	0.41.0	1	A minimal, keyboard-driven media player based on mplayer/mplayer2
+base	mtdev	1.1.7	1	Multitouch protocol translation
+base	ncurses	6.5	1	Terminal UI library, needed by procps-ng (top/watch)
+base	niri	25.11	2	A scrollable-tiling Wayland compositor
+base	npth	1.8	1	New portable threads library
+base	nspr	4.38	1	Netscape Portable Runtime
+base	nss	3.120	1	Network Security Services
+base	nushell	0.109.0	1	A shell built around structured data
+base	obconf-qt	0.16.6	1	GUI configuration tool for the Openbox window manager
+base	obs-studio	32.0.1	1	Live streaming and screen recording
+base	okular	25.12.0	1	Document viewer
+base	openal	1.24.3	1	3D audio API
+base	openbox	3.6.1	2	A highly configurable stacking window manager
+base	openexr	3.4.0	1	High dynamic range image format
+base	openimageio	3.1.15.0	1	Image I/O library
+base	openjpeg2	2.5.4	1	JPEG 2000 codec
+base	opus	1.6.1	1	Opus audio codec
+base	pango	1.58.0	1	Text layout and rendering
+base	pcmanfm-qt	2.4.0	1	The LXQt file manager
+base	pcmanfm	1.3.2	1	The LXDE file manager
+base	picom	12.5	1	X11 compositor, shadows and fading
+base	pipewire-alsa	1.6.2	1	ALSA compatibility for PipeWire
+base	pipewire-pulse	1.6.2	1	PulseAudio compatibility for PipeWire
+base	pipewire	1.6.2	1	Audio and video server
+base	pixman	0.46.4	1	Low-level pixel manipulation
+base	plasma-desktop	6.5.0	1	The Plasma desktop session
+base	plasma-framework	6.20.0	1	Plasma QML framework
+base	plasma-meta	6.5.0	1	KDE Plasma desktop (meta package)
+base	plasma-nm	6.5.0	1	Plasma network applet
+base	plasma-pa	6.5.0	1	Plasma volume applet
+base	plasma-workspace	6.5.0	1	The Plasma shell and workspace
+base	podman	5.7.0	1	Daemonless container engine
+base	polkit-qt-1	0.201.1	1	Qt6 bindings for polkit, needed by liblxqt's backlight backend
+base	polkit	126	1	Authorisation framework
+base	poppler	26.01.0	1	PDF rendering library
+base	portaudio	19.7.0	1	Portable audio I/O
+base	powerdevil	6.5.0	1	Plasma power management
+base	prismlauncher	9.4	1	Minecraft launcher
+base	procps-ng	4.0.7	1	Process monitoring utilities (ps, top, free); libproc2, needed by lxqt-session
+base	proton-ge	GE-Proton10-30	1	Proton with extra patches, for Steam
+base	pulseaudio	17.0	1	PulseAudio client library (libpulse) - build against, actual audio server is pipewire-pulse
+base	qemu	11.0.0	1	Machine emulator and virtualiser
+base	qt6-base	6.10.1	1	Qt 6 base libraries
+base	qt6-declarative	6.10.1	1	Qt 6 QML and Quick
+base	qt6-multimedia	6.10.1	1	Qt 6 multimedia
+base	qt6-shadertools	6.10.1	1	Qt 6 shader baking tools, needed by qtdeclarative
+base	qt6-svg	6.10.1	1	Qt 6 SVG support
+base	qt6-tools	6.10.1	1	Qt 6 developer tools: lupdate, lrelease, Qt6LinguistTools cmake support
+base	qt6-wayland	6.10.1	1	Qt 6 Wayland platform plugin
+base	qt6-webengine	6.10.1	1	Chromium-based web engine for Qt
+base	qterminal	2.4.0	1	A Qt terminal emulator
+base	qtermwidget	2.4.0	1	The terminal emulator widget behind qterminal
+base	qtxdg-tools	4.4.0	1	Command-line helpers (xdg-terminal, xdg-launch) and the qtxdg-tools cmake package, needed by lxqt-session
+base	quazip	1.5	1	Qt zip library
+base	quickshell	0.2.0	1	Qt/QML toolkit for building Wayland shells
+base	qutebrowser	3.6.0	1	Keyboard-driven browser
+base	retroarch	1.22.0	1	Frontend for emulators and game engines
+base	rnnoise	0.2	1	Recurrent neural network noise suppression
+base	rofi	2.0.0	1	Window switcher and application launcher
+base	runc	1.4.0	1	OCI container runtime
+base	scenefx	0.3	1	Effects library for wlroots compositors
+base	scraplinux-plasma-theme	1.0.0	1	ScrapLinux theme, wallpapers and icons for KDE Plasma
+base	screengrab	3.2.0	1	A cross-platform Qt-based screenshot tool
+base	sddm-scraplinux-theme	1.0.0	1	ScrapLinux theme for the SDDM login screen
+base	sddm	0.21.0	1	Qt display manager, Wayland capable
+base	setxkbmap	1.3.4	1	Set the keyboard layout in a running X server
+base	slock	1.5	1	Simple X screen locker
+base	slstatus	1.1	1	Status monitor for dwm
+base	slurp	1.5.0	1	Select a region on Wayland
+base	solid	6.20.0	1	KF6Solid, hardware/device detection, needed by lxqt-panel's mount plugin
+base	somebar	0.2	1	Status bar for dwl
+base	spectacle	25.12.0	1	KDE's screenshot and screen recording tool
+base	startup-notification	0.12	1	Startup notification protocol library
+base	steam	1.0.0.87	1	The Steam client
+base	sway	1.11	2	i3-compatible Wayland compositor
+base	swaybg	1.2.2	1	Wallpaper tool for Wayland
+base	swayfx	0.5	1	Sway with eye candy
+base	swayidle	1.8.0	1	Idle management daemon
+base	swaylock	1.8.4	1	Screen locker for Wayland
+base	syncthing	2.1.0	1	Continuous file synchronisation
+base	systemsettings	6.5.0	1	Plasma system settings
+base	telegram-desktop	6.5.0	1	Telegram client
+base	thunar	4.20.9	1	The Xfce file manager
+base	thunderbird	147.0	1	Email client
+base	tinywl	0.20.2	1	Minimal reference Wayland compositor, wlroots' own example
+base	tllist	1.1.0	1	Typed linked list, header-only C library
+base	transmission	4.1.0	1	BitTorrent client
+base	tuigreet	0.9.1	1	Console greeter for greetd
+base	tumbler	4.20.2	1	Thumbnail service
+base	ungoogled-chromium	146.0.7500.60	1	Chromium with the Google integration removed
+base	util-macros	1.20.2	1	Autoconf macros used by every other Xorg autotools build
+base	vkd3d-proton	2.14.1	1	Direct3D 12 over Vulkan
+base	vlc	3.0.22	1	A feature-rich, cross-platform media player supporting nearly any format
+base	vte3	0.82.0	2	Terminal widget library
+base	vulkan-headers	1.4.330	1	Vulkan header files
+base	vulkan-intel	26.0.2	1	Intel ANV Vulkan driver
+base	vulkan-loader	1.4.330	1	Vulkan ICD loader
+base	vulkan-radeon	26.0.2	1	AMD RADV Vulkan driver
+base	vulkan-swrast	26.0.2	1	Lavapipe software Vulkan driver
+base	vulkan-tools	1.4.330	1	vulkaninfo and vkcube
+base	waybar	0.15.0	1	Status bar for Wayland compositors
+base	wayland-base	1.0.0	1	Everything needed for a working Wayland session: wlroots, GL/EGL via glvnd, seatd, input, keymaps, Xwayland and fonts. Install this and a wlroots compositor runs.
+base	wayland-protocols	1.48	2	Wayland protocol extensions
+base	wayland	1.25.0	1	Wayland core protocol
+base	wine	11.0	1	Run Windows applications
+base	wio	0.19.0	1	Wayland compositor similar to Plan 9's rio
+base	wireplumber	0.5.10	1	Session / policy manager implementation for PipeWire
+base	wl-clipboard	2.2.1	1	Clipboard tools for Wayland
+base	wlogout	1.1.1	1	Wayland logout menu
+base	wlroots	0.20.2	2	Wayland compositor library
+base	wlroots0.19	0.19.2	1	Wayland compositor library, 0.19 series (slotted beside wlroots 0.20)
+base	wofi	1.4.1	1	Launcher for wlroots compositors
+base	wxwidgets	3.2.8	1	Cross-platform GUI toolkit
+base	x11-base	1.0.0	1	Everything needed for a working X11 session: the server, xinit/startx, input and video drivers, keymaps, GL and fonts. Install this and startx works.
+base	x264	0.165	1	H.264 encoder
+base	x265	4.1	1	H.265 encoder
+base	xauth	1.1.3	1	X11 authority file utility, needed by xinit/startx to set up display access
+base	xcb-proto	1.17.0	2	XML descriptions of the X protocol, needed to build libxcb
+base	xcb-util-cursor	0.1.5	1	Cursor loading for XCB, needed by Qt6's XCB platform plugin
+base	xcb-util-image	0.4.1	1	Image handling for XCB, needed by lxqt-panel's tray plugin
+base	xcb-util-keysyms	0.4.1	1	Keysym handling for XCB
+base	xcb-util-renderutil	0.3.10	1	Convenience functions for the Render extension, needed by Qt6's XCB platform plugin
+base	xcb-util-wm	0.4.2	1	ICCCM and EWMH helpers for XCB
+base	xcb-util	0.4.1	1	XCB utility functions
+base	xdg-desktop-portal-hyprland	1.3.10	1	Hyprland portal backend
+base	xdg-desktop-portal-kde	6.5.0	1	Plasma portal backend
+base	xdg-desktop-portal-wlr	0.8.1	1	xdg-desktop-portal backend for wlroots compositors (screencast, screenshot)
+base	xdg-user-dirs	0.19	1	Manages ~/Desktop, ~/Documents etc per the XDG spec, needed by lxqt-session
+base	xdm	1.1.17	1	X display manager
+base	xf86-input-libinput	1.5.0	2	Xorg input driver backed by libinput - without this, X has no keyboard/mouse driver at all
+base	xf86-video-amdgpu	23.0.0	1	X.Org driver for AMD GPUs (AMDGPU kernel driver)
+base	xf86-video-nouveau	1.0.18	1	X.Org driver for NVIDIA GPUs via the open nouveau kernel driver
+base	xfce4-appfinder	4.20.0	1	Xfce application finder
+base	xfce4-dev-tools	4.20.0	1	Build tools for Xfce and its greeters
+base	xfce4-meta	4.22	1	Xfce desktop environment (meta package)
+base	xfce4-notifyd	0.9.7	1	Xfce notification daemon
+base	xfce4-panel	4.20.8	1	The Xfce panel
+base	xfce4-screenshooter	1.11.1	1	Xfce screenshot tool
+base	xfce4-session	4.20.4	1	The Xfce session manager
+base	xfce4-settings	4.20.5	1	Xfce settings manager
+base	xfce4-terminal	1.2.0	1	The Xfce terminal
+base	xfconf	4.20.0	1	Xfce configuration storage
+base	xfdesktop	4.20.2	1	The Xfce desktop manager
+base	xfwm4	4.20.0	1	The Xfce window manager
+base	xkbcomp	1.4.7	1	X keymap compiler, needed by Xorg's keyboard init at startup
+base	xkeyboard-config	2.47	1	Keyboard layout database
+base	xorg-server	21.1.20	1	The X.Org display server
+base	xorg-xinit	1.4.4	1	startx and the X session starter
+base	xorg-xwayland	24.1.9	1	X server running on Wayland
+base	xorgproto	2025.1	1	X11 protocol headers
+base	xrandr	1.5.3	1	Command-line interface to the RandR extension
+base	xset	1.2.5	1	User preference utility for X
+base	xsettingsd	1.0.4	1	Provides settings (fonts, theme, cursor, DPI) to X11 applications via XSETTINGS
+base	xterm	400	1	Terminal emulator for X11 - the fallback every xinitrc needs a real one of
+base	xtrans	1.6.0	1	X transport library, needed by Xwayland's build
+base	yajl	2.1.0	1	Yet another JSON library
+base	yazi	26.5.6	1	Terminal file manager
+base	zsh-autosuggestions	0.7.1	1	Fish-like autosuggestions for zsh
+base	zsh-syntax-highlighting	0.8.0	1	Syntax highlighting for zsh
+extra	alacritty	0.16.0	1	GPU-accelerated terminal
+extra	aria2	1.37.0	1	Multi-protocol download utility
+extra	bat	0.26.0	1	cat with syntax highlighting
+extra	bind-tools	9.22.4	1	dig, host and nslookup
+extra	btop	1.4.7	3	Resource monitor with a nicer view
+extra	cargo	1.94.0	1	Rust package manager and build tool
+extra	difftastic	0.65.0	1	A diff that understands syntax
+extra	dkms	3.4.2	1	Rebuild kernel modules when the kernel changes
+extra	electron	43.2.0	1	Chromium application runtime
+extra	eza	0.23.5	1	A modern ls
+extra	fastfetch	2.55.0	2	A fast, feature-rich system information tool with extensive customization
+extra	fcft	3.3.1	2	Font loading and glyph rasterisation
+extra	fd	10.4.2	1	A simpler, faster find
+extra	fontconfig	2.18.3	1	Font configuration and matching
+extra	foot	1.24.0	2	A fast, lightweight Wayland terminal emulator
+extra	freetype	2.14.1	1	Font rendering engine
+extra	fuse3	3.18.1	1	Filesystem in userspace
+extra	fzf	0.68.0	1	Command-line fuzzy finder
+extra	gdb	17.2	1	The GNU debugger, for when lldb will not do
+extra	gh	2.86.0	1	GitHub command line
+extra	git	2.53.0	3	Distributed version control system
+extra	go	1.26.1	1	The Go toolchain
+extra	harfbuzz	12.2.0	1	Text shaping engine
+extra	helix	25.07	1	A post-modern modal text editor
+extra	htop	3.5.0	1	Interactive process viewer
+extra	hyperfine	1.20.0	1	Command-line benchmarking tool
+extra	iperf3	3.20	1	Network throughput measurement
+extra	jemalloc	5.3.0	2	General-purpose malloc implementation
+extra	jq	1.8.1	1	Command-line JSON processor
+extra	kitty	0.48.2	1	Fast, feature-rich terminal
+extra	lazygit	0.58.0	1	Terminal UI for git
+extra	lerc	4.2.0	1	Limited error raster compression
+extra	less	679	2	Terminal pager
+extra	libavif	1.4.0	1	AVIF image codec
+extra	libelf	0.194	1	ELF utilities and libelf
+extra	liberation-fonts	2.1.5	1	Metric-compatible substitutes for Arial and Times
+extra	libevent	2.1.12	1	Event notification library
+extra	libjpeg-turbo	3.1.3	1	JPEG codec with SIMD
+extra	libluv	1.51.0	1	libuv bindings for Lua, needed by neovim
+extra	libpcap	1.10.6	1	Packet capture library
+extra	libpng	1.6.51	1	PNG reference library
+extra	libtiff	4.7.1	1	TIFF library
+extra	libusb	1.0.30	1	USB device access library
+extra	libuv	1.52.0	1	Asynchronous I/O library
+extra	libvterm	0.3.3	1	Abstract VT220 terminal emulator library
+extra	libwebp	1.6.0	1	WebP codec
+extra	lm-sensors	3.6.2	1	Hardware monitoring
+extra	ltrace	0.7.91	1	Trace library calls
+extra	lua	5.5.0	1	The Lua interpreter
+extra	luajit	2.1.1748459687	1	Just-in-time Lua compiler
+extra	lzo	2.10	2	Real-time compression library
+extra	man-pages	6.16	1	Linux manual pages
+extra	micro	2.0.14	1	Small terminal-based editor
+extra	msgpack-c	2.1.4	1	MessagePack for C
+extra	mtr	0.96	1	Combined traceroute and ping
+extra	nano	9.2	1	Simple console editor
+extra	nasm	2.16.03	1	Netwide assembler
+extra	ncdu	2.9	1	Disk usage analyser with a text UI
+extra	neovim	0.12.2	1	Hyperextensible Vim-based editor
+extra	nmap	7.99	1	Network exploration and security auditing
+extra	nodejs	26.3.0	1	JavaScript runtime
+extra	noto-fonts-emoji	2.051	1	Noto emoji fonts
+extra	noto-fonts	2026.08.01	1	Google Noto fonts
+extra	numactl	2.0.19	1	NUMA policy control
+extra	oniguruma	6.9.10	1	Regular expression library
+extra	openvpn	2.7.3	1	VPN daemon
+extra	p7zip	17.06	1	7-Zip for POSIX
+extra	pciutils	3.14.0	2	lspci and setpci
+extra	perf	7.1.3	1	Linux performance counters
+extra	pigz	2.8	1	Parallel gzip
+extra	ripgrep	15.1.0	1	Very fast recursive grep
+extra	rsync	3.4.4	1	Fast incremental file transfer
+extra	rust	1.94.0	1	The Rust compiler and standard library
+extra	screenfetch	3.9.1	1	A bash-based system information tool with ASCII art distro logos
+extra	shellcheck	0.11.0	1	Shell script linter
+extra	slang	2.3.3	1	Screen and interpreter library
+extra	smartmontools	7.6	1	Disk health monitoring
+extra	socat	1.8.0.3	1	Multipurpose relay
+extra	st	0.9.3	2	The suckless simple terminal
+extra	starship	1.24.0	1	Cross-shell prompt
+extra	strace	6.19	1	Trace system calls
+extra	sudo-shim	1.0.0	1	A sudo-compatible wrapper around doas, for scripts that insist
+extra	tcpdump	4.99.6	1	Command-line packet analyser
+extra	tealdeer	1.8.0	1	Fast tldr client, for when man is too much
+extra	tig	2.5.12	1	Text-mode interface for git
+extra	tmux	3.6a	1	Terminal multiplexer
+extra	tree-sitter	0.26.1	1	Incremental parsing library
+extra	ttf-dejavu	2.37	1	DejaVu font family
+extra	ttf-firacode-nerd	3.4.0	1	Fira Code patched with Nerd Font glyphs
+extra	ttf-hack-nerd	3.4.0	1	Hack patched with Nerd Font glyphs
+extra	ttf-jetbrains-mono-nerd	3.4.0	1	JetBrains Mono patched with Nerd Font glyphs
+extra	ttf-jetbrains-mono	2.304	1	A monospaced typeface designed for developers, by JetBrains
+extra	ttf-maple-mono	7.9	1	Maple Mono NF, a rounded monospace with Nerd Font glyphs
+extra	ttf-nerd-fonts-symbols	3.4.0	1	Nerd Font icon glyphs
+extra	unibilium	2.1.2	1	Terminfo parsing library
+extra	unzip	6.0	1	Extract PKZIP archives
+extra	usbutils	019	2	lsusb
+extra	utf8proc	2.11.0	1	Unicode processing library
+extra	valgrind	3.26.0	1	Memory error detector
+extra	vim	9.2.0100	2	Vi improved
+extra	vscode	1.108.0	1	Visual Studio Code, built from source (Code - OSS)
+extra	vscodium	1.126.04524	1	VS Code without Microsoft's telemetry or branding
+extra	wezterm	20240203-110809-5046fc22	1	GPU-accelerated cross-platform terminal
+extra	wget	1.25.0	2	Network downloader
+extra	wireguard-tools	1.0.20250521	1	wg and wg-quick
+extra	xdg-desktop-portal	1.22.0	1	Sandboxed application portal
+extra	xdg-utils	1.1.3	1	Desktop integration helpers
+extra	yq	4.48.1	1	Command-line YAML processor
+extra	zellij	0.44.0	1	Terminal workspace multiplexer
+extra	zig	0.16.0	1	The Zig compiler
+extra	zip	3.0	1	Create PKZIP archives
+extra	zoxide	0.9.9	1	A smarter cd
+kernels	ScrapLinux-base-kernel-devel	7.1.3	1	Kernel build tree for ScrapLinux-base-kernel, for out-of-tree modules
+kernels	ScrapLinux-base-kernel	7.1.3	1	ScrapLinux kernel, broad hardware support
+kernels	ScrapLinux-hardened-kernel	7.1.3	1	ScrapLinux kernel with the hardening options turned up
+kernels	ScrapLinux-libre-kernel	7.1.3	1	ScrapLinux kernel, fully free, no binary blob loading
+kernels	ScrapLinux-lts-kernel	6.12.60	1	ScrapLinux kernel on the long-term support series
+kernels	ScrapLinux-rt-kernel	7.1.3	1	ScrapLinux kernel with full preemption, for audio work
+kernels	ScrapLinux-small-kernel	7.1.3	1	ScrapLinux kernel, monolithic and minimal, no modules
+kernels	alsa-ucm-conf	1.2.15	1	ALSA use case manager configuration
+kernels	linux-firmware	20260701	1	Firmware files for Linux device drivers
+kernels	sof-firmware	2025.12	1	Sound Open Firmware, for modern Intel audio
+main	66	0.9.1.2	2	Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init
+main	acl	2.4.0	1	Access control list tools
+main	argon2	20190702	1	Argon2 password hashing
+main	attr	2.6.0	1	Extended attribute tools
+main	autoconf	2.73	1	Generates configure scripts from configure.ac, needed for packages that ship raw git-tag tarballs
+main	automake	1.18.1	1	Generates Makefile.in from Makefile.am, needed alongside autoconf
+main	base-devel	1.0.0	1	The toolchain needed to build ScrapLinux packages
+main	base	1.0.1	1	A minimal but complete ScrapLinux system
+main	bmake	20260714	1	The NetBSD make utility
+main	brotli	1.1.0	1	Brotli compression
+main	btrfs-progs	6.19	1	Btrfs filesystem tools
+main	busybox	1.38.0	2	Init, getty, device manager and network tools in one binary
+main	byacc	20260426	1	Berkeley LALR parser generator
+main	bzip2	1.0.8	2	Block-sorting file compressor
+main	c-ares	1.34.8	1	Asynchronous DNS resolver
+main	ca-certificates	20260601	1	Trusted certificate authority bundle
+main	cmake	4.2.1	2	Cross-platform build generator
+main	cryptsetup	2.8.1	1	LUKS disk encryption
+main	curl	8.19.0	2	Transfer data over any protocol
+main	dbus	1.16.2	1	Desktop message bus
+main	dinit	0.19.4	1	Service manager and init with dependency handling
+main	doas	6.8.2	2	Execute commands as another user (OpenBSD doas)
+main	dosfstools	4.2	1	FAT filesystem tools
+main	e2fsprogs	1.47.4	3	ext2/3/4 filesystem tools
+main	efibootmgr	18	1	Edit UEFI boot entries
+main	efivar	39	1	UEFI variable library
+main	ell	0.79	1	Embedded Linux library, used by bluez
+main	eudev	3.2.14	3	Standalone udev, for desktops that need it
+main	execline	2.9.7.0	1	Non-interactive scripting language for s6
+main	exfatprogs	1.2.9	1	exFAT filesystem tools
+main	expat	2.8.2	1	Stream-oriented XML parser
+main	f2fs-tools	1.16.0	1	F2FS filesystem tools
+main	flex-alt	20260210	1	reflex, a BSD-licensed lex
+main	gcc-libs	15.3.0	1	libstdc++ and libgcc_s runtime only, required by the NVIDIA driver
+main	genfstab	1.0.0	1	Write /etc/fstab from the live mount table
+main	gettext-tiny	0.3.3	1	Stub gettext, so nothing needs GNU gettext
+main	glib	2.84.4	1	Core GNOME utility library
+main	glibc	2.44	1	The GNU C library, the standard C library implementation for Linux
+main	gmake	4.4.1	1	GNU make as gmake, for kernel modules; /usr/bin/make is still bmake
+main	gmp-alt	6.3.0	1	Arbitrary precision arithmetic, for nftables
+main	gperf	3.1	1	Perfect hash function generator
+main	gptfdisk	1.0.10	1	GPT partition tools, gdisk and sgdisk
+main	grub	2.14	1	GRUB2 bootloader (BIOS only)
+main	hwdata	0.410	3	Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)
+main	iana-etc	20260723	1	/etc/services and /etc/protocols
+main	inih	60	1	Simple INI file parser
+main	initialization	0.8.1	1	The ScrapLinux init system and process supervisor
+main	iproute2	6.19.0	1	ip, ss, tc and the netlink tools
+main	iw	6.17	1	Configure and scan wireless devices through nl80211
+main	jansson	2.14	1	A C library for encoding, decoding and manipulating JSON
+main	json-c	0.19	1	A C library for JSON, commonly used by low-level system tools
+main	json-glib	1.10.8	1	JSON parser/generator built on GLib, used by lxqt-archiver
+main	kmod	34.2	1	Kernel module tools
+main	libarchive	3.8.9	2	Multi-format archive library, provides bsdtar and bsdcpio
+main	libbsd	0.12.2	1	BSD compatibility library, needed by Xorg's modesetting driver and libglx
+main	libcap	2.78	1	POSIX capabilities library
+main	libclc	22.1.8	1	OpenCL C library (bitcode) for LLVM
+main	libedit	20260512	1	BSD line editing, replacing readline
+main	libepoxy	1.5.10	1	GL function pointer dispatch, needed by Xorg's glamor 2D acceleration
+main	libffi	3.5.2	1	Foreign function interface
+main	libglvnd	1.7.0	1	GL vendor dispatch, so mesa and NVIDIA can both provide GL
+main	libidn2	2.3.7	1	Internationalised domain names, which curl resolves hostnames with
+main	libmd	1.1.0	1	BSD message digest functions
+main	libmnl	1.0.5	1	Minimal netlink library
+main	libndp	1.9	1	IPv6 Neighbor Discovery Protocol library
+main	libnftnl	1.3.0	1	Low-level nftables library
+main	libnl	3.12.0	1	Netlink protocol library
+main	libpsl	0.21.5	1	Public suffix list library
+main	libressl	4.2.0	4	A TLS/SSL and crypto library forked from OpenSSL by the OpenBSD project
+main	libseccomp	2.6.0	1	Syscall filtering library
+main	libtool	2.6.2	1	Generates portable shared-library build rules, needed by autoreconf
+main	libudev-zero	1.0.3	2	libudev without systemd, paired with mdev
+main	libunistring	1.3	1	Unicode string library
+main	libxcrypt	4.5.2	1	crypt(), which glibc no longer provides
+main	libxml2	2.15.2	1	XML parsing library
+main	libyaml	0.2.5	1	YAML parser
+main	limine	12.5.2	1	A modern, fast bootloader supporting both BIOS and UEFI
+main	linux-headers	7.1.3	1	Kernel headers for userspace
+main	llvm	22.1.8	3	The LLVM compiler infrastructure: clang, lld, libc++, lldb
+main	lvm2	2.03.36	1	Logical volume management
+main	lz4	1.10.0	1	Extremely fast compression
+main	m4	1.4.21	1	GNU macro processor, needed by autoconf/automake/libtool
+main	mandoc	1.14.6	1	Manual page formatter and reader from OpenBSD
+main	mdadm	4.4	1	Software RAID administration
+main	meson	1.10.1	1	Build system
+main	muparser	2.3.5	1	Fast math expression parser library, used by lxqt-runner's calculator feature
+main	netbsd-curses	0.3.2	2	NetBSD curses, a BSD-licensed replacement for ncurses
+main	networkmanager	1.50.0	2	Network configuration daemon, provides nmtui
+main	newt	0.52.24	1	Text-mode windowing library, used by nmtui
+main	nftables	1.1.5	1	The Linux packet filter
+main	nghttp2	1.68.0	3	HTTP/2 library
+main	ninja	1.13.2	4	Small, fast build system
+main	nitro	0.8.1	1	Tiny init system and process supervisor
+main	oblibs	0.4.0.1	1	Obarun's base C library - what 66 links against
+main	onetrueawk	20260426	1	The one true awk
+main	openrc	0.63.2	3	Dependency-based init system from Gentoo
+main	openssh	10.3p1	1	OpenBSD secure shell
+main	pam	1.7.2	1	Pluggable authentication modules, library and pam_unix only
+main	parted	3.7	1	Disk partition editor
+main	patch-bsd	2.0	1	The BSD patch utility
+main	pcre2	10.46	1	Perl compatible regular expressions
+main	perl	5.42.1	1	Perl, needed to build openssl and git
+main	pkgconf	3.0.4	1	Build flag helper, replacing pkg-config
+main	popt	1.19	1	Command-line option parsing library
+main	python	3.14.7	2	The Python interpreter
+main	runit	2.2.0	1	Small init and service supervision
+main	s6-linux-init	1.1.3.0	1	PID 1 for an s6 system
+main	s6-rc	0.5.6.0	1	Service manager for s6
+main	s6	2.13.2.0	1	skarnet supervision suite
+main	samurai	1.2	1	A ninja-compatible build tool in C
+main	scraplinux-base	1.5.0	2	ScrapLinux base configuration, init scripts and branding
+main	scraplinux-init	1.0.0	1	The ScrapLinux init scripts and service manager
+main	scraps	1.0.0	1	ScrapLinux Package Manager
+main	seatd	0.9.1	1	Seat management, replacing logind
+main	signify	33	1	Cryptographically sign and verify files (Ed25519)
+main	skalibs	2.14.4.0	1	skarnet base library, needed by s6
+main	spirv-headers	1.4.357.0	1	Machine-readable SPIR-V headers
+main	spirv-llvm-translator	22.1.5	1	LLVM IR to SPIR-V translator
+main	sqlite	3.52.0	1	Embedded SQL database
+main	sysvinit	3.14	2	The traditional System V init
+main	toybox	0.8.14	3	The classic Unix commands, 0BSD licensed
+main	tzdata	2026b	1	Time zone database
+main	util-linux-libs	2.42.1	3	libblkid, libmount and libuuid only
+main	util-linux	2.41.5	1	Core system utilities (blkid, mount, findfs, lsblk)
+main	wifi-connect-cli	1.0.0	1	Interactive wireless connect - scan, pick a network, connect
+main	wifi-connect-default	1.0.0	1	wifi-connect-cli plus common wireless firmware (Intel iwlwifi and more)
+main	wifi-connect-extra	1.0.0	1	wifi-connect-default plus less common wireless drivers (Broadcom wl)
+main	wireless-regdb	2026.05.30	2	Wireless regulatory database
+main	wpa_supplicant	2.11	2	WPA client, NetworkManager's wifi backend
+main	xfsprogs	6.19.0	1	XFS filesystem tools
+main	xz	5.8.3	1	liblzma and the xz tools
+main	zlib	1.3.1	1	Compression library
+main	zsh	5.9.2	1	A powerful interactive shell with extensive scripting features, ScrapLinux's login shell
+main	zstd	1.5.7	1	Fast real-time compression
+multilib	alsa-lib-32	1.2.15	1	ALSA library, 32-bit
+multilib	busybox-32	1.38.0	1	Init, getty, device manager and network tools, 32-bit
+multilib	glibc-32	2.44	2	The C library, 32-bit
+multilib	libdrm-32	2.4.130	1	DRM library, 32-bit
+multilib	libgl-32	26.0.2	1	32-bit OpenGL, for Steam and Wine
+multilib	libglvnd-32	1.7.0	1	GL vendor dispatch, 32-bit
+multilib	libressl-32	4.2.0	1	LibreSSL, 32-bit
+multilib	libx11-32	1.8.13	1	X11 client library, 32-bit
+multilib	mesa-32	26.0.2	1	OpenGL and Vulkan, 32-bit
+multilib	nvidia-utils-32	590.48	1	NVIDIA userspace libraries, 32-bit
+multilib	openrc-32	0.63.2	1	Dependency-based init system from Gentoo, 32-bit
+multilib	steam-deps-32	1.0.0	1	Everything 32-bit that Steam needs
+multilib	vulkan-loader-32	1.4.330	1	Vulkan loader, 32-bit
+multilib	zlib-32	1.3.1	1	Compression library, 32-bit
+nonfree	amd-ucode	20260701	1	Microcode update image for AMD CPUs
+nonfree	amdgpu-pro-vulkan	26.10	1	AMD proprietary Vulkan driver
+nonfree	b43-firmware	6.30.163.46	1	Firmware for Broadcom b43 cards
+nonfree	broadcom-bt-firmware	12.0.1.1105	1	Broadcom Bluetooth firmware
+nonfree	broadcom-wl	6.30.223.271	1	Broadcom 802.11 proprietary wireless driver
+nonfree	cuda	13.2	1	NVIDIA CUDA toolkit
+nonfree	facetimehd	0.7.0	1	Apple FaceTime HD camera driver
+nonfree	intel-compute-runtime	26.27.39122.12	1	Intel OpenCL and Level Zero runtime
+nonfree	intel-ucode	20260812	1	Microcode update image for Intel CPUs
+nonfree	ipw2200-firmware	3.1	1	Firmware for Intel PRO/Wireless 2200BG
+nonfree	level-zero	1.24.0	1	oneAPI Level Zero API
+nonfree	nvidia-drivers	595.99.02	1	NVIDIA proprietary graphics driver and kernel module
+nonfree	nvidia-lts-drivers	590.48	1	NVIDIA driver built for the LTS kernel
+nonfree	nvidia-open	595.84	1	NVIDIA open kernel modules for Turing and newer
+nonfree	nvidia-settings	595.84	1	NVIDIA control panel
+nonfree	nvidia-utils	590.48	1	NVIDIA userspace libraries, nvidia-smi and CUDA loader
+nonfree	rocm-opencl	7.2.0	1	AMD ROCm OpenCL runtime
+nonfree	rtl8812au	5.13.6	1	Realtek RTL8812AU wireless driver
+nonfree	rtl8821ce	6.30.0	1	Realtek RTL8821CE wireless driver
+nonfree	steam-runtime	latest-public-stable	1	The Steam runtime libraries
+nonfree	unrar	7.2.2	1	Extract RAR archives
+profile	apiwow-dwm	1.0.0	1	dwm + picom, calm grey and white, with the ScrapLinux terminal and fonts
+profile	apiwow-lxqt	1.1.0	1	SDDM + LXQt, the full desktop session on X11
+profile	lazyvim	1.0.0	1	Sets up the official LazyVim starter config, on request, per user
+profile	niri-dms	1.0.0	2	Niri + DankMaterialShell, with the ScrapLinux neutral rice and keybinds
+profile	scraplinux-kde	1.0.0	2	KDE Plasma with foot and the ScrapLinux colour scheme
+profile	scraplinux-sound	1.0.0	1	PipeWire, WirePlumber and alsamixer, configured and enabled
+profile	scraplinux-xfce	1.0.0	2	Xfce with the ScrapLinux theme, foot and a neutral panel layout
+profile	sound-setup-openrc	1.0.0	1	PipeWire audio, wired up and started (OpenRC)
+profile	sound-setup	1.0.0	1	PipeWire audio, wired up and started
+profile	x11-extra	1.0.0	1	Scalable fonts, a nerd font for terminal glyphs, and feh for wallpapers - the non-essential pieces a working desktop still wants beyond x11-base's minimal server+driver set.

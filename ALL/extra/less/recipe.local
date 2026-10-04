@@ -1,3 +1,0 @@
-# replaces="busybox" and the release bump that carries it. The template has
-# no field for either, and regenerating this recipe dropped both - the
-# published package kept them, so the recipe no longer built what we shipped.

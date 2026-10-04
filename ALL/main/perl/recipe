@@ -1,7 +1,3 @@
-# perl - Perl, needed to build openssl and git
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=perl
 version=5.42.1
 release=1
@@ -15,19 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "perl-5.42.1"
-	# perl ships its own interactive Configure (capital C), not a GNU
-	# autotools ./configure - no help text to introspect, no
-	# --disable-dependency-tracking. -des runs it non-interactively with
-	# defaults.
-	# ScrapLinux ships llvm-ar/llvm-nm/llvm-ranlib, not the generic "ar"/"nm"/
-	# "ranlib" names Configure defaults to and hardcodes into libperl.a's
-	# build rule regardless of $PATH.
-	# -Dmake=gmake: without this Configure records bmake (the first "make"
-	# on PATH) into Config.pm, and every CPAN module's generated
-	# sub-Makefile recurses via $(MAKE) = bmake, which doesn't speak GNU
-	# Make's jobserver FIFO protocol and corrupts the -j flag on the
-	# recursive call ("argument 'observer-auth=fifo:...' to option '-j'
-	# must be a positive number").
 	sh Configure -des \
 		-Dprefix=/usr \
 		-Dcc=clang \

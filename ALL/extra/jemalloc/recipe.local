@@ -1,2 +1,0 @@
-# --disable-cxx and the release that carries it: the template has no field
-# for either, and libjemalloc linking libc++ pulls all of LLVM onto an image.

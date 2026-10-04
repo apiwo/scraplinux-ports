@@ -1,7 +1,3 @@
-# intel-media-free - The free Intel stack, replaces intel-compute-runtime
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=intel-media-free
 version=26.0.2
 release=1
@@ -9,13 +5,10 @@ desc="The free Intel stack, replaces intel-compute-runtime"
 url="https://mesa3d.org/"
 license="MIT"
 depend="mesa vulkan-intel"
-recommend=""
 makedepend=""
 source=""
 sha256=""
 
-# A meta package: the dependency list is the whole payload. Installing it pulls
-# in a working setup and nothing else.
 package() {
 	install -d "$pkgdir/usr/share/scraplinux/meta"
 	printf '%s\n' "mesa vulkan-intel" >"$pkgdir/usr/share/scraplinux/meta/intel-media-free"

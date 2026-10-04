@@ -1,7 +1,3 @@
-# 66 - Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=66
 version=0.9.1.2
 release=2
@@ -14,12 +10,6 @@ source="https://git.obarun.org/Obarun/66/-/archive/0.9.1.2/66-0.9.1.2.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Before the cd: scraps-build's own srcdir_fix (fired by its overridden
-	# cd when the literal directory name is wrong - this tarball's real top
-	# dir is 66-0.9.1.2, not 66-66-0.9.1.2) shells out to /bin/basename
-	# itself, which crashes the same way meson's own tooling does if
-	# LD_LIBRARY_PATH is still pointed at the sysroot - it was, since this
-	# unset previously ran *after* the cd that triggers it.
 	unset LD_LIBRARY_PATH
 	cd "66-66-0.9.1.2"
 	meson setup build \
@@ -36,26 +26,7 @@ build() {
 package() {
 	cd "66-66-0.9.1.2"
 	DESTDIR="$pkgdir" ninja -C build install
-	# 66 boot expects this to already exist and prints a warning at boot
-	# otherwise - it doesn't mkdir it itself before first use.
 	install -d "$pkgdir/var/lib/66/system"
-	# Upstream ships CATCHLOG=1 (SS_BOOT_CATCH_LOG default): 66 boot's own
-	# catch-all-logger fifo handshake (open the log fifo write-only in the
-	# parent, then again in the forked stage2, so both ends of that fork
-	# rendezvous with the scandir-log reader) can hang boot indefinitely
-	# right after "Starts boot logger at:" if that rendezvous doesn't land -
-	# reproduced on real hardware and in a from-scratch QEMU boot of this
-	# exact kernel/initramfs/rootfs. CATCHLOG=0 uses 66's other
-	# synchronization path (a plain pipe to the forked stage2) instead of
-	# this fifo dance, which does not hang in either case.
 	sed -i 's/^CATCHLOG=1$/CATCHLOG=0/' "$pkgdir/etc/66/init.conf"
-	# With CATCHLOG=0 every one of those messages goes straight to the
-	# console, and the console is the tty the login prompt is on - so at
-	# VERBOSITY=2 the tail of boot ("Starting enabled trees", "Empty tree:
-	# global", "Successfully executed start on tree: global") lands on top
-	# of a prompt somebody is already typing at. VERBOSITY=1 keeps warnings
-	# and errors, which are the ones actually worth interrupting for, and
-	# drops the running commentary. The catch-all logger would be the other
-	# way to solve this, but see above: it hangs this system's boot.
 	sed -i 's/^VERBOSITY=2$/VERBOSITY=1/' "$pkgdir/etc/66/init.conf"
 }

@@ -1,11 +1,11 @@
 # libarchive - bsdtar, and the library scraps uses to read .scrapsz packages.
 name=libarchive
 version=3.8.9
-release=1
+release=2
 desc="Multi-format archive library, provides bsdtar and bsdcpio"
 url="https://libarchive.org/"
 license="BSD-2-Clause"
-depend="glibc xz zstd"
+depend="glibc xz zstd libmd zlib"
 makedepend="cmake clang lld"
 source="libarchive-$version.tar.gz::https://github.com/libarchive/libarchive/archive/refs/tags/v$version.tar.gz"
 sha256="SKIP"

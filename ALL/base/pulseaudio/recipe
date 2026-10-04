@@ -1,7 +1,3 @@
-# pulseaudio - PulseAudio client library (libpulse) - build against, actual audio server is pipewire-pulse
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=pulseaudio
 version=17.0
 release=1
@@ -15,18 +11,7 @@ sha256="SKIP"
 
 build() {
 	cd "pulseaudio-v17.0"
-	# meson.build derives its own version by shelling out to
-	# git-version-gen against .tarball-version - present in a real "make
-	# dist" tarball, absent from a GitLab archive/tag download, which
-	# leaves the project version empty and crashes meson's own array
-	# indexing a few lines later ("Index 1 out of bounds").
 	echo "17.0" > .tarball-version
-	# libpulse.so's own version script (map-file) lists pa_simple_*/
-	# pa_glib_mainloop_* symbols that actually live in the separately
-	# built libpulse-simple.so/libpulse-mainloop-glib.so, not this
-	# target - GNU ld silently tolerates a version-script entry for a
-	# symbol that isn't in the object being linked, lld (ScrapLinux's only
-	# linker) doesn't. --undefined-version restores the lenient behavior.
 	export LDFLAGS="$LDFLAGS -Wl,--undefined-version"
 	meson setup build \
 		--prefix=/usr \

@@ -1,7 +1,3 @@
-# dmenu - Dynamic menu for X
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=dmenu
 version=5.4
 release=1
@@ -9,15 +5,12 @@ desc="Dynamic menu for X"
 url="https://tools.suckless.org/dmenu/"
 license="MIT"
 depend="libx11 libxft libxinerama freetype fontconfig"
-recommend=""
 makedepend="bmake"
 source="https://dl.suckless.org/tools/dmenu-5.4.tar.gz"
 sha256="SKIP"
 
 build() {
 	cd "dmenu-5.4"
-	# Suckless software is configured in the source. ScrapLinux ships a config.h
-	# with the ScrapLinux palette; replace it and rebuild to change anything.
 	[ -f config.def.h ] && cp -f config.def.h config.h
 	make -j"$JOBS" PREFIX=/usr
 }

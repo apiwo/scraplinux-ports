@@ -1,7 +1,3 @@
-# xorg-xwayland - X server running on Wayland
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=xorg-xwayland
 version=24.1.9
 release=1
@@ -9,16 +5,11 @@ desc="X server running on Wayland"
 url="https://x.org/"
 license="MIT"
 depend="glibc mesa wayland libdrm pixman libxkbcommon"
-recommend=""
 makedepend="meson ninja"
 source="https://x.org/pub/individual/xserver/xwayland-24.1.9.tar.xz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "xwayland-24.1.9"
 	meson setup build \

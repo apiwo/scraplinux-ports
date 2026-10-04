@@ -1,11 +1,11 @@
 # git - version control. Built without any GNU dependency.
 name=git
 version=2.53.0
-release=2
+release=3
 desc="Distributed version control system"
 url="https://git-scm.com/"
 license="GPL-2.0-only"
-depend="glibc zlib libressl curl expat"
+depend="glibc zlib libressl curl expat pcre2"
 makedepend="clang lld bmake"
 source="https://mirrors.edge.kernel.org/pub/software/scm/git/git-$version.tar.xz"
 sha256="SKIP"

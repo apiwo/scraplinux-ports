@@ -1,7 +1,3 @@
-# sof-firmware - Sound Open Firmware, for modern Intel audio
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=sof-firmware
 version=2025.12
 release=1
@@ -9,7 +5,6 @@ desc="Sound Open Firmware, for modern Intel audio"
 url="https://github.com/thesofproject/sof-bin"
 license="BSD-3-Clause"
 depend=""
-recommend=""
 makedepend=""
 source="https://github.com/thesofproject/sof-bin/releases/download/v2025.12/sof-bin-2025.12.tar.gz"
 sha256="SKIP"

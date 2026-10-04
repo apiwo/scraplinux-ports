@@ -1,2 +1,0 @@
-# -fcommon: the sources rely on tentative definitions in a header, which no
-# longer link with a compiler defaulting to -fno-common.

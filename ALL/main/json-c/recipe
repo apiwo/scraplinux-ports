@@ -1,7 +1,3 @@
-# json-c - JSON parsing library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=json-c
 version=0.19
 release=1

@@ -1,2 +1,0 @@
-# python belongs in makedepend here; as a runtime dependency it followed
-# libxcb onto every machine installing mesa.

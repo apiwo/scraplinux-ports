@@ -1,2 +1,0 @@
-# A font archive: no build, and the layout inside varies between
-# releases, so package() takes every face it finds.

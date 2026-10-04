@@ -1,7 +1,3 @@
-# dxvk - Direct3D 9/10/11 over Vulkan
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=dxvk
 version=2.7.1
 release=1
@@ -9,16 +5,11 @@ desc="Direct3D 9/10/11 over Vulkan"
 url="https://github.com/doitsujin/dxvk"
 license="Zlib"
 depend="vulkan-loader wine"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/doitsujin/dxvk/releases/download/v2.7.1/dxvk-2.7.1.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "dxvk-2.7.1"
 	meson setup build \

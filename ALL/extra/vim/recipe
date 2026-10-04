@@ -1,13 +1,6 @@
-# vim - Vi improved
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=vim
 version=9.2.0100
 release=2
-# toybox ships xxd as a fallback applet under the same name.
-# This package carries the real implementation and is meant to take
-# that path over.
 replaces="toybox"
 desc="Vi improved"
 url="https://www.vim.org/"
@@ -19,31 +12,12 @@ sha256="SKIP"
 
 build() {
 	cd "vim-9.2.0100"
-	# Not every configure script accepts the same options - sqlite rejects
-	# --disable-nls outright, for instance - so only pass the ones this one
-	# actually advertises. Guessing wrong fails the whole build.
-	#
-	# vim's own configure auto-detects a GUI toolkit off the build host
-	# (gtk2/gtk3/motif/X11) rather than the target - on a host with a real
-	# desktop installed it happily found GTK3, glib, pango, dbus and elogind
-	# and linked against all of them, none of which ScrapLinux builds or ships.
-	# This is a terminal editor here; --enable-gui=no and --without-x rule
-	# out the whole GUI path regardless of what the build host happens to
-	# have lying around.
-	# vim's configure auto-detects a pile of optional libraries against
-	# whatever the build host happens to have via pkg-config and links
-	# against them unconditionally if found - wayland-client, libcanberra
-	# (sound events), libsodium (secure memory), libacl. None of that is
-	# shipped on ScrapLinux, so the resulting vim failed to start at all on
-	# real hardware with "cannot open shared object file". --without-x
-	# alone only rules out the X11 GUI path, not any of these.
 	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib \
 		--enable-gui=no --without-x --without-wayland \
 		--disable-canberra --disable-libsodium --disable-acl"
 	_help=$(./configure --help 2>/dev/null)
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	# shellcheck disable=SC2086
 	./configure $_opts
 	make -j"$JOBS"
 }

@@ -1,3 +1,0 @@
-Marker only - see CONTRIBUTING.md. build()/package() here are hand-tuned
-(non-systemd meson options, nmtui enabled, plugins=keyfile) and gen-ports.py
-must never regenerate over them from the manifest's generic meson template.

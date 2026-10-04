@@ -1,7 +1,3 @@
-# libwnck - Window navigator construction kit
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=libwnck
 version=43.3
 release=1
@@ -9,16 +5,11 @@ desc="Window navigator construction kit"
 url="https://gitlab.gnome.org/GNOME/libwnck"
 license="LGPL-2.0-or-later"
 depend="gtk3 libx11 libxres"
-recommend=""
 makedepend="meson ninja"
 source="https://download.gnome.org/sources/libwnck/43/libwnck-43.3.tar.xz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "libwnck-43.3"
 	meson setup build \

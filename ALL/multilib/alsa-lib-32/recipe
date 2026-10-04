@@ -1,7 +1,3 @@
-# alsa-lib-32 - ALSA library, 32-bit
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=alsa-lib-32
 version=1.2.15
 release=1
@@ -15,13 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "alsa-lib-1.2.15"
-	# Same reasoning as libx11-32/glibc-32: clean flag slate, real 32-bit
-	# target flags - scraps-build's own exported CFLAGS/LDFLAGS point at the
-	# 64-bit sysroot.
-	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
-	# with a real, complete glibc-32 now published into the sysroot, even
-	# /bin/sh crashes loading the sysroot's libc.so.6 while running
-	# ./configure.
 	unset LD_LIBRARY_PATH
 	unset CFLAGS CXXFLAGS LDFLAGS
 	export CC="clang -m32" CXX="clang++ -m32"
@@ -32,7 +21,6 @@ build() {
 	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
 	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
 	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	# shellcheck disable=SC2086
 	./configure $_opts
 	gmake -j"$JOBS"
 }
@@ -40,9 +28,5 @@ build() {
 package() {
 	cd "alsa-lib-1.2.15"
 	gmake DESTDIR="$pkgdir" install
-	# Same reason libx11-32 strips down to usr/lib32: headers and other
-	# arch-independent files land at the same paths the 64-bit alsa-lib
-	# package already owns. A 32-bit build only needs to contribute its
-	# runtime libraries.
 	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

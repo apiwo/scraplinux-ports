@@ -1,7 +1,3 @@
-# mako - Notification daemon for Wayland
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=mako
 version=1.11.0
 release=1
@@ -9,16 +5,11 @@ desc="Notification daemon for Wayland"
 url="https://github.com/emersion/mako"
 license="MIT"
 depend="wayland pango cairo libxkbcommon dbus"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/emersion/mako/archive/refs/tags/v1.11.0.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "mako-1.11.0"
 	meson setup build \

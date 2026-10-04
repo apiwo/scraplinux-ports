@@ -1,7 +1,3 @@
-# gamescope - Micro-compositor for games
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=gamescope
 version=3.16.20
 release=1
@@ -9,16 +5,11 @@ desc="Micro-compositor for games"
 url="https://github.com/ValveSoftware/gamescope"
 license="BSD-2-Clause"
 depend="wlroots vulkan-loader mesa libxcb libxcomposite"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/ValveSoftware/gamescope/archive/refs/tags/3.16.20.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "gamescope-3.16.20"
 	meson setup build \

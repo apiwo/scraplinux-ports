@@ -1,7 +1,3 @@
-# mesa-32 - OpenGL and Vulkan, 32-bit
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=mesa-32
 version=26.0.2
 release=1
@@ -15,31 +11,7 @@ sha256="SKIP"
 
 build() {
 	cd "mesa-26.0.2"
-	# Same LD_LIBRARY_PATH-poisoning fix as glibc-32/openrc/steam-runtime:
-	# with a real, complete glibc-32 now published into the sysroot, plain
-	# host tools this recipe's own build invokes (dirname, python-exec2c
-	# via meson) crash loading the sysroot's libc.so.6 instead of the
-	# host's own ("undefined symbol: __pointer_chk_guard, version
-	# GLIBC_PRIVATE").
 	unset LD_LIBRARY_PATH
-	# The 64-bit mesa recipe's full driver+LLVM matrix is not realistic to
-	# cross-build a second time for 32-bit in this pass - a 32-bit LLVM
-	# alone is its own multi-hour cross-build. Trimmed to what Steam
-	# actually needs to have a working glvnd-vendored GL: softpipe (the
-	# older pure-C software rasterizer, not llvmpipe - llvmpipe is LLVM by
-	# definition and cannot coexist with -Dllvm=disabled) plus nouveau
-	# (this machine's real GPU family is NVIDIA - the proprietary driver
-	# provides the real accelerated GL through glvnd, mesa-32 mainly needs
-	# to exist as a valid glvnd vendor and software fallback, not carry
-	# every gallium driver). No LLVM, no video codecs, no Vulkan (Vulkan
-	# needs the 32-bit LLVM this is avoiding).
-	#
-	# meson's CC env var is not how cross-compilation works here - a real
-	# cross machine file is, declaring the -m32 toolchain and host_machine.
-	# pkg_config_libdir needs /usr/share/pkgconfig too: xproto and friends
-	# are headers-only, arch-independent .pc files that live in share/, not
-	# lib32/ or lib/ - meson's cross mode does not fall back to the host's
-	# own default search path the way a native build does.
 	unset CFLAGS CXXFLAGS LDFLAGS
 	meson setup build \
 		--prefix=/usr \
@@ -64,11 +36,5 @@ build() {
 package() {
 	cd "mesa-26.0.2"
 	DESTDIR="$pkgdir" ninja -C build install
-	# Same reason libx11-32 strips down to usr/lib32: headers, drirc.d and
-	# glvnd vendor JSON land at the same paths the 64-bit mesa package
-	# already owns ("now owned by mesa-32, was mesa" - silently tolerated
-	# because the content happened to be identical, but wrong: removing
-	# mesa-32 later would orphan files mesa still needs). A 32-bit build
-	# only needs to contribute its runtime libraries.
 	find "$pkgdir/usr" -mindepth 1 -maxdepth 1 ! -name lib32 -exec rm -rf {} +
 }

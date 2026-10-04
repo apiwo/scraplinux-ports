@@ -1,2 +1,0 @@
-# Hand-written: built from the llvm-project tarball with -S libclc, which the
-# cmake template cannot express (it configures the top of the source tree).

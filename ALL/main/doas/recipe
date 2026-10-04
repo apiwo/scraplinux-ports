@@ -1,11 +1,11 @@
 # doas - run a command as another user. ScrapLinux ships no sudo.
 name=doas
 version=6.8.2
-release=1
+release=2
 desc="Execute commands as another user (OpenBSD doas)"
 url="https://github.com/Duncaen/OpenDoas"
 license="ISC"
-depend="glibc"
+depend="glibc libxcrypt"
 provides="sudo-replacement"
 source="opendoas-$version.tar.gz::https://github.com/Duncaen/OpenDoas/archive/refs/tags/v$version.tar.gz"
 sha256="SKIP"

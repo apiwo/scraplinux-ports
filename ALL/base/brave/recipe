@@ -1,7 +1,3 @@
-# brave - The Brave browser
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=brave
 version=1.95.24
 release=1
@@ -9,13 +5,10 @@ desc="The Brave browser"
 url="https://brave.com/"
 license="MPL-2.0"
 depend="glibc gtk4 mesa nss alsa-lib"
-recommend=""
 makedepend=""
 source="https://github.com/brave/brave-browser/releases/download/v1.95.24/brave-browser-1.95.24-linux-amd64.zip"
 sha256="SKIP"
 
-# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
-# things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 
 package() {

@@ -1,7 +1,3 @@
-# openrc - Dependency-based init system from Gentoo
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=openrc
 version=0.63.2
 release=3
@@ -15,13 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "openrc-0.63.2"
-	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
-	# build() runs, for recipes that compile-and-run a helper against the
-	# target's own libs. meson's own tooling inherits it too: on a host
-	# whose python-exec2c was built expecting pointer-guard hardening from
-	# its own libc, it crashed loading the sysroot's libc.so.6 instead
-	# ("undefined symbol: __pointer_chk_guard, version GLIBC_PRIVATE")
-	# before meson ever got to configure anything.
 	unset LD_LIBRARY_PATH
 	meson setup build \
 		--prefix=/usr \
@@ -38,11 +27,6 @@ package() {
 	cd "openrc-0.63.2"
 	DESTDIR="$pkgdir" ninja -C build install
 
-	# Linux_sysctl() calls `sysctl --system`, a GNU procps-ng extension -
-	# busybox's sysctl has no such flag and the service failed on every
-	# boot. Busybox does support `-p FILE...` (apply one or more files),
-	# so loop over the same paths --system would have read, the same
-	# existence-check pattern BSD_sysctl() right above it already uses.
 	sed -i \
 		-e '/^Linux_sysctl()/,/^}/{
 			/sysctl \${quiet} --system/{
@@ -51,13 +35,6 @@ package() {
 		}' \
 		"$pkgdir/etc/init.d/sysctl"
 
-	# kbd_mode/loadkeys/dumpkeys come from the real kbd package, which
-	# ScrapLinux does not build - it has its own keymap path already
-	# (scraplinux-rebuild applies identity.conf's id.keymap via busybox's
-	# loadkmap against a .bmap file). Rather than half-reimplement these
-	# two services around a completely different keymap format, drop them
-	# from the default boot runlevel; the init.d scripts stay installed
-	# for anyone who does add a real kbd package.
 	rm -f "$pkgdir/etc/runlevels/boot/keymaps" \
 	      "$pkgdir/etc/runlevels/boot/save-keymaps"
 }

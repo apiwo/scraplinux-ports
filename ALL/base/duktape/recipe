@@ -1,7 +1,3 @@
-# duktape - Embeddable JavaScript engine
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=duktape
 version=2.7.0
 release=1
@@ -16,17 +12,11 @@ sha256="SKIP"
 build() {
 	unset LD_LIBRARY_PATH
 	cd "duktape-2.7.0"
-	# No top-level Makefile - duktape ships as amalgamated source meant to
-	# be embedded directly, plus a handful of Makefile.* examples for the
-	# rare consumer that wants it as a real shared library (polkit does).
 	gmake -f Makefile.sharedlibrary INSTALL_PREFIX=/usr LIBDIR=/lib
 }
 
 package() {
 	cd "duktape-2.7.0"
 	gmake -f Makefile.sharedlibrary INSTALL_PREFIX=/usr LIBDIR=/lib DESTDIR="$pkgdir" install
-	# The debug variant (libduktaped) is a duplicate build of the same
-	# source with -g and no other differences - nothing in this tree asks
-	# for it, and ScrapLinux packages do not ship debug/release library pairs.
 	rm -f "$pkgdir"/usr/lib/libduktaped*
 }

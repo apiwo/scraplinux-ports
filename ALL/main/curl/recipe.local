@@ -1,4 +1,0 @@
-Marker only - see CONTRIBUTING.md. build() is hand-written because curl's
-configure needs an explicit --with-openssl (works for LibreSSL too) - it
-does not auto-detect a TLS backend - and gen-ports.py must never regenerate
-over it from the manifest's generic autotools template.

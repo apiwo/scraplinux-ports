@@ -1,12 +1,6 @@
-# pciutils - lspci and setpci
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=pciutils
 version=3.14.0
 release=2
-# toybox ships lspci as a fallback applet. This package carries the real one
-# and is meant to take that path over.
 replaces="toybox"
 desc="lspci and setpci"
 url="https://mj.ucw.cz/sw/pciutils/"

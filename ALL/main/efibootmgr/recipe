@@ -1,7 +1,3 @@
-# efibootmgr - Edit UEFI boot entries
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=efibootmgr
 version=18
 release=1
@@ -9,16 +5,11 @@ desc="Edit UEFI boot entries"
 url="https://github.com/rhboot/efibootmgr"
 license="GPL-2.0-or-later"
 depend="glibc efivar"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/rhboot/efibootmgr/archive/refs/tags/18.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "efibootmgr-18"
 	meson setup build \

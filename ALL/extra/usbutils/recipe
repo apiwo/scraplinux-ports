@@ -1,12 +1,6 @@
-# usbutils - lsusb
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=usbutils
 version=019
 release=2
-# toybox ships lsusb as a fallback applet. This package carries the real one
-# and is meant to take that path over.
 replaces="toybox"
 desc="lsusb"
 url="https://github.com/gregkh/usbutils"

@@ -1,7 +1,3 @@
-# gdk-pixbuf - Image loading library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=gdk-pixbuf
 version=2.44.4
 release=2

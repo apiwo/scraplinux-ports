@@ -1,7 +1,3 @@
-# electron - Chromium application runtime
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=electron
 version=43.2.0
 release=1
@@ -9,13 +5,10 @@ desc="Chromium application runtime"
 url="https://electronjs.org/"
 license="MIT"
 depend="glibc mesa libx11 wayland nss alsa-lib"
-recommend=""
 makedepend=""
 source="https://github.com/electron/electron/releases/download/v43.2.0/electron-v43.2.0-linux-x64.zip"
 sha256="SKIP"
 
-# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
-# things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 
 package() {

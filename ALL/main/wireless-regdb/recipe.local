@@ -1,4 +1,0 @@
-# Installs the signed regulatory.db the release tarball already ships instead
-# of running the default make target, which regenerates it from db.txt with
-# python and a private key that is not distributed. The template has no way to
-# express "no build step".

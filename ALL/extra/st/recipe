@@ -1,11 +1,12 @@
 # st - The suckless simple terminal
 name=st
 version=0.9.3
-release=1
+release=2
 desc="The suckless simple terminal"
 url="https://st.suckless.org/"
 license="MIT"
 depend="glibc libx11 libxft freetype fontconfig"
+recommend="x11-base"
 makedepend=""
 source="https://dl.suckless.org/st/st-0.9.3.tar.gz"
 sha256="SKIP"

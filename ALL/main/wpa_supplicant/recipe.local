@@ -1,4 +1,0 @@
-Marker only - see CONTRIBUTING.md. This recipe's build()/package() are
-hand-written (the generic "make" template doesn't work for wpa_supplicant -
-see the comment at the top of the recipe) and gen-ports.py must never
-regenerate over them from the manifest's generic template.

@@ -1,7 +1,3 @@
-# mangohud - Vulkan and OpenGL overlay
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=mangohud
 version=0.8.4
 release=1
@@ -9,16 +5,11 @@ desc="Vulkan and OpenGL overlay"
 url="https://github.com/flightlessmango/MangoHud"
 license="MIT"
 depend="vulkan-loader mesa dbus"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/flightlessmango/MangoHud/releases/download/v0.8.4/MangoHud-v0.8.4-Source.tar.xz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "MangoHud-v0.8.4-Source"
 	meson setup build \

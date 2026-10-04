@@ -1,7 +1,3 @@
-# btop - Resource monitor with a nicer view
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=btop
 version=1.4.7
 release=3
@@ -14,11 +10,6 @@ source="https://github.com/aristocratos/btop/archive/refs/tags/v1.4.7.tar.gz"
 sha256="SKIP"
 
 build() {
-	# BUILD_TESTING pulls in googletest via FetchContent, which tries to
-	# clone/download it at configure time - a real network dependency the
-	# sandboxed build should not have, and libgtest/libgmock only existed
-	# in the package because this was ON by CMake's own default. ScrapLinux
-	# never runs btop's own test suite, so there is nothing to lose.
 	cmake -S "btop-1.4.7" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \
@@ -30,10 +21,6 @@ build() {
 
 package() {
 	DESTDIR="$pkgdir" ninja -C build install
-	# Vendored googletest, pulled in as a CMake subdirectory for btop's own
-	# test suite and installed as a side effect of -DBUILD_SHARED_LIBS=ON. A
-	# resource monitor has no business shipping another project's library -
-	# check-conflicts.sh flagged this colliding with ninja's own copy.
 	rm -rf "$pkgdir/usr/include/gtest"
 	rm -rf "$pkgdir/usr/include/gmock"
 	rm -rf "$pkgdir/usr/lib/cmake/GTest"

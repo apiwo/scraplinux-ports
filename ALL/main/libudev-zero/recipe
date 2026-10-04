@@ -1,7 +1,3 @@
-# libudev-zero - libudev without systemd, paired with mdev
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=libudev-zero
 version=1.0.3
 release=2

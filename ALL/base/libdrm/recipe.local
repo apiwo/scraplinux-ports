@@ -1,3 +1,0 @@
-# The per-GPU libraries (libdrm_amdgpu and friends) are hand-enabled: meson
-# leaves them at auto, they silently do not get built, and mesa then stops at
-# configure with "Dependency libdrm_amdgpu not found".

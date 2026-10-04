@@ -1,3 +1,0 @@
-# --with-cli=no is passed in build(): configure probes for "readline" inside
-# -ledit, which ScrapLinux's libedit does not provide, and without it nftables
-# cannot be packaged at all. The template has no field for extra options.

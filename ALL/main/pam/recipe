@@ -1,7 +1,3 @@
-# pam - Pluggable authentication modules, library and pam_unix only
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=pam
 version=1.7.2
 release=1
@@ -15,10 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "Linux-PAM-1.7.2"
-	# docs needs docbook/xsltproc, which are not packaged; selinux, audit,
-	# nis, logind and elogind all need libraries ScrapLinux does not build.
-	# openssl is disabled upstream by default - pam_timestamp has no reason
-	# to link a second TLS library when it never needs one.
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -41,11 +33,5 @@ build() {
 package() {
 	cd "Linux-PAM-1.7.2"
 	DESTDIR="$pkgdir" ninja -C build install
-	# pam_unix.so shells out to this to check a password when the caller
-	# itself cannot read /etc/shadow (anything not already running as
-	# root - a screen locker, `passwd` invoked by an ordinary user, ...).
-	# Without the setuid bit it can't read shadow either, and the check
-	# fails the exact same way root-owned processes never notice because
-	# they never need this helper at all.
 	chmod 4755 "$pkgdir/usr/bin/unix_chkpwd"
 }

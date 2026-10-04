@@ -1,5 +1,0 @@
-# harfbuzz is declared here because freetype links libharfbuzz.so.0 and does
-# not declare it, so dwm installed cleanly and then died with
-# "libharfbuzz.so.0: cannot open shared object file". The correct fix is on
-# freetype, but freetype and harfbuzz link each other and that cycle is not
-# something to introduce into the base dependency graph untested.

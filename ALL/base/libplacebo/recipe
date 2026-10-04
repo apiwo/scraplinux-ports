@@ -1,7 +1,3 @@
-# libplacebo - GPU video rendering library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=libplacebo
 version=7.351.0
 release=1
@@ -9,16 +5,11 @@ desc="GPU video rendering library"
 url="https://libplacebo.org/"
 license="LGPL-2.1-or-later"
 depend="glibc vulkan-loader mesa"
-recommend=""
 makedepend="meson ninja"
 source="https://code.videolan.org/videolan/libplacebo/-/archive/v7.351.0/libplacebo-v7.351.0.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "libplacebo-v7.351.0"
 	meson setup build \

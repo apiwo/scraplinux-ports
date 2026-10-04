@@ -1,7 +1,3 @@
-# qt6-base - Qt 6 base libraries
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=qt6-base
 version=6.10.1
 release=1
@@ -14,18 +10,6 @@ source="https://download.qt.io/official_releases/qt/6.10/6.10.1/submodules/qtbas
 sha256="SKIP"
 
 build() {
-	# No OpenSSL TLS backend. Qt's plugin is written against OpenSSL 1.1/3.x
-	# and uses OPENSSL_STACK, an opaque type LibreSSL never defined:
-	#
-	#   qsslsocket_openssl_symbols_p.h:210:22: error: unknown type name
-	#   'OPENSSL_STACK'; did you mean 'OPENSSL_STRING'?
-	#
-	# ScrapLinux links libressl everywhere and openssl is the alternative that is
-	# never installed alongside it, so building Qt against openssl instead
-	# would make every Qt application drag in a second TLS library that
-	# conflicts with the one curl and the rest of the system use. The desktop
-	# does not need QSslSocket; anything that genuinely wants TLS through Qt
-	# is not something this stack ships.
 	cmake -S "qtbase-everywhere-src-6.10.1" -B build -G Ninja \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \

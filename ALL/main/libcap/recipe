@@ -1,7 +1,3 @@
-# libcap - POSIX capabilities library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=libcap
 version=2.78
 release=1
@@ -15,23 +11,7 @@ sha256="SKIP"
 
 build() {
 	cd "libcap-2.78"
-	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
-	# build() runs, for recipes that compile-and-run a helper against the
-	# target's own libs (gobject-introspection's g-ir-scanner is the usual
-	# case). libcap's Makefile never does that - it only invokes make - but
-	# that's exactly who inherits the export too: the host's make binary
-	# started resolving symbols against the sysroot's freshly-built
-	# libc.so.6 instead of its own and crashed before printing a single
-	# build line.
 	unset LD_LIBRARY_PATH
-	# libcap's Makefile hardcodes CC := gcc rather than honoring the
-	# inherited environment, so it built with the host's own hardened gcc
-	# plus ScrapLinux's --sysroot/-fuse-ld=lld flags (still exported via
-	# CFLAGS/LDFLAGS) instead of clang - a combination host gcc was never
-	# built for, and the sysroot's ld.lld crashed the same way `make` did
-	# above for the same reason. CC=$CC on the command line outranks the
-	# Makefile's own assignment and gets clang building it like everything
-	# else.
 	make -j"$JOBS" PREFIX=/usr CC="$CC"
 }
 

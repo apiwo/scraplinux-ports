@@ -1,24 +1,16 @@
-# sway - i3-compatible Wayland compositor
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=sway
 version=1.11
-release=1
+release=2
 desc="i3-compatible Wayland compositor"
 url="https://swaywm.org/"
 license="MIT"
 depend="glibc wayland wlroots libinput libxkbcommon pixman cairo pango json-c pcre2"
-recommend="wayland-base foot bemenu swaybg swayidle swaylock"
+recommend="wayland-base foot swaybg swayidle swaylock"
 makedepend="meson ninja"
 source="https://github.com/swaywm/sway/releases/download/1.11/sway-1.11.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "sway-1.11"
 	meson setup build \

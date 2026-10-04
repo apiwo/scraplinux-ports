@@ -1,7 +1,3 @@
-# steam - The Steam client
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=steam
 version=1.0.0.87
 release=1
@@ -13,8 +9,6 @@ makedepend=""
 source="https://repo.steampowered.com/steam/archive/stable/steam_1.0.0.87.tar.gz"
 sha256="SKIP"
 
-# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
-# things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 
 package() {

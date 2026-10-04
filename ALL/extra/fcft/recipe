@@ -1,7 +1,3 @@
-# fcft - Font loading and glyph rasterisation
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=fcft
 version=3.3.1
 release=2
@@ -15,9 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "fcft"
-	# meson's own tooling (python-exec2c dispatching to the host's python3)
-	# crashes the same way other native builds do if this is still pointed
-	# at the sysroot - see recipe.local.
 	unset LD_LIBRARY_PATH
 	meson setup build \
 		--prefix=/usr \

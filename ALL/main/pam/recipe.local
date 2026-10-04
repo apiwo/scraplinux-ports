@@ -1,3 +1,0 @@
-# build() disables docs, examples, selinux, audit, nis, logind and elogind -
-# none of those are packaged, and meson would otherwise probe for them or
-# fail outright. The template has no field for extra meson options.

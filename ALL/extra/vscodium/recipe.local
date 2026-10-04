@@ -1,2 +1,0 @@
-# Hand-written: a repackage of the upstream build, not a compile - there is no
-# build() at all, and the tarball unpacks with no top-level directory.

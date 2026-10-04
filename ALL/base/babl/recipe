@@ -1,7 +1,3 @@
-# babl - Pixel format conversion library
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=babl
 version=0.1.114
 release=1
@@ -9,16 +5,11 @@ desc="Pixel format conversion library"
 url="https://gegl.org/babl/"
 license="LGPL-3.0-or-later"
 depend="glibc lcms2"
-recommend=""
 makedepend="meson ninja"
 source="https://download.gimp.org/babl/0.1/babl-0.1.114.tar.xz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "babl-0.1.114"
 	meson setup build \

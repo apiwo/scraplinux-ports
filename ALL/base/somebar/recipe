@@ -1,7 +1,3 @@
-# somebar - Status bar for dwl
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=somebar
 version=0.2
 release=1
@@ -9,16 +5,11 @@ desc="Status bar for dwl"
 url="https://git.sr.ht/~raphi/somebar"
 license="MIT"
 depend="wayland wlroots pango cairo"
-recommend=""
 makedepend="meson ninja"
 source="https://git.sr.ht/~raphi/somebar/archive/0.2.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "somebar-0.2"
 	meson setup build \

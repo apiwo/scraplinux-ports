@@ -1,7 +1,3 @@
-# steam-runtime - The Steam runtime libraries
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=steam-runtime
 version=latest-public-stable
 release=1
@@ -13,17 +9,10 @@ makedepend=""
 source="https://repo.steampowered.com/steamrt-images-scout/snapshots/latest-public-stable/steam-runtime.tar.xz"
 sha256="SKIP"
 
-# Repackaged upstream build. ScrapLinux prefers to compile from source, but a few
-# things ship only as binaries; those live here with the licence stated plainly.
 options="!strip"
 
 package() {
 	cd "steam-runtime"
-	# scraps-build exports LD_LIBRARY_PATH pointing at the sysroot before
-	# package() runs; this step's own `install` is a plain host tool, not
-	# something built against the sysroot, so it loads the sysroot's own
-	# libc.so.6 and crashes ("undefined symbol: __pointer_chk_guard,
-	# version GLIBC_PRIVATE") - same failure, same fix, as openrc/glibc-32.
 	unset LD_LIBRARY_PATH
 	install -d "$pkgdir/opt/steam-runtime"
 	cp -a . "$pkgdir/opt/steam-runtime/"

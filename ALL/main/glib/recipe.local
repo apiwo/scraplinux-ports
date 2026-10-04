@@ -1,5 +1,0 @@
-Marker only - see CONTRIBUTING.md. build() disables introspection: g-ir-scanner
-writes to $HOME/.cache, which the read-only build sandbox does not provide,
-and nothing here needs GObject introspection data (that is for scripting-
-language bindings, not a C daemon like NetworkManager). gen-ports.py must
-never regenerate over this from the manifest's generic meson template.

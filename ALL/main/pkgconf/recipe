@@ -1,7 +1,3 @@
-# pkgconf - Build flag helper, replacing pkg-config
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=pkgconf
 version=3.0.4
 release=1
@@ -9,16 +5,11 @@ desc="Build flag helper, replacing pkg-config"
 url="https://github.com/pkgconf/pkgconf"
 license="ISC"
 depend="glibc"
-recommend=""
 makedepend="meson ninja"
 source="https://distfiles.ariadne.space/pkgconf/pkgconf-3.0.4.tar.xz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "pkgconf-3.0.4"
 	meson setup build \

@@ -1,7 +1,3 @@
-# xdg-user-dirs - Manages ~/Desktop, ~/Documents etc per the XDG spec, needed by lxqt-session
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=xdg-user-dirs
 version=0.19
 release=1

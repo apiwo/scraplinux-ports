@@ -1,7 +1,3 @@
-# rtl8812au - Realtek RTL8812AU wireless driver
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=rtl8812au
 version=5.13.6
 release=1
@@ -9,17 +5,10 @@ desc="Realtek RTL8812AU wireless driver"
 url="https://github.com/morrownr/8812au-20210629"
 license="GPL-2.0-only Realtek-proprietary"
 depend="glibc"
-recommend=""
 makedepend="linux-headers"
 source="https://github.com/morrownr/8812au-20210629/archive/refs/heads/main.tar.gz"
 sha256="SKIP"
 
-# Built against every installed kernel. scraps re-runs this from the package's
-# post_upgrade hook whenever a kernel changes, which is what dkms is for.
-#
-# gmake, not make: Linux's kbuild is written against GNU make and bmake cannot
-# drive it. /usr/bin/make on ScrapLinux is bmake, so kernel modules ask for gmake
-# explicitly.
 build() {
 	cd "8812au-20210629-refs/heads/main"
 	for kdir in /usr/lib/modules/*/build; do

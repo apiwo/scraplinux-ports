@@ -1,7 +1,3 @@
-# flex-alt - reflex, a BSD-licensed lex
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=flex-alt
 version=20260210
 release=1

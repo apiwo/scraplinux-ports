@@ -1,7 +1,3 @@
-# networkmanager - Network configuration daemon, provides nmtui
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=networkmanager
 version=1.50.0
 release=2
@@ -15,62 +11,6 @@ sha256="SKIP"
 
 build() {
 	cd "NetworkManager-1.50.0"
-	# ScrapLinux has no systemd, no logind/ConsoleKit, no SELinux and no
-	# firewalld - every option below turns off an integration this system
-	# genuinely does not have, rather than one we just don't want. -Dnmtui=true
-	# is the point of this port: it bundles the nmtui text UI in the same
-	# build, no separate package needed.
-	#
-	# -Dcrypto=null: NM's crypto backend only matters for certificate/key
-	# handling in 802.1X EAP, which this port does not target (WPA2-PSK via
-	# nmtui is the point of it). nss turned out to need its own non-standard
-	# build.sh/coreconf build (no plain Makefile, no DESTDIR install) rather
-	# than the "already a buildable dependency" it looked like on paper, and
-	# gnutls would mean pulling in nettle+gmp as a second crypto stack for a
-	# feature this port does not use either. null keeps everything WPA2-PSK
-	# needs (wpa_supplicant does its own crypto for that) with no dependency
-	# on any of them. Revisit if 802.1X specifically turns out to matter.
-	#
-	# -Dmodem_manager=false: no ModemManager port exists (mobile broadband
-	# modems), and leaving this at its default true silently links against
-	# the build host's own libmm-glib/libnm-wwan if it happens to have
-	# ModemManager installed - neither ships on ScrapLinux, so that binary would
-	# fail to even start with "cannot open shared object file".
-	#
-	# -Dnmcli=false: nmcli hard-requires readline or libedit to build at all.
-	# GNU readline is what ScrapLinux never ships (openssh and vim use libedit
-	# instead, for the same reason) - so this recipe pointed PKG_CONFIG_PATH/
-	# CFLAGS/LDFLAGS at $DEPS (the staging tree build-rootfs.sh/build-usable.sh
-	# already maintain for exactly this "dependency isn't on the build host"
-	# problem) and that half worked: meson found libedit and configured
-	# cleanly. The actual compile then failed - nmcli/agent.c and
-	# nmcli/common.c assign a 2-argument function to libedit's
-	# `rl_startup_hook`, which libedit's readline-compat shim declares as
-	# taking zero arguments (upstream NetworkManager was written against
-	# GNU readline's own, incompatible rl_startup_hook signature for this
-	# one deftext-prefill feature). That's a real upstream libedit/readline
-	# API mismatch, not a packaging problem, and patching NetworkManager's C
-	# source for it is more than this port needs: nmtui is the point of
-	# this package and doesn't touch readline at all (it's newt-based, a
-	# completely separate line-editing library) - only the interactive
-	# nmcli prompt's tab completion is affected, and nmcli itself won't
-	# build at all while that's unresolved. Revisit if nmcli specifically
-	# turns out to matter enough to carry a patch for.
-	#
-	# -Dsystemdsystemunitdir is a real path, not "no". meson.build's own
-	# logic only skips its systemd-unit-dir probe when this is exactly the
-	# string "no" and asserts looking for a real systemd install otherwise -
-	# "no" was passed and the assert fired anyway, for a reason not worth
-	# chasing further when any non-empty path sidesteps the check entirely.
-	# Nothing on ScrapLinux reads this path; ninja install just writes a few
-	# .service files under it inside $pkgdir that nothing ever loads.
-	#
-	# -Db_lto=false: meson's own default asserts on -flto-partition=none, a
-	# GCC LTO flag clang has never had - "Compiler for C supports arguments
-	# -flto-partition=none: NO" then a hard Assert failed, never reaching
-	# the rest of the build. This is not a workaround for clang's LTO being
-	# broken - clang's LTO works fine - it is meson's own default check
-	# being written against gcc.
 	meson setup build \
 		--prefix=/usr \
 		--libdir=/usr/lib \
@@ -113,9 +53,6 @@ build() {
 package() {
 	cd "NetworkManager-1.50.0"
 	DESTDIR="$pkgdir" ninja -C build install
-	# NM ships a default main.conf with plugins=keyfile,ifupdown - ifupdown
-	# is a Debian-ism ScrapLinux has no use for and its plugin isn't even built
-	# here; keyfile alone is what actually reads/writes connection profiles.
 	if [ -f "$pkgdir/etc/NetworkManager/NetworkManager.conf" ]; then
 		sed -i 's/^plugins=.*/plugins=keyfile/' \
 			"$pkgdir/etc/NetworkManager/NetworkManager.conf"

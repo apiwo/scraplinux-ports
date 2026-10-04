@@ -1,7 +1,3 @@
-# kiwmi - Lua-scriptable Wayland compositor
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=kiwmi
 version=0-20220730
 release=1
@@ -9,16 +5,11 @@ desc="Lua-scriptable Wayland compositor"
 url="https://github.com/buffet/kiwmi"
 license="MIT"
 depend="wlroots wayland libxkbcommon pixman lua"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/buffet/kiwmi/archive/392b6c38fd189e304aa97f9c6fc88a5c7113a140.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "kiwmi-392b6c38fd189e304aa97f9c6fc88a5c7113a140"
 	meson setup build \

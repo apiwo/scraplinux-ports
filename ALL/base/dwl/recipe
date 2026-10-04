@@ -1,11 +1,12 @@
 # dwl - dwm's ideas, on Wayland. Patched and configured, suckless style.
 name=dwl
 version=0.8
-release=2
+release=3
 desc="Dynamic window manager for Wayland, in the spirit of dwm"
 url="https://codeberg.org/dwl/dwl"
 license="GPL-3.0-only"
-depend="wayland-base glibc wayland wlroots libinput libxkbcommon"
+depend="glibc wayland wlroots libinput libxkbcommon"
+recommend="wayland-base foot"
 makedepend="bmake clang lld pkgconf"
 source="dwl-$version.tar.gz::https://codeberg.org/dwl/dwl/archive/v$version.tar.gz"
 sha256="SKIP"

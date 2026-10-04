@@ -1,5 +1,0 @@
--DWITH_WAYLAND=OFF: the Wayland idle backend hard-requires
-PlasmaWaylandProtocols, a full separate KDE Plasma package ScrapLinux does not
-build (and LXQt here runs on openbox/xorg-server, X11 only, not Wayland).
--DWITH_X11=ON (the default) is what lxqt-powermanagement actually uses.
-Revisit only if ScrapLinux ever ships a Wayland LXQt session.

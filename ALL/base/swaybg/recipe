@@ -1,7 +1,3 @@
-# swaybg - Wallpaper tool for Wayland
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=swaybg
 version=1.2.2
 release=1
@@ -9,16 +5,11 @@ desc="Wallpaper tool for Wayland"
 url="https://github.com/swaywm/swaybg"
 license="MIT"
 depend="wayland cairo gdk-pixbuf"
-recommend=""
 makedepend="meson ninja"
 source="https://github.com/swaywm/swaybg/archive/refs/tags/v1.2.2.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "swaybg-1.2.2"
 	meson setup build \

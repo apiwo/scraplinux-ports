@@ -1,7 +1,3 @@
-# at-spi2-core - Accessibility bus
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=at-spi2-core
 version=2.58.0
 release=1

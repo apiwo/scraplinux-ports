@@ -1,11 +1,12 @@
 # foot - the ScrapLinux terminal. Wayland native, fast, no dependencies to speak of.
 name=foot
 version=1.24.0
-release=1
+release=2
 desc="A fast, lightweight Wayland terminal emulator"
 url="https://codeberg.org/dnkl/foot"
 license="MIT"
-depend="glibc wayland fontconfig freetype pixman libxkbcommon fcft"
+depend="glibc wayland pixman libxkbcommon fontconfig fcft utf8proc"
+recommend="wayland-base"
 makedepend="meson ninja clang lld scdoc"
 source="foot-$version.tar.gz::https://codeberg.org/dnkl/foot/archive/$version.tar.gz"
 sha256="SKIP"

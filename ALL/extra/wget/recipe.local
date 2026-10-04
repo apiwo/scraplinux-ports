@@ -1,2 +1,0 @@
-# replaces="busybox" and the release that carries it. The template has no
-# field for either, so regenerating this recipe would drop both.

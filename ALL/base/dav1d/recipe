@@ -1,7 +1,3 @@
-# dav1d - AV1 decoder
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=dav1d
 version=1.6.0
 release=1
@@ -9,16 +5,11 @@ desc="AV1 decoder"
 url="https://code.videolan.org/videolan/dav1d"
 license="BSD-2-Clause"
 depend="glibc"
-recommend=""
 makedepend="meson ninja nasm"
 source="https://code.videolan.org/videolan/dav1d/-/archive/1.6.0/dav1d-1.6.0.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "dav1d-1.6.0"
 	meson setup build \

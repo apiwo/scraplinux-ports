@@ -1,7 +1,3 @@
-# libepoxy - GL function pointer dispatch, needed by Xorg's glamor 2D acceleration
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=libepoxy
 version=1.5.10
 release=1
@@ -9,16 +5,11 @@ desc="GL function pointer dispatch, needed by Xorg's glamor 2D acceleration"
 url="https://github.com/anholt/libepoxy"
 license="MIT"
 depend="glibc libx11"
-recommend=""
 makedepend="meson ninja python"
 source="https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10.tar.gz"
 sha256="SKIP"
 
 build() {
-	# Host meson is a python-exec wrapper, and with LD_LIBRARY_PATH still on
-	# the sysroot it loads ScrapLinux's glibc and dies with "undefined symbol:
-	# __pointer_chk_guard, version GLIBC_PRIVATE" before configuring anything.
-	# The compiler gets --sysroot from CFLAGS, so nothing needs the variable.
 	unset LD_LIBRARY_PATH
 	cd "libepoxy-1.5.10"
 	meson setup build \

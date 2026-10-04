@@ -1,7 +1,3 @@
-# gh - GitHub command line
-# Generated from manifest.tsv by gen-ports.py. Edit the manifest, not this file,
-# unless the package needs something the template cannot express - in which case
-# drop a `recipe.local` beside it and it will be preserved.
 name=gh
 version=2.86.0
 release=1
