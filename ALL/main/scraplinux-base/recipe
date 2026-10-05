@@ -1,6 +1,6 @@
 name=scraplinux-base
 version=1.5.0
-release=3
+release=4
 desc="ScrapLinux base configuration, init scripts and branding"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
@@ -22,4 +22,8 @@ package() {
 	done
 	printf '#!/bin/sh\ncat /etc/scraplinux-release\n' >"$pkgdir/usr/bin/scraplinux-release"
 	chmod 755 "$pkgdir/usr/bin/scraplinux-release"
+	# github archives are group writable, git's tar.umask is 0002
+	chmod -R go-w "$pkgdir"
+	chmod 600 "$pkgdir/etc/shadow"
+	[ ! -f "$pkgdir/etc/gshadow" ] || chmod 600 "$pkgdir/etc/gshadow"
 }

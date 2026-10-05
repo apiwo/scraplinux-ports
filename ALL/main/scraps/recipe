@@ -1,6 +1,6 @@
 name=scraps
 version=1.5.1
-release=1
+release=2
 desc="ScrapLinux Package Manager"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
@@ -26,4 +26,6 @@ package() {
 	install -d "$pkgdir/var/lib/scraps/local" "$pkgdir/var/lib/scraps/sync" \
 		"$pkgdir/var/lib/scraps/hold" "$pkgdir/var/lib/scraps/snapshots" \
 		"$pkgdir/var/cache/scraps/pkg" "$pkgdir/var/cache/scraps/src"
+	# github archives are group writable, git's tar.umask is 0002
+	chmod -R go-w "$pkgdir"
 }

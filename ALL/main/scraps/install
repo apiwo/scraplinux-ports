@@ -1,0 +1,6 @@
+# 1.5.0 and 1.5.1-1 shipped it group writable, backup= keeps the file as it is
+post_install() {
+	_r=${SCRAPS_ROOT:-/}; _r=${_r%/}
+	[ ! -f "$_r/etc/scraps/scraps.conf" ] || chmod go-w "$_r/etc/scraps/scraps.conf"
+}
+post_upgrade() { post_install; }

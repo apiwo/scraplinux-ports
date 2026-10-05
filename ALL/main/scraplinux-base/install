@@ -1,0 +1,11 @@
+# 1.5.0-3 shipped these group writable and shadow world readable, backup= keeps the files as they are
+post_install() {
+	_r=${SCRAPS_ROOT:-/}; _r=${_r%/}
+	for _f in passwd group inittab profile zsh/zshrc doas.conf; do
+		[ ! -f "$_r/etc/$_f" ] || chmod go-w "$_r/etc/$_f"
+	done
+	for _f in shadow gshadow; do
+		[ ! -f "$_r/etc/$_f" ] || chmod 600 "$_r/etc/$_f"
+	done
+}
+post_upgrade() { post_install; }
