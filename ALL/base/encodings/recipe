@@ -1,29 +1,23 @@
 name=encodings
 version=1.1.0
-release=1
-desc="Font encoding tables, needed by legacy X core fonts to load at all"
+release=2
+desc="Font encoding tables for X11 core fonts"
 url="https://x.org/"
 license="MIT"
-depend="glibc font-util"
-makedepend=""
-source="https://x.org/pub/individual/font/encodings-1.1.0.tar.gz"
-sha256="SKIP"
+depend=""
+makedepend="font-util mkfontscale gmake"
+source="https://x.org/pub/individual/font/encodings-$version.tar.gz"
+sha256="7d9b7afedc97c3b29b6262b3346728b877f0a91a4a5802bf091df4cffb43a568"
 
 build() {
-	cd "encodings-1.1.0"
-	[ -x ./configure ] || autoreconf -fi
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	case "$_help" in *--disable-gzip-small-encodings*) _opts="$_opts --disable-gzip-small-encodings" ;; esac
-	case "$_help" in *--disable-gzip-large-encodings*) _opts="$_opts --disable-gzip-large-encodings" ;; esac
-	./configure $_opts
+	cd "encodings-$version"
+	# fontrootdir from pkg-config points into the build sysroot
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--with-fontrootdir=/usr/share/fonts/X11
 	gmake -j"$JOBS"
 }
 
 package() {
-	cd "encodings-1.1.0"
+	cd "encodings-$version"
 	gmake DESTDIR="$pkgdir" install
 }

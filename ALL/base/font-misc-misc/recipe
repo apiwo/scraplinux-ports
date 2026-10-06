@@ -1,28 +1,23 @@
 name=font-misc-misc
 version=1.1.3
-release=1
-desc="Core bitmap fonts (fixed, 6x13, ...) - the traditional default X font set"
+release=2
+desc="Core bitmap fonts (fixed, 6x13, ...), the traditional default X font set"
 url="https://x.org/"
 license="MIT"
-depend="glibc font-util encodings"
-makedepend=""
-source="https://x.org/pub/individual/font/font-misc-misc-1.1.3.tar.gz"
-sha256="SKIP"
+depend="encodings"
+makedepend="font-util mkfontscale bdftopcf util-macros gmake"
+source="https://x.org/pub/individual/font/font-misc-misc-$version.tar.gz"
+sha256="bece4a9482b3cb6f7fad2164fd3b394d22dfe1ad2f96f60030a703bcff30f5a5"
 
 build() {
-	cd "font-misc-misc-1.1.3"
-	[ -x ./configure ] || autoreconf -fi
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	case "$_help" in *--with-compression*) _opts="$_opts --with-compression=no" ;; esac
-	./configure $_opts
+	cd "font-misc-misc-$version"
+	# fontrootdir from pkg-config points into the build sysroot
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--with-fontrootdir=/usr/share/fonts/X11 --with-compression=no
 	gmake -j"$JOBS"
 }
 
 package() {
-	cd "font-misc-misc-1.1.3"
+	cd "font-misc-misc-$version"
 	gmake DESTDIR="$pkgdir" install
 }
