@@ -54,7 +54,7 @@ base	dwm	6.6	4	Dynamic window manager for X
 base	dxvk	2.7.1	1	Direct3D 9/10/11 over Vulkan
 base	elogind	257.16	1	Session/seat tracking, the systemd-logind fork for init systems without systemd
 base	embree	4.4.0	1	Ray tracing kernels
-base	encodings	1.1.0	1	Font encoding tables, needed by legacy X core fonts to load at all
+base	encodings	1.1.0	2	Font encoding tables for X11 core fonts
 base	exiv2	0.28.7	1	Image metadata library
 base	exo	4.20.0	1	Xfce extension library
 base	extra-cmake-modules	6.20.0	1	KDE's shared CMake modules, needed to build any KDE Frameworks component
@@ -65,7 +65,7 @@ base	firefox	147.0	1	Mozilla Firefox
 base	fish	4.2.0	1	Friendly interactive shell
 base	flac	1.5.0	1	Free lossless audio codec
 base	flatpak	1.17.0	1	Application sandboxing and distribution
-base	font-misc-misc	1.1.3	1	Core bitmap fonts (fixed, 6x13, ...) - the traditional default X font set
+base	font-misc-misc	1.1.3	2	Core bitmap fonts (fixed, 6x13, ...), the traditional default X font set
 base	font-util	1.4.1	1	Font package creation/installation utilities
 base	fribidi	1.0.16	1	Bidirectional text algorithm
 base	fuzzel	1.13.0	1	Application launcher for Wayland
@@ -330,7 +330,7 @@ base	wireplumber	0.5.10	1	Session / policy manager implementation for PipeWire
 base	wl-clipboard	2.2.1	1	Clipboard tools for Wayland
 base	wlogout	1.1.1	1	Wayland logout menu
 base	wlroots	0.20.2	2	Wayland compositor library
-base	wlroots0.19	0.19.2	1	Wayland compositor library, 0.19 series (slotted beside wlroots 0.20)
+base	wlroots0.19	0.19.2	2	Wayland compositor library, 0.19 series (slotted beside wlroots 0.20)
 base	wofi	1.4.1	1	Launcher for wlroots compositors
 base	wxwidgets	3.2.8	1	Cross-platform GUI toolkit
 base	x11-base	1.0.0	1	Everything needed for a working X11 session: the server, xinit/startx, input and video drivers, keymaps, GL and fonts. Install this and startx works.
@@ -501,7 +501,6 @@ kernels	ScrapLinux-small-kernel	7.1.3	1	ScrapLinux kernel, monolithic and minima
 kernels	alsa-ucm-conf	1.2.15	1	ALSA use case manager configuration
 kernels	linux-firmware	20260701	1	Firmware files for Linux device drivers
 kernels	sof-firmware	2025.12	1	Sound Open Firmware, for modern Intel audio
-main	66	0.9.1.2	2	Obarun's service manager and init - s6 supervision with 66's own scandir/boot layer instead of s6-rc/s6-linux-init
 main	acl	2.4.0	1	Access control list tools
 main	argon2	20190702	1	Argon2 password hashing
 main	attr	2.6.0	1	Extended attribute tools
@@ -521,15 +520,15 @@ main	cmake	4.2.1	2	Cross-platform build generator
 main	cryptsetup	2.8.1	1	LUKS disk encryption
 main	curl	8.19.0	2	Transfer data over any protocol
 main	dbus	1.16.2	1	Desktop message bus
+main	dhcpcd	10.5.2	1	DHCP and DHCPv6 client, configures every interface iwd or a cable brings up
 main	dinit	0.19.4	2	Service manager and init with dependency handling
 main	doas	6.8.2	2	Execute commands as another user (OpenBSD doas)
 main	dosfstools	4.2	1	FAT filesystem tools
 main	e2fsprogs	1.47.4	3	ext2/3/4 filesystem tools
 main	efibootmgr	18	1	Edit UEFI boot entries
 main	efivar	39	1	UEFI variable library
-main	ell	0.79	1	Embedded Linux library, used by bluez
+main	ell	0.83	2	Embedded Linux Library, iwd's base library
 main	eudev	3.2.14	3	Standalone udev, for desktops that need it
-main	execline	2.9.7.0	1	Non-interactive scripting language for s6
 main	exfatprogs	1.2.9	1	exFAT filesystem tools
 main	expat	2.8.2	1	Stream-oriented XML parser
 main	f2fs-tools	1.16.0	1	F2FS filesystem tools
@@ -547,9 +546,9 @@ main	grub	2.14	1	GRUB2 bootloader (BIOS only)
 main	hwdata	0.410	3	Hardware identification and configuration data (pci.ids, pnp.ids, usb.ids, ...)
 main	iana-etc	20260723	1	/etc/services and /etc/protocols
 main	inih	60	1	Simple INI file parser
-main	initialization	0.8.1	1	The ScrapLinux init system and process supervisor
 main	iproute2	6.19.0	1	ip, ss, tc and the netlink tools
 main	iw	6.17	1	Configure and scan wireless devices through nl80211
+main	iwd	3.12	2	Wireless daemon, connects to WiFi networks, iwctl to drive it
 main	jansson	2.14	1	A C library for encoding, decoding and manipulating JSON
 main	json-c	0.19	1	A C library for JSON, commonly used by low-level system tools
 main	json-glib	1.10.8	1	JSON parser/generator built on GLib, used by lxqt-archiver
@@ -594,9 +593,7 @@ main	nftables	1.1.5	1	The Linux packet filter
 main	nghttp2	1.68.0	3	HTTP/2 library
 main	ninja	1.13.2	4	Small, fast build system
 main	nitro	0.8.1	1	Tiny init system and process supervisor
-main	oblibs	0.4.0.1	1	Obarun's base C library - what 66 links against
 main	onetrueawk	20260426	1	The one true awk
-main	openrc	0.63.2	3	Dependency-based init system from Gentoo
 main	openssh	10.3p1	1	OpenBSD secure shell
 main	pam	1.7.2	1	Pluggable authentication modules, library and pam_unix only
 main	parted	3.7	1	Disk partition editor
@@ -606,28 +603,19 @@ main	perl	5.42.1	1	Perl, needed to build openssl and git
 main	pkgconf	3.0.4	1	Build flag helper, replacing pkg-config
 main	popt	1.19	1	Command-line option parsing library
 main	python	3.14.7	2	The Python interpreter
-main	runit	2.2.0	1	Small init and service supervision
-main	s6-linux-init	1.1.3.0	1	PID 1 for an s6 system
-main	s6-rc	0.5.6.0	1	Service manager for s6
-main	s6	2.13.2.0	1	skarnet supervision suite
 main	samurai	1.2	1	A ninja-compatible build tool in C
-main	scraplinux-base	1.5.0	4	ScrapLinux base configuration, init scripts and branding
+main	scraplinux-base	1.6.0	1	ScrapLinux base configuration, init scripts and branding
 main	scraplinux-init	1.0.0	1	The ScrapLinux init scripts and service manager
-main	scraps	1.5.1	2	ScrapLinux Package Manager
+main	scraps	1.5.2	1	ScrapLinux Package Manager
 main	seatd	0.9.1	1	Seat management, replacing logind
 main	signify	33	1	Cryptographically sign and verify files (Ed25519)
-main	skalibs	2.14.4.0	1	skarnet base library, needed by s6
 main	spirv-headers	1.4.357.0	1	Machine-readable SPIR-V headers
 main	spirv-llvm-translator	22.1.5	1	LLVM IR to SPIR-V translator
 main	sqlite	3.52.0	1	Embedded SQL database
-main	sysvinit	3.14	2	The traditional System V init
 main	toybox	0.8.14	3	The classic Unix commands, 0BSD licensed
 main	tzdata	2026b	1	Time zone database
 main	util-linux-libs	2.42.1	3	libblkid, libmount and libuuid only
 main	util-linux	2.41.5	1	Core system utilities (blkid, mount, findfs, lsblk)
-main	wifi-connect-cli	1.0.0	1	Interactive wireless connect - scan, pick a network, connect
-main	wifi-connect-default	1.0.0	1	wifi-connect-cli plus common wireless firmware (Intel iwlwifi and more)
-main	wifi-connect-extra	1.0.0	1	wifi-connect-default plus less common wireless drivers (Broadcom wl)
 main	wireless-regdb	2026.05.30	2	Wireless regulatory database
 main	wpa_supplicant	2.11	2	WPA client, NetworkManager's wifi backend
 main	xfsprogs	6.19.0	1	XFS filesystem tools
@@ -645,7 +633,6 @@ multilib	libressl-32	4.2.0	1	LibreSSL, 32-bit
 multilib	libx11-32	1.8.13	1	X11 client library, 32-bit
 multilib	mesa-32	26.0.2	1	OpenGL and Vulkan, 32-bit
 multilib	nvidia-utils-32	590.48	1	NVIDIA userspace libraries, 32-bit
-multilib	openrc-32	0.63.2	1	Dependency-based init system from Gentoo, 32-bit
 multilib	steam-deps-32	1.0.0	1	Everything 32-bit that Steam needs
 multilib	vulkan-loader-32	1.4.330	1	Vulkan loader, 32-bit
 multilib	zlib-32	1.3.1	1	Compression library, 32-bit
@@ -677,6 +664,5 @@ profile	niri-dms	1.0.0	2	Niri + DankMaterialShell, with the ScrapLinux neutral r
 profile	scraplinux-kde	1.0.0	2	KDE Plasma with foot and the ScrapLinux colour scheme
 profile	scraplinux-sound	1.0.0	1	PipeWire, WirePlumber and alsamixer, configured and enabled
 profile	scraplinux-xfce	1.0.0	2	Xfce with the ScrapLinux theme, foot and a neutral panel layout
-profile	sound-setup-openrc	1.0.0	1	PipeWire audio, wired up and started (OpenRC)
 profile	sound-setup	1.0.0	1	PipeWire audio, wired up and started
 profile	x11-extra	1.0.0	1	Scalable fonts, a nerd font for terminal glyphs, and feh for wallpapers - the non-essential pieces a working desktop still wants beyond x11-base's minimal server+driver set.
