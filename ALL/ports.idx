@@ -368,7 +368,7 @@ base	xkbcomp	1.4.7	1	X keymap compiler, needed by Xorg's keyboard init at startu
 base	xkeyboard-config	2.47	1	Keyboard layout database
 base	xorg-server	21.1.20	1	The X.Org display server
 base	xorg-xinit	1.4.4	1	startx and the X session starter
-base	xorg-xwayland	24.1.9	1	X server running on Wayland
+base	xorg-xwayland	24.1.9	2	X server running on Wayland
 base	xorgproto	2025.1	1	X11 protocol headers
 base	xrandr	1.5.3	1	Command-line interface to the RandR extension
 base	xset	1.2.5	1	User preference utility for X
@@ -560,7 +560,7 @@ main	libclc	22.1.8	1	OpenCL C library (bitcode) for LLVM
 main	libedit	20260512	1	BSD line editing, replacing readline
 main	libepoxy	1.5.10	1	GL function pointer dispatch, needed by Xorg's glamor 2D acceleration
 main	libffi	3.5.2	1	Foreign function interface
-main	libglvnd	1.7.0	1	GL vendor dispatch, so mesa and NVIDIA can both provide GL
+main	libglvnd	1.7.0	3	GL vendor dispatch, so mesa and NVIDIA can both provide GL
 main	libidn2	2.3.7	1	Internationalised domain names, which curl resolves hostnames with
 main	libmd	1.1.0	1	BSD message digest functions
 main	libmnl	1.0.5	1	Minimal netlink library

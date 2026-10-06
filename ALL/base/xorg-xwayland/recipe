@@ -1,13 +1,13 @@
 name=xorg-xwayland
 version=24.1.9
-release=1
+release=2
 desc="X server running on Wayland"
 url="https://x.org/"
 license="MIT"
-depend="glibc mesa wayland libdrm pixman libxkbcommon"
-makedepend="meson ninja"
+depend="glibc pixman libbsd libmd libxfont2 libxau libxdmcp wayland libxcvt libxshmfence libdrm libepoxy mesa libglvnd libtirpc xkbcomp xkeyboard-config"
+makedepend="meson ninja xorgproto xtrans libxkbfile font-util wayland-protocols"
 source="https://x.org/pub/individual/xserver/xwayland-24.1.9.tar.xz"
-sha256="SKIP"
+sha256="f297af27a84508db9b80d1cbbcc69c3801da38eb64c72f3b5b50f582459afdd0"
 
 build() {
 	unset LD_LIBRARY_PATH
@@ -19,7 +19,9 @@ build() {
 		--localstatedir=/var \
 		--buildtype=release \
 		--wrap-mode=nodownload \
-		-Db_lto=true
+		-Db_lto=true \
+		-Dsha1=libmd \
+		-Dxvfb=false
 	ninja -C build -j"$JOBS"
 }
 
@@ -27,4 +29,6 @@ package() {
 	unset LD_LIBRARY_PATH
 	cd "xwayland-24.1.9"
 	DESTDIR="$pkgdir" ninja -C build install
+	# xorg-server owns these
+	rm -f "$pkgdir/usr/lib/xorg/protocol.txt" "$pkgdir/usr/share/man/man1/Xserver.1"
 }
