@@ -1,15 +1,15 @@
 name=scraplinux-base
 version=1.6.0
-release=2
+release=3
 desc="ScrapLinux base configuration, init scripts and branding"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
 depend="busybox toybox zsh doas scraps dinit eudev dhcpcd iwd"
 # takes /usr/bin/init over from whichever init the system had
 replaces="busybox 66 openrc sysvinit runit initialization"
-_commit=2f045c7155f74f3c01db8956f5c7853d817c2c5a
+_commit=62a64b12544658ebfc3f9eca9c1cd80ae0b09ff9
 source="scraplinux-$_commit.tar.gz::https://github.com/apiwo/scraplinux/archive/$_commit.tar.gz"
-sha256="f878378531d3b1ab7de98871f3c01252155300d28bd6aec7de13dbfb9c81dcbe"
+sha256="40c9b220df3f3e21967235f79d39e8ed4e2cbf1e79cc88896bd5d8ecce09f1a6"
 backup="etc/passwd etc/group etc/shadow etc/gshadow etc/profile etc/zsh/zshrc etc/doas.conf"
 
 package() {

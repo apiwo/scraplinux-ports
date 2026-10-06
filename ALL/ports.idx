@@ -604,7 +604,7 @@ main	pkgconf	3.0.4	1	Build flag helper, replacing pkg-config
 main	popt	1.19	1	Command-line option parsing library
 main	python	3.14.7	2	The Python interpreter
 main	samurai	1.2	1	A ninja-compatible build tool in C
-main	scraplinux-base	1.6.0	2	ScrapLinux base configuration, init scripts and branding
+main	scraplinux-base	1.6.0	3	ScrapLinux base configuration, init scripts and branding
 main	scraplinux-init	1.0.0	1	The ScrapLinux init scripts and service manager
 main	scraps	1.5.2	1	ScrapLinux Package Manager
 main	seatd	0.9.1	1	Seat management, replacing logind
