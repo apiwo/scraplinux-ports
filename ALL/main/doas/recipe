@@ -6,6 +6,7 @@ desc="Execute commands as another user (OpenBSD doas)"
 url="https://github.com/Duncaen/OpenDoas"
 license="ISC"
 depend="glibc libxcrypt"
+makedepend="gmake"
 provides="sudo-replacement"
 source="opendoas-$version.tar.gz::https://github.com/Duncaen/OpenDoas/archive/refs/tags/v$version.tar.gz"
 sha256="SKIP"
@@ -14,12 +15,12 @@ build() {
 	cd "OpenDoas-$version"
 	# No PAM: ScrapLinux authenticates against shadow directly.
 	./configure --prefix=/usr --sysconfdir=/etc --without-pam
-	make -j"$JOBS"
+	gmake -j"$JOBS"
 }
 
 package() {
 	cd "OpenDoas-$version"
-	make DESTDIR="$pkgdir" install
+	gmake DESTDIR="$pkgdir" install
 	# Without the setuid bit doas cannot do its job.
 	chmod 4755 "$pkgdir/usr/bin/doas"
 	# doas.conf itself is not shipped here: scraplinux-base owns
