@@ -1,6 +1,6 @@
 name=scraps
-version=1.5.1
-release=2
+version=1.5.2
+release=1
 desc="ScrapLinux Package Manager"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
@@ -8,9 +8,9 @@ depend="busybox onetrueawk xz libarchive curl"
 provides="package-manager"
 # takes etc/scraps over from older scraplinux-base
 replaces="scraplinux-base"
-_commit=1b11f5e906dfe257ed51237769d8e4526835b024
+_commit=2f045c7155f74f3c01db8956f5c7853d817c2c5a
 source="scraplinux-$_commit.tar.gz::https://github.com/apiwo/scraplinux/archive/$_commit.tar.gz"
-sha256="6b119779928e933b60613991e248e93c8f5621560b953a50a11cc5e44008dee4"
+sha256="f878378531d3b1ab7de98871f3c01252155300d28bd6aec7de13dbfb9c81dcbe"
 backup="etc/scraps/scraps.conf"
 
 package() {

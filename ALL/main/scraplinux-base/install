@@ -1,11 +1,43 @@
 # 1.5.0-3 shipped these group writable and shadow world readable, backup= keeps the files as they are
-post_install() {
-	_r=${SCRAPS_ROOT:-/}; _r=${_r%/}
-	for _f in passwd group inittab profile zsh/zshrc doas.conf; do
+fix_modes() {
+	for _f in passwd group profile zsh/zshrc doas.conf; do
 		[ ! -f "$_r/etc/$_f" ] || chmod go-w "$_r/etc/$_f"
 	done
 	for _f in shadow gshadow; do
 		[ ! -f "$_r/etc/$_f" ] || chmod 600 "$_r/etc/$_f"
 	done
+}
+
+# services enabled under the old rc.d init become dinit enables
+migrate_services() {
+	_old=$_r/etc/scraplinux/services
+	[ -d "$_old" ] || [ -d "$_r/etc/scraplinux/respawn" ] || return 0
+	for _f in "$_old"/*; do
+		[ -e "$_f" ] || continue
+		case "${_f##*/}" in
+		network) echo dhcpcd ;;
+		wifi) echo iwd; echo dhcpcd ;;
+		udev|udevd|udev-trigger|getty|getty-serial) ;;
+		*) echo "${_f##*/}" ;;
+		esac
+	done | sort -u | while read -r _s; do
+		[ -f "$_r/etc/dinit.d/$_s" ] || { echo "scraplinux-base: no dinit service for $_s, not enabled"; continue; }
+		ln -sf "../$_s" "$_r/etc/dinit.d/boot.d/$_s"
+	done
+	rm -rf "$_old" "$_r/etc/scraplinux/respawn"
+	rmdir "$_r/etc/rc.d" 2>/dev/null || :
+	# the old tarball installed these outside any package
+	for _f in usr/bin/scinit usr/bin/scraplinux-init-setup; do
+		grep -qxF "/$_f" "$_r"/var/lib/scraps/local/*/FILES 2>/dev/null || rm -f "$_r/$_f"
+	done
+}
+
+post_install() {
+	_r=${SCRAPS_ROOT:-/}; _r=${_r%/}
+	fix_modes
+	migrate_services
+	# rc.boot set up zram whenever this file existed
+	[ ! -f "$_r/etc/scraplinux/zram.conf" ] || ln -sf ../zram "$_r/etc/dinit.d/boot.d/zram"
+	mkdir -p "$_r/etc/scraplinux" && echo dinit >"$_r/etc/scraplinux/init"
 }
 post_upgrade() { post_install; }

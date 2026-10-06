@@ -1,20 +1,27 @@
 name=dinit
 version=0.19.4
-release=1
+release=2
 desc="Service manager and init with dependency handling"
 url="https://github.com/davmac314/dinit"
 license="Apache-2.0"
 depend="glibc"
-makedepend=""
-source="https://github.com/davmac314/dinit/archive/refs/tags/v0.19.4.tar.gz"
-sha256="SKIP"
+makedepend="llvm gmake"
+# takes over their halt, poweroff and reboot
+replaces="busybox initialization sysvinit"
+source="https://github.com/davmac314/dinit/releases/download/v$version/dinit-$version.tar.xz"
+sha256="a7d472186c9e8b19a8b88019a99c64c417c59abee244b1893b6c2ae03024df1e"
 
 build() {
-	cd "dinit-0.19.4"
-	make -j"$JOBS" PREFIX=/usr
+	unset LD_LIBRARY_PATH
+	cd "dinit-$version"
+	# pid 1 must not depend on the toolchain package for libc++
+	./configure --prefix=/usr --sbindir=/usr/bin --mandir=/usr/share/man \
+		LDFLAGS_EXTRA="-static-libstdc++ -l:libc++abi.a -l:libunwind.a"
+	make -j"$JOBS"
 }
 
 package() {
-	cd "dinit-0.19.4"
-	make PREFIX=/usr DESTDIR="$pkgdir" install
+	unset LD_LIBRARY_PATH
+	cd "dinit-$version"
+	make DESTDIR="$pkgdir" install
 }

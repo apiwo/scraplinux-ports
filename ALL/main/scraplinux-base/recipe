@@ -1,14 +1,16 @@
 name=scraplinux-base
-version=1.5.0
-release=4
+version=1.6.0
+release=1
 desc="ScrapLinux base configuration, init scripts and branding"
 url="https://github.com/apiwo/scraplinux"
 license="GPL-3.0-or-later"
-depend="busybox toybox zsh doas scraps"
-_commit=5fc0c20b5808a925d506601e753d33a1c087fbfe
+depend="busybox toybox zsh doas scraps dinit eudev dhcpcd iwd"
+# takes /usr/bin/init over from busybox
+replaces="busybox"
+_commit=2f045c7155f74f3c01db8956f5c7853d817c2c5a
 source="scraplinux-$_commit.tar.gz::https://github.com/apiwo/scraplinux/archive/$_commit.tar.gz"
-sha256="0d05b444e56134ce371c9fc5411a69af760bf4f6eb061dae381e53ecbb65c946"
-backup="etc/passwd etc/group etc/shadow etc/gshadow etc/inittab etc/profile etc/zsh/zshrc etc/doas.conf"
+sha256="f878378531d3b1ab7de98871f3c01252155300d28bd6aec7de13dbfb9c81dcbe"
+backup="etc/passwd etc/group etc/shadow etc/gshadow etc/profile etc/zsh/zshrc etc/doas.conf"
 
 package() {
 	unset LD_LIBRARY_PATH
@@ -22,6 +24,7 @@ package() {
 	done
 	printf '#!/bin/sh\ncat /etc/scraplinux-release\n' >"$pkgdir/usr/bin/scraplinux-release"
 	chmod 755 "$pkgdir/usr/bin/scraplinux-release"
+	ln -s dinit "$pkgdir/usr/bin/init"
 	# github archives are group writable, git's tar.umask is 0002
 	chmod -R go-w "$pkgdir"
 	chmod 600 "$pkgdir/etc/shadow"
