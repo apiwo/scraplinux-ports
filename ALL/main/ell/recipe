@@ -1,27 +1,21 @@
 name=ell
-version=0.79
-release=1
-desc="Embedded Linux library, used by bluez"
+version=0.83
+release=2
+desc="Embedded Linux Library, iwd's base library"
 url="https://git.kernel.org/pub/scm/libs/ell/ell.git"
 license="LGPL-2.1-or-later"
 depend="glibc"
-makedepend=""
-source="https://kernel.org/pub/linux/libs/ell/ell-0.79.tar.xz"
-sha256="SKIP"
+makedepend="gmake"
+source="https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-$version.tar.xz"
+sha256="39a562f5ab2768e69da1ffbb1f98a8eb3483baffc7d2ef6adc3705e4fd4e53fb"
 
 build() {
-	cd "ell-0.79"
-	[ -x ./configure ] || autoreconf -fi
-	_opts="--prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib"
-	_help=$(./configure --help 2>/dev/null)
-	case "$_help" in *--disable-static*)  _opts="$_opts --disable-static" ;; esac
-	case "$_help" in *--disable-nls*)     _opts="$_opts --disable-nls" ;; esac
-	case "$_help" in *--disable-dependency-tracking*) _opts="$_opts --disable-dependency-tracking" ;; esac
-	./configure $_opts
+	cd "ell-$version"
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --libdir=/usr/lib --disable-static
 	gmake -j"$JOBS"
 }
 
 package() {
-	cd "ell-0.79"
+	cd "ell-$version"
 	gmake DESTDIR="$pkgdir" install
 }

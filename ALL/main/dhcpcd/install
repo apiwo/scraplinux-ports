@@ -1,0 +1,8 @@
+post_install() {
+	_r=${SCRAPS_ROOT:-/}; _r=${_r%/}
+	grep -q '^dhcpcd:' "$_r/etc/passwd" 2>/dev/null && return 0
+	printf 'dhcpcd:x:%s:%s:dhcpcd privilege separation:/var/lib/dhcpcd:/sbin/nologin\n' 120 120 >>"$_r/etc/passwd"
+	grep -q '^dhcpcd:' "$_r/etc/group" 2>/dev/null || printf 'dhcpcd:x:120:\n' >>"$_r/etc/group"
+	grep -q '^dhcpcd:' "$_r/etc/shadow" 2>/dev/null || printf 'dhcpcd:!:20000::::::\n' >>"$_r/etc/shadow"
+}
+post_upgrade() { post_install; }

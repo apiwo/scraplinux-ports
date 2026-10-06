@@ -1,0 +1,31 @@
+name=iwd
+version=3.12
+release=2
+desc="Wireless daemon, connects to WiFi networks, iwctl to drive it"
+url="https://iwd.wiki.kernel.org"
+license="LGPL-2.1-or-later"
+depend="glibc ell dbus libedit"
+makedepend="gmake"
+recommend="dhcpcd"
+source="https://mirrors.edge.kernel.org/pub/linux/network/wireless/iwd-$version.tar.xz"
+sha256="d89a5e45c7180170e19be828f9e944a768c593758094fc57a358d0e7c4cb1a49"
+
+build() {
+	cd "iwd-$version"
+	# libedit mode expects the bsd layout with readline/*.h, ours has editline/readline.h
+	mkdir -p rlcompat/readline
+	for h in readline history; do
+		printf '#include <editline/readline.h>\n' >"rlcompat/readline/$h.h"
+	done
+	export CPPFLAGS="-I$PWD/rlcompat ${CPPFLAGS:-}"
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
+		--libexecdir=/usr/lib/iwd --enable-external-ell --enable-libedit \
+		--disable-systemd-service --disable-manual-pages \
+		--with-dbus-datadir=/usr/share --with-dbus-busdir=/usr/share/dbus-1/system-services
+	gmake -j"$JOBS"
+}
+
+package() {
+	cd "iwd-$version"
+	gmake DESTDIR="$pkgdir" install
+}
