@@ -12,7 +12,7 @@
 # allocator. No Vulkan renderer - that is what the reference build uses too.
 name=wlroots0.19
 version=0.19.2
-release=1
+release=2
 desc="Wayland compositor library, 0.19 series (slotted beside wlroots 0.20)"
 url="https://gitlab.freedesktop.org/wlroots/wlroots"
 license="MIT"
@@ -22,7 +22,7 @@ license="MIT"
 # seatd, libxcb-ewmh/icccm from xcb-util-wm, the other xcb extensions from
 # libxcb itself. hwdata is read at runtime for monitor names, and Xwayland
 # is exec'd by the xwayland backend.
-depend="wayland libglvnd mesa libinput libxkbcommon pixman seatd libdrm libdisplay-info eudev libxcb xcb-util-wm hwdata xorg-xwayland"
+depend="wayland libglvnd mesa lcms2 libinput libxkbcommon pixman seatd libdrm libdisplay-info eudev libxcb xcb-util-wm hwdata xorg-xwayland"
 makedepend="meson ninja wayland-protocols hwdata"
 source="https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/0.19.2/downloads/wlroots-0.19.2.tar.gz"
 sha256="SKIP"
